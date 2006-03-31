@@ -95,13 +95,17 @@ it('renders interactive public blocks without authoring surface', function (): v
         'meta' => ['tabs' => [['label' => 'Plan', 'content' => '<p>Plan the page.</p>']]],
     ])->render();
 
-    TestResponse::fromBaseResponse(new Response('<!DOCTYPE html><html><body>' . $html . '</body></html>'))
-        ->assertContainsElement('section.section-accordion[x-data]')
-        ->assertContainsElement('section.section-tabs [role="tablist"]')
+    $response = TestResponse::fromBaseResponse(new Response('<!DOCTYPE html><html><body>' . $html . '</body></html>'));
+
+    $response
         ->assertDontSee('filament')
         ->assertDontSee('signed')
         ->assertDontSee('wire:')
         ->assertDontSee('contenteditable');
+
+    $response
+        ->assertContainsElement('section.section-accordion[x-data]')
+        ->assertContainsElement('section.section-tabs [role="tablist"]');
 });
 
 it('renders every default public block view', function (): void {
