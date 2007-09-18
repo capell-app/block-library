@@ -180,6 +180,7 @@ This package has no schema impact. It registers runtime behaviour through `Capel
 
 - [Package docs](docs/README.md)
 - [Overview](docs/overview.md)
+- [Worked extension examples](docs/extension-contracts.md)
 - [Troubleshooting](#troubleshooting)
 - [Screenshot contract](docs/screenshots.json)
 - [Marketplace assets](docs/assets/marketplace/)
