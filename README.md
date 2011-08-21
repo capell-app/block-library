@@ -47,15 +47,98 @@ Screenshot contract: `docs/screenshots.json`.
 
 ## Technical Shape
 
-- Service providers: `Capell\BlockLibrary\Providers\BlockLibraryServiceProvider`.
-- Filament classes: `AbstractCatalogBuilderBlock`, `AccordionBlock`, `CallToActionBlock`, `ComparisonBlock`, `ContentBlock`, `CounterBlock`, `DividerBlock`, `FaqBlock`, `FeaturesBlock`, `HeroBlock`, `LogosBlock`, `PricingBlock`, `and 6 more`.
-- Extension contracts: `BlockDefinitionProvider`, `BlockDemoContentProvider`, `BlockFixtureProvider`, `BlockRenderer`, `FilamentBuilderBlock`.
-- Actions: `ListBlockDefinitionsAction`, `ListBuilderBlockPickerItemsAction`, `RegisterBlockDefinitionProviderAction`, `ResolveBlockDefinitionAction`, `SanitizeBlockHtmlAction`, `ValidateDefaultBlockCatalogAction`.
-- Data objects: `AdminPreviewBlockViewReference`, `BlockAccessibilityContractData`, `BlockCompatibilityData`, `BlockContentContractData`, `BlockDefinitionData`, `BlockFixtureData`, `BlockScreenshotData`, `BlockSettingDefinitionData`, `BlockVariantData`, `BlockVariantKey`, `BuilderBlockPickerItemData`, `PublicBlockPresentationData`, `and 1 more`.
-- Manifest action API: `sanitizeBlockHtml: Capell\BlockLibrary\Actions\SanitizeBlockHtmlAction`.
-- Health checks: `Capell\BlockLibrary\Health\BlockLibraryHealthCheck`.
-- Blade views: `packages/block-library/resources/views/blocks/catalog/accordion.blade.php`, `packages/block-library/resources/views/blocks/catalog/call-to-action.blade.php`, `packages/block-library/resources/views/blocks/catalog/comparison.blade.php`, `packages/block-library/resources/views/blocks/catalog/content.blade.php`, `packages/block-library/resources/views/blocks/catalog/counter.blade.php`, `packages/block-library/resources/views/blocks/catalog/divider.blade.php`, `packages/block-library/resources/views/blocks/catalog/faq.blade.php`, `packages/block-library/resources/views/blocks/catalog/features.blade.php`, `packages/block-library/resources/views/blocks/catalog/hero.blade.php`, `packages/block-library/resources/views/blocks/catalog/logos.blade.php`, `packages/block-library/resources/views/blocks/catalog/pricing.blade.php`, `packages/block-library/resources/views/blocks/catalog/stats.blade.php`, `and 7 more`.
-- Cache tags: `block-library`.
+### Service providers
+
+- `Capell\BlockLibrary\Providers\BlockLibraryServiceProvider`
+
+### Filament classes
+
+- `AbstractCatalogBuilderBlock`
+- `AccordionBlock`
+- `CallToActionBlock`
+- `ComparisonBlock`
+- `ContentBlock`
+- `CounterBlock`
+- `DividerBlock`
+- `FaqBlock`
+- `FeaturesBlock`
+- `HeroBlock`
+- `LogosBlock`
+- `PricingBlock`
+- `StatsBlock`
+- `TableBlock`
+- `TabsBlock`
+- `TeamBlock`
+- `TestimonialBlock`
+- `TimelineBlock`
+
+### Extension contracts
+
+- `BlockDefinitionProvider`
+- `BlockDemoContentProvider`
+- `BlockFixtureProvider`
+- `BlockRenderer`
+- `FilamentBuilderBlock`
+
+### Actions
+
+- `ListBlockDefinitionsAction`
+- `ListBuilderBlockPickerItemsAction`
+- `RegisterBlockDefinitionProviderAction`
+- `ResolveBlockDefinitionAction`
+- `SanitizeBlockHtmlAction`
+- `ValidateDefaultBlockCatalogAction`
+
+### Data objects
+
+- `AdminPreviewBlockViewReference`
+- `BlockAccessibilityContractData`
+- `BlockCompatibilityData`
+- `BlockContentContractData`
+- `BlockDefinitionData`
+- `BlockFixtureData`
+- `BlockScreenshotData`
+- `BlockSettingDefinitionData`
+- `BlockVariantData`
+- `BlockVariantKey`
+- `BuilderBlockPickerItemData`
+- `PublicBlockPresentationData`
+- `PublicBlockViewReference`
+
+### Manifest action API
+
+- `sanitizeBlockHtml: Capell\BlockLibrary\Actions\SanitizeBlockHtmlAction`
+
+### Health checks
+
+- `Capell\BlockLibrary\Health\BlockLibraryHealthCheck`
+
+### Blade views
+
+- `packages/block-library/resources/views/blocks/catalog/accordion.blade.php`
+- `packages/block-library/resources/views/blocks/catalog/call-to-action.blade.php`
+- `packages/block-library/resources/views/blocks/catalog/comparison.blade.php`
+- `packages/block-library/resources/views/blocks/catalog/content.blade.php`
+- `packages/block-library/resources/views/blocks/catalog/counter.blade.php`
+- `packages/block-library/resources/views/blocks/catalog/divider.blade.php`
+- `packages/block-library/resources/views/blocks/catalog/faq.blade.php`
+- `packages/block-library/resources/views/blocks/catalog/features.blade.php`
+- `packages/block-library/resources/views/blocks/catalog/hero.blade.php`
+- `packages/block-library/resources/views/blocks/catalog/logos.blade.php`
+- `packages/block-library/resources/views/blocks/catalog/pricing.blade.php`
+- `packages/block-library/resources/views/blocks/catalog/stats.blade.php`
+- `packages/block-library/resources/views/blocks/catalog/table.blade.php`
+- `packages/block-library/resources/views/blocks/catalog/tabs.blade.php`
+- `packages/block-library/resources/views/blocks/catalog/team.blade.php`
+- `packages/block-library/resources/views/blocks/catalog/testimonial.blade.php`
+- `packages/block-library/resources/views/blocks/catalog/timeline.blade.php`
+- `packages/block-library/resources/views/blocks/fallback.blade.php`
+- `packages/block-library/resources/views/blocks/variants/default.blade.php`
+
+### Cache tags
+
+- `block-library`
+
 
 ## Data Model
 
@@ -66,7 +149,7 @@ This package has no schema impact. It registers runtime behaviour through `Capel
 - Required packages: `capell-app/admin`, `capell-app/core`.
 - Admin navigation: no admin page or resource contribution is declared.
 - Admin/editor extensions: none declared.
-- Permissions: none declared in `capell.json`.
+- Permissions: no package permission declarations or Shield gates detected; host access rules still apply.
 - Public routes: none declared.
 - Database changes: no package migrations declared.
 - Config: no package config files.
@@ -91,8 +174,7 @@ This package has no schema impact. It registers runtime behaviour through `Capel
 ## Quick Start
 
 1. Install the package: `composer require capell-app/block-library`.
-2. No package-specific setup command or migrations are declared.
-3. Open the package admin surface at `/pages/{first-record}/edit` and confirm Block Library is available.
+2. Open the package admin surface at `/pages/{first-record}/edit` and confirm Block Library is available.
 
 ## Next Steps
 
