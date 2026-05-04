@@ -1,0 +1,49 @@
+{
+    "package": "content-blocks",
+    "composerName": "capell-app/content-blocks",
+    "generatedFor": "deployment-screenshot-runner",
+    "requiresInstalledPackage": true,
+    "outputDirectory": "public/docs/screenshots/packages/content-blocks",
+    "entries": [
+        {
+            "id": "content-blocks-admin-index",
+            "title": "Content blocks admin index.",
+            "package": "content-blocks",
+            "surface": "admin",
+            "targetType": "admin-surface",
+            "target": "ContentBlockResource",
+            "required": true,
+            "notes": "Resolved by the deployment screenshot runner after the package is installed and demo data is prepared."
+        },
+        {
+            "id": "create-edit-content-block-form",
+            "title": "Create/edit content block form.",
+            "package": "content-blocks",
+            "surface": "admin",
+            "targetType": "admin-surface",
+            "target": "ContentBlockResource",
+            "required": true,
+            "notes": "Resolved by the deployment screenshot runner after the package is installed and demo data is prepared."
+        },
+        {
+            "id": "content-block-asset-relation-manager",
+            "title": "Content block asset relation manager.",
+            "package": "content-blocks",
+            "surface": "admin",
+            "targetType": "admin-surface",
+            "target": "ContentBlockResource",
+            "required": true,
+            "notes": "Resolved by the deployment screenshot runner after the package is installed and demo data is prepared."
+        },
+        {
+            "id": "widget-or-page-selector-using-a-content-block",
+            "title": "Widget or page selector using a content block.",
+            "package": "content-blocks",
+            "surface": "admin",
+            "targetType": "admin-surface",
+            "target": "ContentBlockResource",
+            "required": true,
+            "notes": "Resolved by the deployment screenshot runner after the package is installed and demo data is prepared."
+        }
+    ]
+}
