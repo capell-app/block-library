@@ -4,18 +4,20 @@ declare(strict_types=1);
 
 namespace Capell\ContentBlocks\Providers;
 
-use BackedEnum;
 use Capell\Admin\Actions\CreatedModelAction;
 use Capell\Admin\Actions\DeletedModelAction;
 use Capell\Admin\Data\AdminAssetData;
 use Capell\Admin\Data\AdminSurfaceContributionData;
 use Capell\Admin\Facades\CapellAdmin;
+use Capell\ContentBlocks\Actions\RegisterContentBlockDefinitionProviderAction;
+use Capell\ContentBlocks\Actions\RegisterDefaultContentBlocksAction;
+use Capell\ContentBlocks\Contracts\ContentBlockDefinitionProvider;
 use Capell\ContentBlocks\Enums\AssetEnum;
-use Capell\ContentBlocks\Enums\ConfiguratorTypeEnum;
 use Capell\ContentBlocks\Enums\LayoutTypeEnum;
 use Capell\ContentBlocks\Enums\ResourceEnum;
 use Capell\ContentBlocks\Filament\Resources\ContentBlocks\ContentBlockResource;
 use Capell\ContentBlocks\Models\ContentBlock;
+use Capell\ContentBlocks\Support\ContentBlockRegistry;
 use Capell\ContentBlocks\Support\Mosaic\Livewire\ContentBlockAssets;
 use Capell\Core\Data\AssetData;
 use Capell\Core\Data\PageTypeData;
@@ -53,6 +55,7 @@ class ContentBlocksServiceProvider extends AbstractPackageServiceProvider
             ->name(self::$name)
             ->hasViews(self::$name)
             ->hasTranslations()
+            ->hasRoute('web')
             ->hasMigrations([
                 'create_content_blocks_table',
             ]);
@@ -86,6 +89,7 @@ class ContentBlocksServiceProvider extends AbstractPackageServiceProvider
     {
         return $this
             ->registerModels()
+            ->registerBlockRegistry()
             ->registerRelationships()
             ->registerResources()
             ->registerConfigurators()
@@ -139,6 +143,25 @@ class ContentBlocksServiceProvider extends AbstractPackageServiceProvider
         return $this;
     }
 
+    private function registerBlockRegistry(): self
+    {
+        $this->app->singleton(ContentBlockRegistry::class);
+
+        $this->callAfterResolving(ContentBlockRegistry::class, function (ContentBlockRegistry $registry): void {
+            RegisterDefaultContentBlocksAction::run($registry);
+
+            foreach ($this->app->tagged(ContentBlockDefinitionProvider::TAG) as $provider) {
+                if (! $provider instanceof ContentBlockDefinitionProvider) {
+                    continue;
+                }
+
+                RegisterContentBlockDefinitionProviderAction::run($registry, $provider);
+            }
+        });
+
+        return $this;
+    }
+
     private function registerResources(): self
     {
         CapellAdmin::contributeToAdminSurface(AdminSurfaceContributionData::resource(
@@ -151,16 +174,12 @@ class ContentBlocksServiceProvider extends AbstractPackageServiceProvider
 
     private function registerConfigurators(): self
     {
-        foreach (ConfiguratorTypeEnum::getAllConfigurators() as $type => $configurators) {
-            foreach ($configurators as $configurator) {
-                $configuratorClass = $configurator instanceof BackedEnum ? $configurator->value : $configurator;
-
-                CapellAdmin::contributeToAdminSurface(AdminSurfaceContributionData::configurator(
-                    class: $configuratorClass,
-                    group: $type,
-                    name: $configuratorClass::getKey(),
-                ));
-            }
+        foreach (resolve(ContentBlockRegistry::class)->all() as $definition) {
+            CapellAdmin::contributeToAdminSurface(AdminSurfaceContributionData::configurator(
+                class: $definition->configurator,
+                group: $definition->configuratorType->value,
+                name: $definition->configurator::getKey(),
+            ));
         }
 
         return $this;

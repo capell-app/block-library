@@ -8,7 +8,8 @@ Content Blocks adds reusable content records that can be managed in Filament and
 
 - Content block Filament resource.
 - Reusable block creation, replication, and form mutation actions.
-- Default, hero, and testimonial block configurators.
+- Default, hero, testimonial, accordion, call to action, comparison, counter, divider, FAQ, features, logos, pricing, stats, table, tabs, team, and timeline block configurators.
+- Registry-backed block definitions for admin discovery and future package registration.
 - Asset relation manager support.
 - Content select and repeater form components.
 
@@ -35,6 +36,51 @@ Screenshots are generated from [docs/screenshots.json](docs/screenshots.json) du
 - Filament resource: ContentBlockResource.
 - Actions create, replicate, and mutate content state.
 - Mosaic support component handles content block assets.
+- Content block definitions are loaded from the default provider plus any package providers tagged with `ContentBlockDefinitionProvider::TAG`.
+
+## Extending From Another Package
+
+Other packages can add their own content blocks without changing this package. Create a provider that implements `ContentBlockDefinitionProvider`, return one or more `ContentBlockDefinitionData` objects, and tag that provider in the package service provider.
+
+```php
+use Capell\ContentBlocks\Contracts\ContentBlockDefinitionProvider;
+use Capell\ContentBlocks\Data\ContentBlockDefinitionData;
+use Filament\Support\Icons\Heroicon;
+
+final class VideoBlockDefinitionProvider implements ContentBlockDefinitionProvider
+{
+    /**
+     * @return iterable<ContentBlockDefinitionData>
+     */
+    public function definitions(): iterable
+    {
+        return [
+            new ContentBlockDefinitionData(
+                key: 'video',
+                label: __('capell-video-block::block.video.label'),
+                description: __('capell-video-block::block.video.description'),
+                icon: Heroicon::OutlinedPlayCircle,
+                group: 'media',
+                configurator: VideoContentBlockConfigurator::class,
+                component: 'capell-video-block::content-block.video',
+            ),
+        ];
+    }
+}
+```
+
+```php
+use Capell\ContentBlocks\Contracts\ContentBlockDefinitionProvider;
+
+public function register(): void
+{
+    $this->app->tag([
+        VideoBlockDefinitionProvider::class,
+    ], ContentBlockDefinitionProvider::TAG);
+}
+```
+
+The package owns its configurator, views, translations, and any dependencies. Content Blocks discovers the tagged provider when the local app boots, registers the block definition, contributes the configurator to the admin surface, and uses the definition component when rendering frontend assets.
 
 ## Data Model
 
@@ -42,6 +88,21 @@ Screenshots are generated from [docs/screenshots.json](docs/screenshots.json) du
 - Content block factories and type factories support tests and demos.
 - Assets are managed through relation manager behaviour.
 - Deletion behaviour for reused content should be verified before removing shared records.
+
+## Future Optional Blocks
+
+Advanced blocks should live in their own packages and register into the content block registry:
+
+- `capell-block-before-after`
+- `capell-block-code-snippet`
+- `capell-block-map`
+- `capell-block-video`
+- `capell-block-speed-dial`
+- `capell-block-parallax`
+- `capell-block-document-list`
+- `capell-block-media-gallery`
+- `capell-block-posts`
+- `capell-block-contact-form`
 
 ## Install Impact
 

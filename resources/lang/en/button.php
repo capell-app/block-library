@@ -37,10 +37,12 @@ return [
     'previous' => 'Previous',
     'remove_container' => 'Remove Container',
     'remove_widget' => 'Remove Widget',
+    'read_more' => 'Read more',
     'reorder' => 'Reorder',
     'save_changes' => 'Save Changes',
     'save_layout' => 'Save Layout',
     'select_asset' => 'Select existing',
     'select_records' => 'Select Records',
     'widget' => 'Widget',
+    'add_item' => 'Add Item',
 ];

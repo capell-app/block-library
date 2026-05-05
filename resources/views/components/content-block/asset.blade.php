@@ -1,4 +1,5 @@
 @php
+    use Capell\ContentBlocks\Actions\ResolveContentBlockComponentAction;
     use Capell\Frontend\Facades\Frontend;
 
     $language = Frontend::language();
@@ -20,10 +21,15 @@
     if ($withImage) {
         $image = $asset->relationLoaded('image') ? $asset->image : $asset->media->first();
     }
+
+    $contentBlockComponent = ResolveContentBlockComponentAction::run(
+        configurator: $asset->type?->configurator,
+        fallbackComponent: $componentItem,
+    );
 @endphp
 {{-- format-ignore-end --}}
 <x-dynamic-component
-    :component="$componentItem"
+    :component="$contentBlockComponent"
     :$asset
     :$loop
     :$size
