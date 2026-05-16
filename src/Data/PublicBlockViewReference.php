@@ -10,9 +10,7 @@ final class PublicBlockViewReference
 {
     public function __construct(public readonly string $view)
     {
-        if (trim($this->view) === '') {
-            throw new InvalidArgumentException('Public block view cannot be empty.');
-        }
+        throw_if(trim($this->view) === '', InvalidArgumentException::class, 'Public block view cannot be empty.');
 
         if ($this->isAdminView($this->view)) {
             throw new InvalidArgumentException(sprintf('Public block view [%s] cannot reference admin or Filament views.', $this->view));

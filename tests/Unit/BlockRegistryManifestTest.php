@@ -98,8 +98,10 @@ it('writes registry manifests atomically and removes temporary files', function 
         'blocks' => ['marketing.hero' => ['key' => 'marketing.hero']],
     ]);
 
+    $temporaryFiles = $filesystem->glob($path . '.*.tmp');
+
     expect($store->read()['blocks'])->toHaveKey('marketing.hero')
-        ->and($filesystem->glob($path . '.*.tmp') ?: [])->toBe([]);
+        ->and($temporaryFiles === false ? [] : $temporaryFiles)->toBe([]);
 
     $store->forget();
 });
@@ -135,6 +137,7 @@ it('returns null for missing or corrupt manifests so callers can use safe cold-s
     $store = new BlockRegistryManifestStore($filesystem, $path);
 
     $store->forget();
+
     expect($store->read())->toBeNull();
 
     $filesystem->put($path, '<?php throw new RuntimeException("corrupt");');

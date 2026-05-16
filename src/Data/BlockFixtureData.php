@@ -16,12 +16,8 @@ final class BlockFixtureData
         public readonly string $label,
         public readonly array $payload,
     ) {
-        if (trim($this->key) === '') {
-            throw new InvalidArgumentException('Block fixture key cannot be empty.');
-        }
+        throw_if(trim($this->key) === '', InvalidArgumentException::class, 'Block fixture key cannot be empty.');
 
-        if (trim($this->label) === '') {
-            throw new InvalidArgumentException('Block fixture label cannot be empty.');
-        }
+        throw_if(trim($this->label) === '', InvalidArgumentException::class, 'Block fixture label cannot be empty.');
     }
 }

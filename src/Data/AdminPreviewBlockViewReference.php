@@ -10,9 +10,7 @@ final class AdminPreviewBlockViewReference
 {
     public function __construct(public readonly string $view)
     {
-        if (trim($this->view) === '') {
-            throw new InvalidArgumentException('Admin preview block view cannot be empty.');
-        }
+        throw_if(trim($this->view) === '', InvalidArgumentException::class, 'Admin preview block view cannot be empty.');
     }
 
     public static function from(string $view): self
