@@ -14,7 +14,7 @@ It is intentionally small: a typed block definition DTO, a block registry, provi
 | Migrations              | None                                                                                                  |
 | Config                  | None                                                                                                  |
 | Actions                 | `ListBlockDefinitionsAction`, `RegisterBlockDefinitionProviderAction`, `ResolveBlockDefinitionAction` |
-| Public extension points | `BlockDefinitionProvider::TAG`, `BlockRenderer`, `BlockRegistry`                                      |
+| Public extension points | `BlockDefinitionProvider::TAG`, `BlockRenderer`, `BlockRegistry`, block fixtures and demo providers   |
 | Tests                   | Package manifest, registry, provider registration, action resolution                                  |
 
 ## Registering Blocks
@@ -42,3 +42,21 @@ final class MarketingBlockProvider implements BlockDefinitionProvider
 ```
 
 Block views must render ordinary public HTML. Authoring metadata, selectors, model IDs, signed URLs, and editor scripts belong behind the authenticated frontend authoring beacon, not in block definitions or public output.
+
+## Block Definitions
+
+`BlockDefinitionData` remains backwards compatible with the original `key`, `label`, `description`, `category`, `view`, and `defaults` shape. New packages can also provide:
+
+- per-block variants through `BlockVariantData` and `BlockVariantKey` slug value objects;
+- structured setting definitions with translated label/help keys, defaults, grouping, responsive fallbacks, and accessibility rules;
+- content and accessibility contracts for required fields, item limits, CTA rules, image ratios, alt/decorative-image intent, semantic rules, and keyboard expectations;
+- context-separated `PublicBlockViewReference` and `AdminPreviewBlockViewReference`;
+- class-string fixture/demo providers, screenshots, compatibility metadata, and source package metadata.
+
+Public views are trusted PHP definitions only. Do not read view names from editor state, database meta, fixtures, or request data.
+
+## Registry Cache Safety
+
+Registry manifests should contain structural metadata only. Localized labels/help text should be translation keys or resolved for the current admin locale at render time.
+
+Compiled manifests must be written atomically and validated against currently installed packages, provider classes, fixture/demo provider classes, and trusted view contexts before use. If compilation fails and no valid manifest exists, callers should fall back to the safe built-in fallback definition and surface an admin/system health warning.

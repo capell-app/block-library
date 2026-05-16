@@ -6,7 +6,12 @@ use Capell\ContentBlocks\Actions\ListBlockDefinitionsAction;
 use Capell\ContentBlocks\Actions\RegisterBlockDefinitionProviderAction;
 use Capell\ContentBlocks\Actions\ResolveBlockDefinitionAction;
 use Capell\ContentBlocks\Contracts\BlockDefinitionProvider;
+use Capell\ContentBlocks\Data\AdminPreviewBlockViewReference;
 use Capell\ContentBlocks\Data\BlockDefinitionData;
+use Capell\ContentBlocks\Data\BlockSettingDefinitionData;
+use Capell\ContentBlocks\Data\BlockVariantData;
+use Capell\ContentBlocks\Data\BlockVariantKey;
+use Capell\ContentBlocks\Data\PublicBlockViewReference;
 use Capell\ContentBlocks\Support\BlockRegistry;
 
 it('registers typed content block definitions', function (): void {
@@ -25,6 +30,65 @@ it('registers typed content block definitions', function (): void {
     expect($registry->has('marketing.hero'))->toBeTrue()
         ->and($registry->getOrFail('marketing.hero'))->toBe($definition)
         ->and($registry->forCategory('marketing'))->toBe(['marketing.hero' => $definition]);
+});
+
+it('keeps legacy definitions backwards compatible with a default variant and trusted views', function (): void {
+    $definition = new BlockDefinitionData(
+        key: 'marketing.hero',
+        label: 'Marketing hero',
+        description: 'A campaign-ready hero block.',
+        category: 'marketing',
+        view: 'vendor-package::blocks.marketing-hero',
+    );
+
+    expect($definition->defaultVariant?->value())->toBe('default')
+        ->and($definition->variantKeys())->toBe(['default'])
+        ->and($definition->publicViewName())->toBe('vendor-package::blocks.marketing-hero')
+        ->and($definition->previewViewName())->toBe('vendor-package::blocks.marketing-hero');
+});
+
+it('supports package-owned variant keys without requiring a global enum case', function (): void {
+    $definition = new BlockDefinitionData(
+        key: 'agency.proof',
+        label: 'Proof block',
+        description: 'Agency proof layout.',
+        category: 'agency',
+        view: 'vendor-package::blocks.proof',
+        variants: [
+            new BlockVariantData(BlockVariantKey::from('bento-proof-wall'), 'vendor-package::blocks.variants.bento_proof_wall'),
+        ],
+        settings: [
+            new BlockSettingDefinitionData(
+                key: 'cards_per_row',
+                labelKey: 'vendor-package::blocks.settings.cards_per_row',
+                type: 'integer',
+                default: 3,
+                allowedVariants: ['bento-proof-wall'],
+            ),
+        ],
+    );
+
+    expect($definition->supportsVariant('bento-proof-wall'))->toBeTrue()
+        ->and($definition->settings[0]->allowedVariants)->toBe(['bento-proof-wall']);
+});
+
+it('rejects admin or filament views as public block views', function (): void {
+    PublicBlockViewReference::from('capell-admin::filament.blocks.hero');
+})->throws(InvalidArgumentException::class, 'cannot reference admin or Filament views');
+
+it('keeps public and admin preview view references context separated', function (): void {
+    $definition = new BlockDefinitionData(
+        key: 'marketing.hero',
+        label: 'Marketing hero',
+        description: 'A campaign-ready hero block.',
+        category: 'marketing',
+        view: 'vendor-package::blocks.marketing-hero',
+        publicView: PublicBlockViewReference::from('vendor-package::blocks.marketing-hero'),
+        previewView: AdminPreviewBlockViewReference::from('vendor-package::admin.preview.marketing-hero'),
+    );
+
+    expect($definition->publicViewName())->toBe('vendor-package::blocks.marketing-hero')
+        ->and($definition->previewViewName())->toBe('vendor-package::admin.preview.marketing-hero');
 });
 
 it('guards against duplicate block keys', function (): void {
