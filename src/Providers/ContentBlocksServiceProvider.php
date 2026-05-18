@@ -65,6 +65,9 @@ class ContentBlocksServiceProvider extends AbstractPackageServiceProvider
 
     public function registeringPackage(): void
     {
+        $this->app->singletonIf(BuilderBlockRegistry::class);
+        $this->app->singletonIf(BuilderBlockDiscovery::class);
+
         $this->registerPackageMetadata();
 
         $this->app->booted(function (): void {
@@ -148,8 +151,6 @@ class ContentBlocksServiceProvider extends AbstractPackageServiceProvider
     private function registerBlockRegistry(): self
     {
         $this->app->singleton(ContentBlockRegistry::class);
-        $this->app->singleton(BuilderBlockRegistry::class);
-        $this->app->singleton(BuilderBlockDiscovery::class);
 
         $this->callAfterResolving(ContentBlockRegistry::class, function (ContentBlockRegistry $registry): void {
             RegisterDefaultContentBlocksAction::run($registry);
