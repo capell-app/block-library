@@ -17,6 +17,8 @@ use Capell\ContentBlocks\Enums\LayoutTypeEnum;
 use Capell\ContentBlocks\Enums\ResourceEnum;
 use Capell\ContentBlocks\Filament\Resources\ContentBlocks\ContentBlockResource;
 use Capell\ContentBlocks\Models\ContentBlock;
+use Capell\ContentBlocks\Support\BuilderBlockDiscovery;
+use Capell\ContentBlocks\Support\BuilderBlockRegistry;
 use Capell\ContentBlocks\Support\ContentBlockRegistry;
 use Capell\ContentBlocks\Support\Mosaic\Livewire\ContentBlockAssets;
 use Capell\Core\Data\AssetData;
@@ -146,6 +148,8 @@ class ContentBlocksServiceProvider extends AbstractPackageServiceProvider
     private function registerBlockRegistry(): self
     {
         $this->app->singleton(ContentBlockRegistry::class);
+        $this->app->singleton(BuilderBlockRegistry::class);
+        $this->app->singleton(BuilderBlockDiscovery::class);
 
         $this->callAfterResolving(ContentBlockRegistry::class, function (ContentBlockRegistry $registry): void {
             RegisterDefaultContentBlocksAction::run($registry);
