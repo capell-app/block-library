@@ -1,142 +1,62 @@
-# Content Blocks
+# Capell Content Blocks
 
-Status: **Available, schema-owning** · Kind: **package** · Tier: **free** · Bundle: **foundation** · Contexts: **admin, frontend** · Product group: **Capell Foundation**
+Content Blocks provides shared block primitives that richer content-editing packages can register and render without reaching into each other's internals.
 
-## What This Plugin Adds
+It is intentionally small: a typed block definition DTO, a block registry, provider contracts, and actions for registering/listing/resolving blocks. It does not own migrations, admin resources, frontend output, or authoring markup.
 
-Content Blocks adds reusable content records that can be managed in Filament and rendered through Mosaic-style assets and configurators.
+## Current Surface
 
-- Content block Filament resource.
-- Reusable block creation, replication, and form mutation actions.
-- Default, hero, testimonial, accordion, call to action, comparison, counter, divider, FAQ, features, logos, pricing, stats, table, tabs, team, and timeline block configurators.
-- Registry-backed block definitions for admin discovery and future package registration.
-- Asset relation manager support.
-- Content select and repeater form components.
+| Surface                 | Status                                                                                                |
+| ----------------------- | ----------------------------------------------------------------------------------------------------- |
+| Namespace               | `Capell\ContentBlocks\`                                                                               |
+| Provider                | `Capell\ContentBlocks\Providers\ContentBlocksServiceProvider`                                         |
+| Commands                | None                                                                                                  |
+| Migrations              | None                                                                                                  |
+| Config                  | None                                                                                                  |
+| Actions                 | `ListBlockDefinitionsAction`, `RegisterBlockDefinitionProviderAction`, `ResolveBlockDefinitionAction` |
+| Public extension points | `BlockDefinitionProvider::TAG`, `BlockRenderer`, `BlockRegistry`, block fixtures and demo providers   |
+| Tests                   | Package manifest, registry, provider registration, action resolution                                  |
 
-## Why It Matters
+## Registering Blocks
 
-**For developers:** Gives packages a structured content model with typed configurators and asset relations rather than pushing shared content into page JSON.
-
-**For teams:** Lets editors manage reusable pieces of content once and place them across structured websites.
-
-## Screens And Workflow
-
-Screenshots are generated from [docs/screenshots.json](docs/screenshots.json) during package deployment.
-
-- Content blocks admin index.
-- Create/edit content block form.
-- Content block asset relation manager.
-- Widget or page selector using a content block.
-
-## Technical Shape
-
-- ContentBlocksServiceProvider registers the package.
-- Migration creates content_blocks.
-- Model: ContentBlock.
-- Filament resource: ContentBlockResource.
-- Actions create, replicate, and mutate content state.
-- Mosaic support component handles content block assets.
-- Content block definitions are loaded from the default provider plus any package providers tagged with `ContentBlockDefinitionProvider::TAG`.
-
-## Extending From Another Package
-
-Other packages can add their own content blocks without changing this package. Create a provider that implements `ContentBlockDefinitionProvider`, return one or more `ContentBlockDefinitionData` objects, and tag that provider in the package service provider.
+Packages register blocks by tagging a `BlockDefinitionProvider` implementation with `BlockDefinitionProvider::TAG`.
 
 ```php
-use Capell\ContentBlocks\Contracts\ContentBlockDefinitionProvider;
-use Capell\ContentBlocks\Data\ContentBlockDefinitionData;
-use Filament\Support\Icons\Heroicon;
+use Capell\ContentBlocks\Contracts\BlockDefinitionProvider;
+use Capell\ContentBlocks\Data\BlockDefinitionData;
 
-final class VideoBlockDefinitionProvider implements ContentBlockDefinitionProvider
+final class MarketingBlockProvider implements BlockDefinitionProvider
 {
-    /**
-     * @return iterable<ContentBlockDefinitionData>
-     */
     public function definitions(): iterable
     {
-        return [
-            new ContentBlockDefinitionData(
-                key: 'video',
-                label: __('capell-video-block::block.video.label'),
-                description: __('capell-video-block::block.video.description'),
-                icon: Heroicon::OutlinedPlayCircle,
-                group: 'media',
-                configurator: VideoContentBlockConfigurator::class,
-                component: 'capell-video-block::content-block.video',
-            ),
-        ];
+        yield new BlockDefinitionData(
+            key: 'marketing.hero',
+            label: 'Marketing hero',
+            description: 'A campaign-ready hero block.',
+            category: 'marketing',
+            view: 'vendor-package::blocks.marketing-hero',
+            defaults: ['alignment' => 'center'],
+        );
     }
 }
 ```
 
-```php
-use Capell\ContentBlocks\Contracts\ContentBlockDefinitionProvider;
+Block views must render ordinary public HTML. Authoring metadata, selectors, model IDs, signed URLs, and editor scripts belong behind the authenticated frontend authoring beacon, not in block definitions or public output.
 
-public function register(): void
-{
-    $this->app->tag([
-        VideoBlockDefinitionProvider::class,
-    ], ContentBlockDefinitionProvider::TAG);
-}
-```
+## Block Definitions
 
-The package owns its configurator, views, translations, and any dependencies. Content Blocks discovers the tagged provider when the local app boots, registers the block definition, contributes the configurator to the admin surface, and uses the definition component when rendering frontend assets.
+`BlockDefinitionData` remains backwards compatible with the original `key`, `label`, `description`, `category`, `view`, and `defaults` shape. New packages can also provide:
 
-## Data Model
+- per-block variants through `BlockVariantData` and `BlockVariantKey` slug value objects;
+- structured setting definitions with translated label/help keys, defaults, grouping, responsive fallbacks, and accessibility rules;
+- content and accessibility contracts for required fields, item limits, CTA rules, image ratios, alt/decorative-image intent, semantic rules, and keyboard expectations;
+- context-separated `PublicBlockViewReference` and `AdminPreviewBlockViewReference`;
+- class-string fixture/demo providers, screenshots, compatibility metadata, and source package metadata.
 
-- content_blocks stores reusable content and metadata.
-- Content block factories and type factories support tests and demos.
-- Assets are managed through relation manager behaviour.
-- Deletion behaviour for reused content should be verified before removing shared records.
+Public views are trusted PHP definitions only. Do not read view names from editor state, database meta, fixtures, or request data.
 
-## Future Optional Blocks
+## Registry Cache Safety
 
-Advanced blocks should live in their own packages and register into the content block registry:
+Registry manifests should contain structural metadata only. Localized labels/help text should be translation keys or resolved for the current admin locale at render time.
 
-- `capell-block-before-after`
-- `capell-block-code-snippet`
-- `capell-block-map`
-- `capell-block-video`
-- `capell-block-speed-dial`
-- `capell-block-parallax`
-- `capell-block-document-list`
-- `capell-block-media-gallery`
-- `capell-block-posts`
-- `capell-block-contact-form`
-
-## Install Impact
-
-- Adds content_blocks table.
-- Adds content block admin resource.
-- Adds Filament form components for choosing content blocks.
-- No public route is registered by this package.
-
-## Commands
-
-- None proven in this package directory.
-
-## Admin And Access
-
-- ContentBlockResource (packages/content-blocks/src/Filament/Resources/ContentBlocks/ContentBlockResource.php)
-- CreateContentBlock (packages/content-blocks/src/Filament/Resources/ContentBlocks/Pages/CreateContentBlock.php)
-- EditContentBlock (packages/content-blocks/src/Filament/Resources/ContentBlocks/Pages/EditContentBlock.php)
-- ListContentBlocks (packages/content-blocks/src/Filament/Resources/ContentBlocks/Pages/ListContentBlocks.php)
-
-- None proven in this package directory.
-
-## Common Pitfalls
-
-- Check where a content block is reused before deleting it.
-- Keep configurator types aligned with registered content types.
-- Run migrations before opening the resource.
-
-## Quick Start
-
-1. Install the package with `composer require capell-app/content-blocks`.
-2. Run the package migrations or the Capell package installer required by the host app.
-3. Open the new admin surface or integration point and verify the result.
-
-## Next Steps
-
-- [docs/overview.md](docs/overview.md)
-- [../mosaic/README.md](../mosaic/README.md)
+Compiled manifests must be written atomically and validated against currently installed packages, provider classes, fixture/demo provider classes, and trusted view contexts before use. If compilation fails and no valid manifest exists, callers should fall back to the safe built-in fallback definition and surface an admin/system health warning.
