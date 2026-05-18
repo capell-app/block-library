@@ -8,6 +8,7 @@ use Capell\ContentBlocks\Providers\ContentBlocksServiceProvider;
 use Capell\Tests\AbstractTestCase;
 use Illuminate\Foundation\Application;
 use Livewire\LivewireServiceProvider;
+use Override;
 
 abstract class BlockLibraryTestCase extends AbstractTestCase
 {
@@ -20,6 +21,7 @@ abstract class BlockLibraryTestCase extends AbstractTestCase
      * @param  Application  $app
      * @return class-string[]
      */
+    #[Override]
     protected function getPackageProviders(mixed $app): array
     {
         return [
