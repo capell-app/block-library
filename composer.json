@@ -20,6 +20,7 @@
     "require": {
         "php": "^8.3",
         "capell-app/core": "*",
+        "filament/forms": "^4.7|^5.2",
         "lorisleiva/laravel-actions": "*",
         "spatie/laravel-package-tools": "*"
     },
