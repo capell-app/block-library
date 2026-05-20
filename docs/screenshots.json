@@ -1,0 +1,45 @@
+{
+    "package": "block-library",
+    "composerName": "capell-app/content-blocks",
+    "generatedFor": "deployment-screenshot-runner",
+    "requiresInstalledPackage": true,
+    "outputDirectory": "public/docs/screenshots/packages/block-library",
+    "entries": [
+        {
+            "id": "block-registry-diagnostics-output",
+            "title": "Block registry diagnostics output.",
+            "package": "block-library",
+            "surface": "shared",
+            "targetType": "diagnostic-output",
+            "target": "BlockRegistry",
+            "required": false,
+            "notes": "Optional because `capell-app/content-blocks` is a shared registry package. Requires a consuming package or harness that registers block definitions before diagnostics are meaningful.",
+            "useCase": "A package developer verifies which block definitions, renderers, fixtures, and builder blocks are registered.",
+            "screenshotPath": "public/docs/screenshots/packages/block-library/block-registry-diagnostics-output.png"
+        },
+        {
+            "id": "filament-builder-block-picker",
+            "title": "Filament builder block picker in a consuming package.",
+            "package": "block-library",
+            "surface": "admin",
+            "targetType": "admin-surface",
+            "target": null,
+            "required": false,
+            "notes": "Optional and blocked until a consuming package such as Content Sections exposes registered `FilamentBuilderBlock` classes in a Builder field.",
+            "useCase": "An editor chooses a registered content block from a Filament Builder field supplied by a consuming package.",
+            "screenshotPath": "public/docs/screenshots/packages/block-library/filament-builder-block-picker.png"
+        },
+        {
+            "id": "fallback-block-rendering-state",
+            "title": "Fallback block rendering state.",
+            "package": "block-library",
+            "surface": "frontend",
+            "targetType": "frontend-view",
+            "target": "capell-content-blocks::blocks.fallback",
+            "required": false,
+            "notes": "Capture only in a controlled fixture. Public output must not reveal internal block metadata, admin view names, or package implementation details.",
+            "useCase": "A developer confirms that an unknown or unrenderable block fails closed with safe public fallback output.",
+            "screenshotPath": "public/docs/screenshots/packages/block-library/fallback-block-rendering-state.png"
+        }
+    ]
+}
