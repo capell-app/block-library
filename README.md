@@ -4,6 +4,8 @@ Content Blocks provides shared block primitives that richer content-editing pack
 
 It is intentionally small: a typed block definition DTO, a block registry, provider contracts, and actions for registering/listing/resolving blocks. It does not own migrations, admin resources, frontend output, or authoring markup.
 
+The directory remains `packages/block-library` for workspace history, but the package identity is `capell-app/content-blocks` and the namespace is `Capell\ContentBlocks\`. Keep external references on the Composer name, not the folder name.
+
 Start with [Overview](docs/overview.md) for install impact, surfaces, and screenshot coverage. Screenshot targets for consuming-package diagnostics live in [docs/screenshots.json](docs/screenshots.json).
 
 ## Current Surface
