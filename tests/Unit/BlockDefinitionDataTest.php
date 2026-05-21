@@ -166,8 +166,6 @@ it('accepts valid custom providers', function (): void {
         description: 'Hero block.',
         category: 'marketing',
         view: 'vendor-package::blocks.hero',
-        fixtureProvider: $fixtureProvider::class,
-        demoContentProvider: $demoContentProvider::class,
         contentContract: new BlockContentContractData(
             requiredFields: ['title'],
             optionalFields: ['subtitle'],
@@ -177,6 +175,8 @@ it('accepts valid custom providers', function (): void {
             allowEmptyCta: false,
             accessibilityRules: ['alt-text'],
         ),
+        fixtureProvider: $fixtureProvider::class,
+        demoContentProvider: $demoContentProvider::class,
     );
 
     expect($definition->fixtureProvider)->toBe($fixtureProvider::class)
