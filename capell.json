@@ -13,9 +13,13 @@
         "bundle": "foundation"
     },
     "namespace": "Capell\\ContentBlocks",
-    "surfaces": ["shared"],
+    "surfaces": [
+        "shared"
+    ],
     "dependencies": {
-        "requires": ["capell-app/core"],
+        "requires": [
+            "capell-app/core"
+        ],
         "optional": [
             "capell-app/content-sections",
             "capell-app/foundation-theme"
@@ -49,7 +53,9 @@
     "performance": {
         "frontendRenderBudgetMs": 0,
         "adminQueryBudget": 0,
-        "cacheTags": ["content-blocks"],
+        "cacheTags": [
+            "content-blocks"
+        ],
         "cacheSafety": {
             "cacheable": false,
             "variesBy": [],
@@ -75,7 +81,16 @@
     },
     "marketplace": {
         "summary": "Shared typed content block primitives and registration contracts for Capell packages.",
-        "screenshots": [],
-        "categories": ["foundation", "shared"]
+        "screenshots": [
+            {
+                "path": "docs/assets/marketplace/extension-card.jpg",
+                "alt": "Content Blocks extension preview image",
+                "caption": "Content Blocks extension preview"
+            }
+        ],
+        "categories": [
+            "foundation",
+            "shared"
+        ]
     }
 }
