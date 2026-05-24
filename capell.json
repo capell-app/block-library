@@ -13,14 +13,10 @@
         "bundle": "foundation"
     },
     "namespace": "Capell\\ContentBlocks",
-    "surfaces": [
-        "shared"
-    ],
+    "surfaces": ["shared"],
     "dependencies": {
-        "requires": [
-            "capell-app/core"
-        ],
-        "optional": [
+        "requires": ["capell-app/core"],
+        "supports": [
             "capell-app/content-sections",
             "capell-app/foundation-theme"
         ],
@@ -53,9 +49,7 @@
     "performance": {
         "frontendRenderBudgetMs": 0,
         "adminQueryBudget": 0,
-        "cacheTags": [
-            "content-blocks"
-        ],
+        "cacheTags": ["content-blocks"],
         "cacheSafety": {
             "cacheable": false,
             "variesBy": [],
@@ -88,9 +82,6 @@
                 "caption": "Content Blocks extension preview"
             }
         ],
-        "categories": [
-            "foundation",
-            "shared"
-        ]
+        "categories": ["foundation", "shared"]
     }
 }
