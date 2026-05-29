@@ -16,7 +16,7 @@
     "surfaces": ["shared"],
     "dependencies": {
         "requires": ["capell-app/core"],
-        "optional": [
+        "supports": [
             "capell-app/content-sections",
             "capell-app/foundation-theme"
         ],
@@ -75,7 +75,13 @@
     },
     "marketplace": {
         "summary": "Shared typed content block primitives and registration contracts for Capell packages.",
-        "screenshots": [],
+        "screenshots": [
+            {
+                "path": "docs/assets/marketplace/extension-card.jpg",
+                "alt": "Content Blocks extension preview image",
+                "caption": "Content Blocks extension preview"
+            }
+        ],
         "categories": ["foundation", "shared"]
     }
 }

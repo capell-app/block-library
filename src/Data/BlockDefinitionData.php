@@ -17,8 +17,8 @@ final class BlockDefinitionData
      * @param  array<int, BlockVariantData>  $variants
      * @param  array<int, BlockSettingDefinitionData>  $settings
      * @param  array<string, mixed>  $defaultSettings
-     * @param  class-string<BlockFixtureProvider>|null  $fixtureProvider
-     * @param  class-string<BlockDemoContentProvider>|null  $demoContentProvider
+     * @param  class-string|null  $fixtureProvider
+     * @param  class-string|null  $demoContentProvider
      * @param  array<int, BlockScreenshotData>  $screenshots
      */
     public function __construct(

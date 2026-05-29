@@ -19,7 +19,7 @@
     ],
     "require": {
         "php": "^8.3",
-        "capell-app/core": "*",
+        "capell-app/core": "^4.0 || 4.x-dev",
         "filament/forms": "^4.7|^5.2",
         "lorisleiva/laravel-actions": "*",
         "spatie/laravel-package-tools": "*"
@@ -43,5 +43,10 @@
     "config": {
         "sort-packages": true
     },
-    "prefer-stable": true
+    "prefer-stable": true,
+    "type": "library",
+    "support": {
+        "source": "https://github.com/capell-app/capell-packages",
+        "docs": "https://docs.capell.app/packages/block-library"
+    }
 }
