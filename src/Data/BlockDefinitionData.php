@@ -11,6 +11,21 @@ use InvalidArgumentException;
 
 final class BlockDefinitionData
 {
+    /** @var array<int, BlockVariantData> */
+    public array $variants;
+
+    public BlockVariantKey $defaultVariant;
+
+    public BlockContentContractData $contentContract;
+
+    public BlockAccessibilityContractData $accessibilityContract;
+
+    public PublicBlockViewReference $publicView;
+
+    public AdminPreviewBlockViewReference $previewView;
+
+    public BlockCompatibilityData $compatibility;
+
     /**
      * @param  array<string, mixed>  $defaults
      * @param  class-string<BlockRenderer>|null  $renderer
@@ -31,19 +46,29 @@ final class BlockDefinitionData
         public ?string $renderer = null,
         public bool $safeForPublicOutput = true,
         public string $sourcePackage = 'unknown',
-        public array $variants = [],
-        public ?BlockVariantKey $defaultVariant = null,
+        array $variants = [],
+        ?BlockVariantKey $defaultVariant = null,
         public array $settings = [],
         public array $defaultSettings = [],
-        public ?BlockContentContractData $contentContract = null,
-        public ?BlockAccessibilityContractData $accessibilityContract = null,
-        public ?PublicBlockViewReference $publicView = null,
-        public ?AdminPreviewBlockViewReference $previewView = null,
+        ?BlockContentContractData $contentContract = null,
+        ?BlockAccessibilityContractData $accessibilityContract = null,
+        ?PublicBlockViewReference $publicView = null,
+        ?AdminPreviewBlockViewReference $previewView = null,
         public ?string $fixtureProvider = null,
         public ?string $demoContentProvider = null,
         public array $screenshots = [],
-        public ?BlockCompatibilityData $compatibility = null,
+        ?BlockCompatibilityData $compatibility = null,
     ) {
+        $this->variants = $variants === []
+            ? [new BlockVariantData(BlockVariantKey::from('default'), 'capell-content-blocks::blocks.variants.default')]
+            : $variants;
+        $this->defaultVariant = $defaultVariant ?? $this->variants[0]->key;
+        $this->contentContract = $contentContract ?? new BlockContentContractData;
+        $this->accessibilityContract = $accessibilityContract ?? new BlockAccessibilityContractData;
+        $this->publicView = $publicView ?? PublicBlockViewReference::from($this->view);
+        $this->previewView = $previewView ?? AdminPreviewBlockViewReference::from($this->view);
+        $this->compatibility = $compatibility ?? new BlockCompatibilityData;
+
         foreach ([
             'key' => $this->key,
             'label' => $this->label,
@@ -54,17 +79,6 @@ final class BlockDefinitionData
                 throw new InvalidArgumentException(sprintf('Block definition [%s] must not be empty.', $field));
             }
         }
-
-        $this->variants = $this->variants === []
-            ? [new BlockVariantData(BlockVariantKey::from('default'), 'capell-content-blocks::blocks.variants.default')]
-            : $this->variants;
-
-        $this->defaultVariant ??= $this->variants[0]->key;
-        $this->contentContract ??= new BlockContentContractData;
-        $this->accessibilityContract ??= new BlockAccessibilityContractData;
-        $this->publicView ??= PublicBlockViewReference::from($this->view);
-        $this->previewView ??= AdminPreviewBlockViewReference::from($this->view);
-        $this->compatibility ??= new BlockCompatibilityData;
 
         $this->validateVariantDefaults();
         $this->validateProviderContracts();

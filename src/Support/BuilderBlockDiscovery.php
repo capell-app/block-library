@@ -65,7 +65,7 @@ final class BuilderBlockDiscovery
         $blocks = [];
 
         foreach ($this->registry->allForTarget(BuilderBlockTarget::AdminFilament) as $blockClass) {
-            if (is_string($blockClass) && $this->isBuilderBlockClass($blockClass)) {
+            if (is_string($blockClass) && class_exists($blockClass) && $this->isBuilderBlockClass($blockClass)) {
                 $blocks[] = $blockClass::make();
             }
         }

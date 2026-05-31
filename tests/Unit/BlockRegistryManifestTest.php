@@ -100,7 +100,9 @@ it('writes registry manifests atomically and removes temporary files', function 
 
     $temporaryFiles = $filesystem->glob($path . '.*.tmp');
 
-    expect($store->read()['blocks'])->toHaveKey('marketing.hero')
+    $manifest = $store->read();
+
+    expect($manifest['blocks'] ?? [])->toHaveKey('marketing.hero')
         ->and($temporaryFiles === false ? [] : $temporaryFiles)->toBe([]);
 
     $store->forget();

@@ -82,3 +82,11 @@ Public views are trusted PHP definitions only. Do not read view names from edito
 Registry manifests should contain structural metadata only. Localized labels/help text should be translation keys or resolved for the current admin locale at render time.
 
 Compiled manifests must be written atomically and validated against currently installed packages, provider classes, fixture/demo provider classes, and trusted view contexts before use. If compilation fails and no valid manifest exists, callers should fall back to the safe built-in fallback definition and surface an admin/system health warning.
+
+## Testing
+
+Run package tests from the repository root:
+
+```bash
+vendor/bin/pest packages/block-library/tests --configuration=phpunit.xml
+```
