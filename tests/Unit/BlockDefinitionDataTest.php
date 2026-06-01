@@ -181,6 +181,6 @@ it('accepts valid custom providers', function (): void {
 
     expect($definition->fixtureProvider)->toBe($fixtureProvider::class)
         ->and($definition->demoContentProvider)->toBe($demoContentProvider::class)
-        ->and($definition->contentContract?->requiredFields)->toBe(['title'])
-        ->and($definition->contentContract?->requiresCta)->toBeTrue();
+        ->and($definition->contentContract->requiredFields)->toBe(['title'])
+        ->and($definition->contentContract->requiresCta)->toBeTrue();
 });

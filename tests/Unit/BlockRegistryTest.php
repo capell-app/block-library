@@ -41,7 +41,7 @@ it('keeps legacy definitions backwards compatible with a default variant and tru
         view: 'vendor-package::blocks.marketing-hero',
     );
 
-    expect($definition->defaultVariant?->value())->toBe('default')
+    expect($definition->defaultVariant->value())->toBe('default')
         ->and($definition->variantKeys())->toBe(['default'])
         ->and($definition->publicViewName())->toBe('vendor-package::blocks.marketing-hero')
         ->and($definition->previewViewName())->toBe('vendor-package::blocks.marketing-hero');
