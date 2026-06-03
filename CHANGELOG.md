@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to `capell-app/content-blocks` will be documented in this file.
+All notable changes to `capell-app/block-library` will be documented in this file.
 
 ## Unreleased
 

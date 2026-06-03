@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-use Capell\ContentBlocks\Contracts\FilamentBuilderBlock;
-use Capell\ContentBlocks\Enums\BuilderBlockTarget;
-use Capell\ContentBlocks\Support\BlockRegistry;
-use Capell\ContentBlocks\Support\BuilderBlockDiscovery;
-use Capell\ContentBlocks\Support\BuilderBlockRegistry;
-use Capell\ContentBlocks\Tests\Fixtures\BuilderBlocks\HeroBuilderBlock;
-use Capell\ContentBlocks\Tests\Fixtures\BuilderBlocks\LegacyBuilderBlock;
+use Capell\BlockLibrary\Contracts\FilamentBuilderBlock;
+use Capell\BlockLibrary\Enums\BuilderBlockTarget;
+use Capell\BlockLibrary\Support\BlockRegistry;
+use Capell\BlockLibrary\Support\BuilderBlockDiscovery;
+use Capell\BlockLibrary\Support\BuilderBlockRegistry;
+use Capell\BlockLibrary\Tests\Fixtures\BuilderBlocks\HeroBuilderBlock;
+use Capell\BlockLibrary\Tests\Fixtures\BuilderBlocks\LegacyBuilderBlock;
 use Filament\Forms\Components\Builder\Block;
 use Illuminate\Filesystem\Filesystem;
 
@@ -52,7 +52,7 @@ it('discovers concrete filament builder block implementations from registered pa
 
     $discovery->registerDiscoverableBlocks(
         __DIR__ . '/../Fixtures/BuilderBlocks',
-        'Capell\\ContentBlocks\\Tests\\Fixtures\\BuilderBlocks',
+        'Capell\\BlockLibrary\\Tests\\Fixtures\\BuilderBlocks',
     );
 
     expect($discovery->filamentBlocks())->toHaveCount(2)
@@ -64,7 +64,7 @@ it('discovers concrete filament builder block implementations from registered pa
 
 it('caches discovered builder block classes for warm starts', function (): void {
     $filesystem = new Filesystem;
-    $cachePath = sys_get_temp_dir() . '/capell-content-blocks-builder-blocks.php';
+    $cachePath = sys_get_temp_dir() . '/capell-block-library-builder-blocks.php';
     $registry = new BuilderBlockRegistry;
     $discovery = new BuilderBlockDiscovery($registry, $filesystem, $cachePath);
 
@@ -72,7 +72,7 @@ it('caches discovered builder block classes for warm starts', function (): void 
 
     $discovery->registerDiscoverableBlocks(
         __DIR__ . '/../Fixtures/BuilderBlocks',
-        'Capell\\ContentBlocks\\Tests\\Fixtures\\BuilderBlocks',
+        'Capell\\BlockLibrary\\Tests\\Fixtures\\BuilderBlocks',
     );
 
     $discovery->cacheBlocks();

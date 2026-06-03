@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Capell\ContentBlocks\Support;
+namespace Capell\BlockLibrary\Support;
 
-use Capell\ContentBlocks\Contracts\BlockDemoContentProvider;
-use Capell\ContentBlocks\Contracts\BlockFixtureProvider;
-use Capell\ContentBlocks\Data\BlockDefinitionData;
-use Capell\ContentBlocks\Data\BlockVariantData;
-use Capell\ContentBlocks\Data\PublicBlockViewReference;
+use Capell\BlockLibrary\Contracts\BlockDemoContentProvider;
+use Capell\BlockLibrary\Contracts\BlockFixtureProvider;
+use Capell\BlockLibrary\Data\BlockDefinitionData;
+use Capell\BlockLibrary\Data\BlockVariantData;
+use Capell\BlockLibrary\Data\PublicBlockViewReference;
 use Throwable;
 
 final class BlockRegistryManifestCompiler

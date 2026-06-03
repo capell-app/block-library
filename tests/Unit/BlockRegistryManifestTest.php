@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use Capell\ContentBlocks\Data\BlockDefinitionData;
-use Capell\ContentBlocks\Support\BlockRegistryManifestCompiler;
-use Capell\ContentBlocks\Support\BlockRegistryManifestStore;
+use Capell\BlockLibrary\Data\BlockDefinitionData;
+use Capell\BlockLibrary\Support\BlockRegistryManifestCompiler;
+use Capell\BlockLibrary\Support\BlockRegistryManifestStore;
 use Illuminate\Filesystem\Filesystem;
 
 it('compiles structural registry metadata without localized labels', function (): void {
@@ -90,7 +90,7 @@ it('filters stale manifest entries for inactive packages and missing views', fun
 
 it('writes registry manifests atomically and removes temporary files', function (): void {
     $filesystem = new Filesystem;
-    $path = sys_get_temp_dir() . '/capell-content-blocks-manifest.php';
+    $path = sys_get_temp_dir() . '/capell-block-library-manifest.php';
     $store = new BlockRegistryManifestStore($filesystem, $path);
 
     $store->forget();
@@ -116,7 +116,7 @@ it('fails manifest writes when the lock cannot be acquired', function (): void {
             throw new RuntimeException('Manifest should not be written without a lock.');
         }
     };
-    $path = sys_get_temp_dir() . '/capell-content-blocks-lock-failure-manifest.php';
+    $path = sys_get_temp_dir() . '/capell-block-library-lock-failure-manifest.php';
     $store = new BlockRegistryManifestStore(
         filesystem: $filesystem,
         path: $path,
@@ -135,7 +135,7 @@ it('fails manifest writes when the lock cannot be acquired', function (): void {
 
 it('returns null for missing or corrupt manifests so callers can use safe cold-start fallback', function (): void {
     $filesystem = new Filesystem;
-    $path = sys_get_temp_dir() . '/capell-content-blocks-corrupt-manifest.php';
+    $path = sys_get_temp_dir() . '/capell-block-library-corrupt-manifest.php';
     $store = new BlockRegistryManifestStore($filesystem, $path);
 
     $store->forget();

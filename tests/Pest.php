@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Capell\ContentBlocks\Tests\BlockLibraryTestCase;
+use Capell\BlockLibrary\Tests\BlockLibraryTestCase;
 
 require_once __DIR__ . '/BlockLibraryTestCase.php';
 

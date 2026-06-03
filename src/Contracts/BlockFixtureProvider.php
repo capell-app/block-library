@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Capell\ContentBlocks\Contracts;
+namespace Capell\BlockLibrary\Contracts;
 
-use Capell\ContentBlocks\Data\BlockDefinitionData;
-use Capell\ContentBlocks\Data\BlockFixtureData;
+use Capell\BlockLibrary\Data\BlockDefinitionData;
+use Capell\BlockLibrary\Data\BlockFixtureData;
 
 interface BlockFixtureProvider
 {

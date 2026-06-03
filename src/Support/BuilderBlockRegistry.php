@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Capell\ContentBlocks\Support;
+namespace Capell\BlockLibrary\Support;
 
-use Capell\ContentBlocks\Enums\BuilderBlockTarget;
+use Capell\BlockLibrary\Enums\BuilderBlockTarget;
 use InvalidArgumentException;
 
 final class BuilderBlockRegistry

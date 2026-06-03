@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Capell\ContentBlocks\Support;
+namespace Capell\BlockLibrary\Support;
 
-use Capell\ContentBlocks\Data\BlockDefinitionData;
-use Capell\ContentBlocks\Data\BlockVariantData;
-use Capell\ContentBlocks\Data\BlockVariantKey;
+use Capell\BlockLibrary\Data\BlockDefinitionData;
+use Capell\BlockLibrary\Data\BlockVariantData;
+use Capell\BlockLibrary\Data\BlockVariantKey;
 
 final class NullBlockDefinition
 {
@@ -17,11 +17,11 @@ final class NullBlockDefinition
             label: 'Safe fallback block',
             description: 'Fallback block used when a registered block cannot be resolved safely.',
             category: 'system',
-            view: 'capell-content-blocks::blocks.fallback',
+            view: 'capell-block-library::blocks.fallback',
             safeForPublicOutput: true,
-            sourcePackage: 'capell-app/content-blocks',
+            sourcePackage: 'capell-app/block-library',
             variants: [
-                new BlockVariantData(BlockVariantKey::from('default'), 'capell-content-blocks::blocks.variants.default'),
+                new BlockVariantData(BlockVariantKey::from('default'), 'capell-block-library::blocks.variants.default'),
             ],
         );
     }

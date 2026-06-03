@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Capell\ContentBlocks\Tests;
+namespace Capell\BlockLibrary\Tests;
 
-use Capell\ContentBlocks\Providers\ContentBlocksServiceProvider;
+use Capell\BlockLibrary\Providers\BlockLibraryServiceProvider;
 use Capell\Tests\AbstractTestCase;
 use Illuminate\Foundation\Application;
 use Livewire\LivewireServiceProvider;
@@ -14,7 +14,7 @@ abstract class BlockLibraryTestCase extends AbstractTestCase
 {
     protected function getPackageServiceName(): string
     {
-        return 'capell-content-blocks';
+        return 'capell-block-library';
     }
 
     /**
@@ -26,7 +26,7 @@ abstract class BlockLibraryTestCase extends AbstractTestCase
     {
         return [
             ...parent::getPackageProviders($app),
-            ContentBlocksServiceProvider::class,
+            BlockLibraryServiceProvider::class,
             LivewireServiceProvider::class,
         ];
     }
