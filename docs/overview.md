@@ -1,8 +1,8 @@
-# Content Blocks
+# Block Library
 
 Status: **Available, shared foundation** · Kind: **package** · Tier: **free** · Bundle: **foundation** · Contexts: **shared** · Product group: **Capell Foundation**
 
-Content Blocks provides typed block definitions, registries, renderer contracts, fixtures, demo-content contracts, and Filament builder block discovery for packages that contribute reusable content blocks.
+Block Library provides typed block definitions, registries, renderer contracts, fixtures, demo-content contracts, and Filament builder block discovery for packages that contribute reusable content blocks.
 
 ## What This Package Adds
 

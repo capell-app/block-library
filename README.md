@@ -1,6 +1,6 @@
-# Capell Content Blocks
+# Capell Block Library
 
-Content Blocks provides shared block primitives that richer content-editing packages can register and render without reaching into each other's internals.
+Block Library provides shared block primitives that richer content-editing packages can register and render without reaching into each other's internals.
 
 It is intentionally small: a typed block definition DTO, a block registry, provider contracts, and actions for registering/listing/resolving blocks. It does not own migrations, admin resources, frontend output, or authoring markup.
 
