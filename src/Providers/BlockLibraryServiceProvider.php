@@ -9,7 +9,9 @@ use Capell\BlockLibrary\Contracts\BlockDefinitionProvider;
 use Capell\BlockLibrary\Support\BlockRegistry;
 use Capell\BlockLibrary\Support\BuilderBlockDiscovery;
 use Capell\BlockLibrary\Support\BuilderBlockRegistry;
+use Capell\BlockLibrary\Support\DefaultBlockDefinitionProvider;
 use Capell\Core\Support\Packages\AbstractPackageServiceProvider;
+use Illuminate\Support\Facades\Blade;
 use Spatie\LaravelPackageTools\Package;
 
 final class BlockLibraryServiceProvider extends AbstractPackageServiceProvider
@@ -32,6 +34,8 @@ final class BlockLibraryServiceProvider extends AbstractPackageServiceProvider
         $this->app->singleton(BuilderBlockRegistry::class);
         $this->app->singleton(BuilderBlockDiscovery::class);
 
+        $this->app->tag([DefaultBlockDefinitionProvider::class], BlockDefinitionProvider::TAG);
+
         $this->callAfterResolving(BlockRegistry::class, function (BlockRegistry $registry): void {
             foreach ($this->app->tagged(BlockDefinitionProvider::TAG) as $provider) {
                 if (! $provider instanceof BlockDefinitionProvider) {
@@ -40,6 +44,20 @@ final class BlockLibraryServiceProvider extends AbstractPackageServiceProvider
 
                 RegisterBlockDefinitionProviderAction::run($registry, $provider);
             }
+        });
+
+        $this->callAfterResolving(BuilderBlockDiscovery::class, function (BuilderBlockDiscovery $discovery): void {
+            $discovery->registerDiscoverableBlocks(
+                __DIR__ . '/../Filament/BuilderBlocks',
+                'Capell\\BlockLibrary\\Filament\\BuilderBlocks',
+            );
+        });
+    }
+
+    public function registeringPackage(): void
+    {
+        $this->app->booted(function (): void {
+            Blade::anonymousComponentPath(__DIR__ . '/../../resources/views', 'capell-block-library');
         });
     }
 }

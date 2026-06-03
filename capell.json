@@ -6,16 +6,16 @@
     "kind": "package",
     "capellApiVersion": "^4.0",
     "version": "4.x-dev",
-    "description": "Block Library provides shared typed block definitions and registration contracts for Capell content packages.",
+    "description": "Block Library provides reusable content blocks, typed definitions, screenshots, and Filament Builder blocks for Capell content packages.",
     "product": {
         "group": "Capell Foundation",
         "tier": "free",
         "bundle": "foundation"
     },
     "namespace": "Capell\\BlockLibrary",
-    "surfaces": ["shared"],
+    "surfaces": ["admin", "frontend", "shared"],
     "dependencies": {
-        "requires": ["capell-app/core"],
+        "requires": ["capell-app/admin", "capell-app/core"],
         "supports": [
             "capell-app/content-sections",
             "capell-app/foundation-theme"
@@ -28,8 +28,12 @@
         "runtime": [
             "Capell\\BlockLibrary\\Providers\\BlockLibraryServiceProvider"
         ],
-        "admin": [],
-        "frontend": []
+        "admin": [
+            "Capell\\BlockLibrary\\Providers\\BlockLibraryServiceProvider"
+        ],
+        "frontend": [
+            "Capell\\BlockLibrary\\Providers\\BlockLibraryServiceProvider"
+        ]
     },
     "contributes": [],
     "database": {
@@ -45,7 +49,11 @@
     },
     "settings": [],
     "permissions": [],
-    "capabilities": [],
+    "capabilities": [
+        "content-blocks",
+        "filament-builder-blocks",
+        "safe-public-block-views"
+    ],
     "performance": {
         "frontendRenderBudgetMs": 0,
         "adminQueryBudget": 0,
@@ -74,7 +82,7 @@
         "privateDocsRequested": false
     },
     "marketplace": {
-        "summary": "Shared typed content block primitives and registration contracts for Capell packages.",
+        "summary": "Reusable foundation content blocks with typed definitions, screenshots, and Filament Builder blocks for Capell packages.",
         "screenshots": [
             {
                 "path": "docs/assets/marketplace/extension-card.jpg",
