@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Capell\ContentBlocks\Support;
+namespace Capell\BlockLibrary\Support;
 
-use Capell\ContentBlocks\Data\BlockDefinitionData;
+use Capell\BlockLibrary\Data\BlockDefinitionData;
 use InvalidArgumentException;
 
 final class BlockRegistry

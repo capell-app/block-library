@@ -14,11 +14,11 @@ Content Blocks provides typed block definitions, registries, renderer contracts,
 
 ## Install Flow
 
-- Composer package: `capell-app/content-blocks`
+- Composer package: `capell-app/block-library`
 - Repository directory: `packages/block-library`
 - Hard dependencies: `capell-app/core`
 - Optional dependencies: `capell-app/content-sections`, `capell-app/foundation-theme`
-- Run `capell:extension-install capell-app/content-blocks` after Composer install when validating package-installed guards.
+- Run `capell:extension-install capell-app/block-library` after Composer install when validating package-installed guards.
 
 ## Admin Surfaces
 

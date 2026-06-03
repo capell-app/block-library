@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Capell\ContentBlocks\Providers;
+namespace Capell\BlockLibrary\Providers;
 
-use Capell\ContentBlocks\Actions\RegisterBlockDefinitionProviderAction;
-use Capell\ContentBlocks\Contracts\BlockDefinitionProvider;
-use Capell\ContentBlocks\Support\BlockRegistry;
-use Capell\ContentBlocks\Support\BuilderBlockDiscovery;
-use Capell\ContentBlocks\Support\BuilderBlockRegistry;
+use Capell\BlockLibrary\Actions\RegisterBlockDefinitionProviderAction;
+use Capell\BlockLibrary\Contracts\BlockDefinitionProvider;
+use Capell\BlockLibrary\Support\BlockRegistry;
+use Capell\BlockLibrary\Support\BuilderBlockDiscovery;
+use Capell\BlockLibrary\Support\BuilderBlockRegistry;
 use Capell\Core\Support\Packages\AbstractPackageServiceProvider;
 use Spatie\LaravelPackageTools\Package;
 
-final class ContentBlocksServiceProvider extends AbstractPackageServiceProvider
+final class BlockLibraryServiceProvider extends AbstractPackageServiceProvider
 {
-    public static string $name = 'capell-content-blocks';
+    public static string $name = 'capell-block-library';
 
-    public static string $packageName = 'capell-app/content-blocks';
+    public static string $packageName = 'capell-app/block-library';
 
     public function configurePackage(Package $package): void
     {

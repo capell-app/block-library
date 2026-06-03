@@ -1,18 +1,18 @@
 {
     "manifest-version": 3,
-    "name": "capell-app/content-blocks",
-    "slug": "content-blocks",
-    "displayName": "Content Blocks",
+    "name": "capell-app/block-library",
+    "slug": "block-library",
+    "displayName": "Block Library",
     "kind": "package",
     "capellApiVersion": "^4.0",
     "version": "4.x-dev",
-    "description": "Content Blocks provides shared typed block definitions and registration contracts for Capell content packages.",
+    "description": "Block Library provides shared typed block definitions and registration contracts for Capell content packages.",
     "product": {
         "group": "Capell Foundation",
         "tier": "free",
         "bundle": "foundation"
     },
-    "namespace": "Capell\\ContentBlocks",
+    "namespace": "Capell\\BlockLibrary",
     "surfaces": ["shared"],
     "dependencies": {
         "requires": ["capell-app/core"],
@@ -26,7 +26,7 @@
         "metadata": [],
         "install": [],
         "runtime": [
-            "Capell\\ContentBlocks\\Providers\\ContentBlocksServiceProvider"
+            "Capell\\BlockLibrary\\Providers\\BlockLibraryServiceProvider"
         ],
         "admin": [],
         "frontend": []
@@ -49,7 +49,7 @@
     "performance": {
         "frontendRenderBudgetMs": 0,
         "adminQueryBudget": 0,
-        "cacheTags": ["content-blocks"],
+        "cacheTags": ["block-library"],
         "cacheSafety": {
             "cacheable": false,
             "variesBy": [],
@@ -60,9 +60,9 @@
     },
     "healthChecks": [
         {
-            "key": "content-blocks.package-health",
-            "label": "Content Blocks package surfaces, providers, and install health are discoverable by Diagnostics.",
-            "class": "Capell\\ContentBlocks\\Health\\ContentBlocksHealthCheck",
+            "key": "block-library.package-health",
+            "label": "Block Library package surfaces, providers, and install health are discoverable by Diagnostics.",
+            "class": "Capell\\BlockLibrary\\Health\\BlockLibraryHealthCheck",
             "severity": "critical",
             "surface": "shared"
         }
@@ -78,8 +78,8 @@
         "screenshots": [
             {
                 "path": "docs/assets/marketplace/extension-card.jpg",
-                "alt": "Content Blocks extension preview image",
-                "caption": "Content Blocks extension preview"
+                "alt": "Block Library extension preview image",
+                "caption": "Block Library extension preview"
             }
         ],
         "categories": ["foundation", "shared"]

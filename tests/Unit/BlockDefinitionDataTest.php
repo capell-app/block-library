@@ -2,23 +2,23 @@
 
 declare(strict_types=1);
 
-use Capell\ContentBlocks\Contracts\BlockDemoContentProvider;
-use Capell\ContentBlocks\Contracts\BlockFixtureProvider;
-use Capell\ContentBlocks\Data\AdminPreviewBlockViewReference;
-use Capell\ContentBlocks\Data\BlockAccessibilityContractData;
-use Capell\ContentBlocks\Data\BlockCompatibilityData;
-use Capell\ContentBlocks\Data\BlockContentContractData;
-use Capell\ContentBlocks\Data\BlockDefinitionData;
-use Capell\ContentBlocks\Data\BlockFixtureData;
-use Capell\ContentBlocks\Data\BlockScreenshotData;
-use Capell\ContentBlocks\Data\BlockSettingDefinitionData;
-use Capell\ContentBlocks\Data\BlockVariantData;
-use Capell\ContentBlocks\Data\BlockVariantKey;
-use Capell\ContentBlocks\Data\PublicBlockPresentationData;
-use Capell\ContentBlocks\Data\PublicBlockViewReference;
-use Capell\ContentBlocks\Health\ContentBlocksHealthCheck;
-use Capell\ContentBlocks\Providers\ContentBlocksServiceProvider;
-use Capell\ContentBlocks\Support\NullBlockDefinition;
+use Capell\BlockLibrary\Contracts\BlockDemoContentProvider;
+use Capell\BlockLibrary\Contracts\BlockFixtureProvider;
+use Capell\BlockLibrary\Data\AdminPreviewBlockViewReference;
+use Capell\BlockLibrary\Data\BlockAccessibilityContractData;
+use Capell\BlockLibrary\Data\BlockCompatibilityData;
+use Capell\BlockLibrary\Data\BlockContentContractData;
+use Capell\BlockLibrary\Data\BlockDefinitionData;
+use Capell\BlockLibrary\Data\BlockFixtureData;
+use Capell\BlockLibrary\Data\BlockScreenshotData;
+use Capell\BlockLibrary\Data\BlockSettingDefinitionData;
+use Capell\BlockLibrary\Data\BlockVariantData;
+use Capell\BlockLibrary\Data\BlockVariantKey;
+use Capell\BlockLibrary\Data\PublicBlockPresentationData;
+use Capell\BlockLibrary\Data\PublicBlockViewReference;
+use Capell\BlockLibrary\Health\BlockLibraryHealthCheck;
+use Capell\BlockLibrary\Providers\BlockLibraryServiceProvider;
+use Capell\BlockLibrary\Support\NullBlockDefinition;
 
 it('serializes public presentation and accessibility contracts', function (): void {
     $presentation = new PublicBlockPresentationData(
@@ -132,15 +132,15 @@ it('builds a safe fallback block definition', function (): void {
 
     expect($definition->key)->toBe('unknown.block')
         ->and($definition->safeForPublicOutput)->toBeTrue()
-        ->and($definition->sourcePackage)->toBe('capell-app/content-blocks')
-        ->and($definition->publicViewName())->toBe('capell-content-blocks::blocks.fallback')
+        ->and($definition->sourcePackage)->toBe('capell-app/block-library')
+        ->and($definition->publicViewName())->toBe('capell-block-library::blocks.fallback')
         ->and($definition->variantKeys())->toBe(['default']);
 });
 
 it('registers package metadata and health compatibility', function (): void {
-    expect(ContentBlocksServiceProvider::$name)->toBe('capell-content-blocks')
-        ->and(ContentBlocksServiceProvider::$packageName)->toBe('capell-app/content-blocks')
-        ->and(ContentBlocksHealthCheck::compatibleCapellApiVersion())->toBe('^4.0');
+    expect(BlockLibraryServiceProvider::$name)->toBe('capell-block-library')
+        ->and(BlockLibraryServiceProvider::$packageName)->toBe('capell-app/block-library')
+        ->and(BlockLibraryHealthCheck::compatibleCapellApiVersion())->toBe('^4.0');
 });
 
 it('accepts valid custom providers', function (): void {

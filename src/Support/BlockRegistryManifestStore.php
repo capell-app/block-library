@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Capell\ContentBlocks\Support;
+namespace Capell\BlockLibrary\Support;
 
 use Closure;
 use Illuminate\Filesystem\Filesystem;

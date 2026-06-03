@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Capell\ContentBlocks\Health;
+namespace Capell\BlockLibrary\Health;
 
 use Capell\Core\Contracts\Extensions\ChecksExtensionHealth;
 
-final class ContentBlocksHealthCheck implements ChecksExtensionHealth
+final class BlockLibraryHealthCheck implements ChecksExtensionHealth
 {
     public static function compatibleCapellApiVersion(): string
     {

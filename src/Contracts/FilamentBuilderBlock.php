@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Capell\ContentBlocks\Contracts;
+namespace Capell\BlockLibrary\Contracts;
 
 use Filament\Forms\Components\Builder\Block;
 

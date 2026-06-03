@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Capell\ContentBlocks\Actions;
+namespace Capell\BlockLibrary\Actions;
 
-use Capell\ContentBlocks\Contracts\BlockDefinitionProvider;
-use Capell\ContentBlocks\Support\BlockRegistry;
+use Capell\BlockLibrary\Contracts\BlockDefinitionProvider;
+use Capell\BlockLibrary\Support\BlockRegistry;
 use Lorisleiva\Actions\Concerns\AsObject;
 
 final class RegisterBlockDefinitionProviderAction

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Capell\ContentBlocks\Tests\Fixtures\BuilderBlocks;
+namespace Capell\BlockLibrary\Tests\Fixtures\BuilderBlocks;
 
 use Filament\Forms\Components\Builder\Block;
 

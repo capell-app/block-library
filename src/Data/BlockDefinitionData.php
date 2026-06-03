@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Capell\ContentBlocks\Data;
+namespace Capell\BlockLibrary\Data;
 
-use Capell\ContentBlocks\Contracts\BlockDemoContentProvider;
-use Capell\ContentBlocks\Contracts\BlockFixtureProvider;
-use Capell\ContentBlocks\Contracts\BlockRenderer;
+use Capell\BlockLibrary\Contracts\BlockDemoContentProvider;
+use Capell\BlockLibrary\Contracts\BlockFixtureProvider;
+use Capell\BlockLibrary\Contracts\BlockRenderer;
 use InvalidArgumentException;
 
 final class BlockDefinitionData
@@ -60,7 +60,7 @@ final class BlockDefinitionData
         ?BlockCompatibilityData $compatibility = null,
     ) {
         $this->variants = $variants === []
-            ? [new BlockVariantData(BlockVariantKey::from('default'), 'capell-content-blocks::blocks.variants.default')]
+            ? [new BlockVariantData(BlockVariantKey::from('default'), 'capell-block-library::blocks.variants.default')]
             : $variants;
         $this->defaultVariant = $defaultVariant ?? $this->variants[0]->key;
         $this->contentContract = $contentContract ?? new BlockContentContractData;

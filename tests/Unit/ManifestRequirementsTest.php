@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use Capell\ContentBlocks\Providers\ContentBlocksServiceProvider;
+use Capell\BlockLibrary\Providers\BlockLibraryServiceProvider;
 use Illuminate\Support\Facades\File;
 
-describe('content-blocks capell.json manifest', function (): void {
+describe('block-library capell.json manifest', function (): void {
     it('declares the foundation package metadata and provider', function (): void {
         $manifest = json_decode(
             File::get(__DIR__ . '/../../capell.json'),
@@ -15,8 +15,8 @@ describe('content-blocks capell.json manifest', function (): void {
 
         expect($manifest)
             ->toMatchArray([
-                'name' => 'capell-app/content-blocks',
-                'slug' => 'content-blocks',
+                'name' => 'capell-app/block-library',
+                'slug' => 'block-library',
                 'kind' => 'package',
                 'capellApiVersion' => '^4.0',
                 'product' => [
@@ -26,6 +26,6 @@ describe('content-blocks capell.json manifest', function (): void {
                 ],
             ])
             ->and($manifest['surfaces'])->toContain('shared')
-            ->and($manifest['providers']['runtime'])->toContain(ContentBlocksServiceProvider::class);
+            ->and($manifest['providers']['runtime'])->toContain(BlockLibraryServiceProvider::class);
     });
 });

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Capell\ContentBlocks\Enums;
+namespace Capell\BlockLibrary\Enums;
 
 enum BlockSpacing: string
 {

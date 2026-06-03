@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-use Capell\ContentBlocks\Actions\ListBlockDefinitionsAction;
-use Capell\ContentBlocks\Actions\RegisterBlockDefinitionProviderAction;
-use Capell\ContentBlocks\Actions\ResolveBlockDefinitionAction;
-use Capell\ContentBlocks\Contracts\BlockDefinitionProvider;
-use Capell\ContentBlocks\Data\AdminPreviewBlockViewReference;
-use Capell\ContentBlocks\Data\BlockDefinitionData;
-use Capell\ContentBlocks\Data\BlockSettingDefinitionData;
-use Capell\ContentBlocks\Data\BlockVariantData;
-use Capell\ContentBlocks\Data\BlockVariantKey;
-use Capell\ContentBlocks\Data\PublicBlockViewReference;
-use Capell\ContentBlocks\Support\BlockRegistry;
+use Capell\BlockLibrary\Actions\ListBlockDefinitionsAction;
+use Capell\BlockLibrary\Actions\RegisterBlockDefinitionProviderAction;
+use Capell\BlockLibrary\Actions\ResolveBlockDefinitionAction;
+use Capell\BlockLibrary\Contracts\BlockDefinitionProvider;
+use Capell\BlockLibrary\Data\AdminPreviewBlockViewReference;
+use Capell\BlockLibrary\Data\BlockDefinitionData;
+use Capell\BlockLibrary\Data\BlockSettingDefinitionData;
+use Capell\BlockLibrary\Data\BlockVariantData;
+use Capell\BlockLibrary\Data\BlockVariantKey;
+use Capell\BlockLibrary\Data\PublicBlockViewReference;
+use Capell\BlockLibrary\Support\BlockRegistry;
 
 it('registers typed content block definitions', function (): void {
     $registry = new BlockRegistry;

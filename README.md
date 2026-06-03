@@ -4,7 +4,7 @@ Content Blocks provides shared block primitives that richer content-editing pack
 
 It is intentionally small: a typed block definition DTO, a block registry, provider contracts, and actions for registering/listing/resolving blocks. It does not own migrations, admin resources, frontend output, or authoring markup.
 
-The directory remains `packages/block-library` for workspace history, but the package identity is `capell-app/content-blocks` and the namespace is `Capell\ContentBlocks\`. Keep external references on the Composer name, not the folder name.
+The directory remains `packages/block-library` for workspace history, but the package identity is `capell-app/block-library` and the namespace is `Capell\BlockLibrary\`. Keep external references on the Composer name, not the folder name.
 
 Start with [Overview](docs/overview.md) for install impact, surfaces, and screenshot coverage. Screenshot targets for consuming-package diagnostics live in [docs/screenshots.json](docs/screenshots.json).
 
@@ -30,8 +30,8 @@ Start with [Overview](docs/overview.md) for install impact, surfaces, and screen
 
 | Surface                 | Status                                                                                                |
 | ----------------------- | ----------------------------------------------------------------------------------------------------- |
-| Namespace               | `Capell\ContentBlocks\`                                                                               |
-| Provider                | `Capell\ContentBlocks\Providers\ContentBlocksServiceProvider`                                         |
+| Namespace               | `Capell\BlockLibrary\`                                                                                |
+| Provider                | `Capell\BlockLibrary\Providers\BlockLibraryServiceProvider`                                           |
 | Commands                | None                                                                                                  |
 | Migrations              | None                                                                                                  |
 | Config                  | None                                                                                                  |
@@ -44,8 +44,8 @@ Start with [Overview](docs/overview.md) for install impact, surfaces, and screen
 Packages register blocks by tagging a `BlockDefinitionProvider` implementation with `BlockDefinitionProvider::TAG`.
 
 ```php
-use Capell\ContentBlocks\Contracts\BlockDefinitionProvider;
-use Capell\ContentBlocks\Data\BlockDefinitionData;
+use Capell\BlockLibrary\Contracts\BlockDefinitionProvider;
+use Capell\BlockLibrary\Data\BlockDefinitionData;
 
 final class MarketingBlockProvider implements BlockDefinitionProvider
 {

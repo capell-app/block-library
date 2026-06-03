@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Capell\ContentBlocks\Support;
+namespace Capell\BlockLibrary\Support;
 
-use Capell\ContentBlocks\Contracts\FilamentBuilderBlock;
-use Capell\ContentBlocks\Enums\BuilderBlockTarget;
+use Capell\BlockLibrary\Contracts\FilamentBuilderBlock;
+use Capell\BlockLibrary\Enums\BuilderBlockTarget;
 use Filament\Forms\Components\Builder\Block;
 use Illuminate\Filesystem\Filesystem;
 use InvalidArgumentException;

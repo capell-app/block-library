@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Capell\ContentBlocks\Data;
+namespace Capell\BlockLibrary\Data;
 
 use InvalidArgumentException;
 
