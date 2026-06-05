@@ -58,7 +58,10 @@ it('renders interactive public blocks without authoring surface', function (): v
 
 it('renders every default public block view', function (): void {
     foreach (DefaultBlockCatalog::keys() as $key) {
-        $html = view(DefaultBlockCatalog::viewName($key), [
+        /** @var view-string $viewName */
+        $viewName = DefaultBlockCatalog::viewName($key);
+
+        $html = view($viewName, [
             'asset' => null,
             'title' => 'Preview',
             'summary' => '<p>Summary</p>',
