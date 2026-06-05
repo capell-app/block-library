@@ -54,10 +54,8 @@ final class BlockLibraryServiceProvider extends AbstractPackageServiceProvider
         });
     }
 
-    public function registeringPackage(): void
+    public function packageBooted(): void
     {
-        $this->app->booted(function (): void {
-            Blade::anonymousComponentPath(__DIR__ . '/../../resources/views', 'capell-block-library');
-        });
+        Blade::anonymousComponentPath(__DIR__ . '/../../resources/views', 'capell-block-library');
     }
 }

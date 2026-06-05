@@ -7,7 +7,6 @@ use Capell\BlockLibrary\Support\BuilderBlockDiscovery;
 use Capell\BlockLibrary\Support\DefaultBlockCatalog;
 use Filament\Forms\Components\Builder\Block;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Testing\TestResponse;
 use Sinnbeck\DomAssertions\Asserts\AssertElement;
 
@@ -36,22 +35,17 @@ it('discovers the default filament builder blocks', function (): void {
 });
 
 it('renders interactive public blocks without authoring surface', function (): void {
-    $html = Blade::render(
-        <<<'BLADE'
-            <x-dynamic-component
-                component="capell-block-library::blocks.catalog.accordion"
-                :asset="null"
-                title="Questions"
-                :meta="['first_open' => true, 'items' => [['heading' => 'What is included?', 'content' => '<p>Reusable public output.</p>']] ]"
-            />
-            <x-dynamic-component
-                component="capell-block-library::blocks.catalog.tabs"
-                :asset="null"
-                title="Workflow"
-                :meta="['tabs' => [['label' => 'Plan', 'content' => '<p>Plan the page.</p>']] ]"
-            />
-        BLADE,
-    );
+    $html = view('capell-block-library::blocks.catalog.accordion', [
+        'asset' => null,
+        'title' => 'Questions',
+        'meta' => ['first_open' => true, 'items' => [['heading' => 'What is included?', 'content' => '<p>Reusable public output.</p>']]],
+    ])->render();
+
+    $html .= view('capell-block-library::blocks.catalog.tabs', [
+        'asset' => null,
+        'title' => 'Workflow',
+        'meta' => ['tabs' => [['label' => 'Plan', 'content' => '<p>Plan the page.</p>']]],
+    ])->render();
 
     TestResponse::fromBaseResponse(new Response('<!DOCTYPE html><html><body>' . $html . '</body></html>'))
         ->assertContainsElement('section.section-accordion[x-data]')
@@ -64,13 +58,13 @@ it('renders interactive public blocks without authoring surface', function (): v
 
 it('renders every default public block view', function (): void {
     foreach (DefaultBlockCatalog::keys() as $key) {
-        $html = Blade::render(
-            '<x-dynamic-component :component="$component" :asset="null" title="Preview" summary="<p>Summary</p>" :meta="$meta" url="#" />',
-            [
-                'component' => DefaultBlockCatalog::viewName($key),
-                'meta' => [],
-            ],
-        );
+        $html = view(DefaultBlockCatalog::viewName($key), [
+            'asset' => null,
+            'title' => 'Preview',
+            'summary' => '<p>Summary</p>',
+            'meta' => [],
+            'url' => '#',
+        ])->render();
 
         TestResponse::fromBaseResponse(new Response('<!DOCTYPE html><html><body>' . $html . '</body></html>'))
             ->assertElementExists('body', static function (AssertElement $body): void {
