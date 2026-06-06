@@ -32,8 +32,9 @@ This package adds no standalone public route. Frontend visibility appears throug
 ## Screenshot Plan
 
 - Admin and frontend screenshots exist for every default catalog block in `docs/screenshots/`.
-- A Filament Builder block picker capture should come from a consuming admin Builder field.
-- Fallback block rendering state should remain a controlled fixture capture.
+- `capell.json` promotes the committed Capell runner captures for the registry list, editor form, asset settings, hero block, features block, and pricing block.
+- A Filament Builder block picker capture can still be added from a consuming admin Builder field as a future optional gallery item.
+- Fallback block rendering state should remain a controlled fixture capture when that fixture is added.
 
 ## Known Risks
 
