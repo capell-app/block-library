@@ -6,16 +6,16 @@
     "kind": "package",
     "capellApiVersion": "^4.0",
     "version": "4.x-dev",
-    "description": "Block Library provides shared typed block definitions and registration contracts for Capell content packages.",
+    "description": "Block Library provides reusable content blocks, typed definitions, screenshots, and Filament Builder blocks for Capell content packages.",
     "product": {
         "group": "Capell Foundation",
         "tier": "free",
         "bundle": "foundation"
     },
     "namespace": "Capell\\BlockLibrary",
-    "surfaces": ["shared"],
+    "surfaces": ["admin", "frontend", "shared"],
     "dependencies": {
-        "requires": ["capell-app/core"],
+        "requires": ["capell-app/admin", "capell-app/core"],
         "supports": [
             "capell-app/content-sections",
             "capell-app/foundation-theme"
@@ -28,8 +28,12 @@
         "runtime": [
             "Capell\\BlockLibrary\\Providers\\BlockLibraryServiceProvider"
         ],
-        "admin": [],
-        "frontend": []
+        "admin": [
+            "Capell\\BlockLibrary\\Providers\\BlockLibraryServiceProvider"
+        ],
+        "frontend": [
+            "Capell\\BlockLibrary\\Providers\\BlockLibraryServiceProvider"
+        ]
     },
     "contributes": [],
     "database": {
@@ -45,7 +49,11 @@
     },
     "settings": [],
     "permissions": [],
-    "capabilities": [],
+    "capabilities": [
+        "content-blocks",
+        "filament-builder-blocks",
+        "safe-public-block-views"
+    ],
     "performance": {
         "frontendRenderBudgetMs": 0,
         "adminQueryBudget": 0,
@@ -74,12 +82,42 @@
         "privateDocsRequested": false
     },
     "marketplace": {
-        "summary": "Shared typed content block primitives and registration contracts for Capell packages.",
+        "summary": "Reusable foundation content blocks with typed definitions, screenshots, and Filament Builder blocks for Capell packages.",
         "screenshots": [
             {
                 "path": "docs/assets/marketplace/extension-card.jpg",
                 "alt": "Block Library extension preview image",
                 "caption": "Block Library extension preview"
+            },
+            {
+                "path": "docs/screenshots/block-library-admin-index.png",
+                "alt": "Capell admin content block registry list",
+                "caption": "Content block registry list"
+            },
+            {
+                "path": "docs/screenshots/block-library-admin-create.png",
+                "alt": "Capell admin content block create form",
+                "caption": "Content block editor form"
+            },
+            {
+                "path": "docs/screenshots/block-library-admin-assets.png",
+                "alt": "Capell admin content block asset settings",
+                "caption": "Content block asset settings"
+            },
+            {
+                "path": "docs/screenshots/block-library-frontend-hero.png",
+                "alt": "Frontend hero block rendered from Block Library",
+                "caption": "Frontend hero block"
+            },
+            {
+                "path": "docs/screenshots/block-library-frontend-features.png",
+                "alt": "Frontend feature block rendered from Block Library",
+                "caption": "Frontend feature block"
+            },
+            {
+                "path": "docs/screenshots/block-library-frontend-pricing.png",
+                "alt": "Frontend pricing block rendered from Block Library",
+                "caption": "Frontend pricing block"
             }
         ],
         "categories": ["foundation", "shared"]

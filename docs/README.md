@@ -1,6 +1,6 @@
-# Content Blocks Docs
+# Block Library Docs
 
-Content Blocks provides shared typed block definitions and registration contracts for Capell content packages.
+Block Library provides shared typed block definitions and registration contracts for Capell content packages.
 
 Start at the [package README](../README.md) when deciding whether to install this package. Use the docs below for setup, extension, debugging, and verification details.
 

@@ -1,8 +1,8 @@
-# Capell Content Blocks
+# Capell Block Library
 
-Content Blocks provides shared block primitives that richer content-editing packages can register and render without reaching into each other's internals.
+Block Library provides shared block primitives, foundation block views, screenshots, and Filament Builder block definitions that richer content-editing packages can register and render without reaching into each other's internals.
 
-It is intentionally small: a typed block definition DTO, a block registry, provider contracts, and actions for registering/listing/resolving blocks. It does not own migrations, admin resources, frontend output, or authoring markup.
+It owns the reusable public Blade blocks and the Builder block catalog, but it still does not own migrations, standalone admin resources, routes, or authoring markup.
 
 The directory remains `packages/block-library` for workspace history, but the package identity is `capell-app/block-library` and the namespace is `Capell\BlockLibrary\`. Keep external references on the Composer name, not the folder name.
 
@@ -10,7 +10,7 @@ Start with [Overview](docs/overview.md) for install impact, surfaces, and screen
 
 ## Why It Helps Your Capell Workflow
 
-- Gives content packages a shared typed block language so richer editing features can register blocks without coupling to each other.
+- Gives content packages a shared typed block language and default renderable block catalog without coupling to each other.
 - Helps developers add reusable block definitions, variants, and renderer references behind one registry pattern.
 - Keeps public block rendering safe by separating trusted definitions from editor state, requests, and database-driven view names.
 
@@ -28,16 +28,17 @@ Start with [Overview](docs/overview.md) for install impact, surfaces, and screen
 
 ## Current Surface
 
-| Surface                 | Status                                                                                                |
-| ----------------------- | ----------------------------------------------------------------------------------------------------- |
-| Namespace               | `Capell\BlockLibrary\`                                                                                |
-| Provider                | `Capell\BlockLibrary\Providers\BlockLibraryServiceProvider`                                           |
-| Commands                | None                                                                                                  |
-| Migrations              | None                                                                                                  |
-| Config                  | None                                                                                                  |
-| Actions                 | `ListBlockDefinitionsAction`, `RegisterBlockDefinitionProviderAction`, `ResolveBlockDefinitionAction` |
-| Public extension points | `BlockDefinitionProvider::TAG`, `BlockRenderer`, `BlockRegistry`, block fixtures and demo providers   |
-| Tests                   | Package manifest, registry, provider registration, action resolution                                  |
+| Surface                 | Status                                                                                                 |
+| ----------------------- | ------------------------------------------------------------------------------------------------------ |
+| Namespace               | `Capell\BlockLibrary\`                                                                                 |
+| Provider                | `Capell\BlockLibrary\Providers\BlockLibraryServiceProvider`                                            |
+| Commands                | None                                                                                                   |
+| Migrations              | None                                                                                                   |
+| Config                  | None                                                                                                   |
+| Actions                 | `ListBlockDefinitionsAction`, `RegisterBlockDefinitionProviderAction`, `ResolveBlockDefinitionAction`  |
+| Public extension points | `BlockDefinitionProvider::TAG`, `BlockRenderer`, `BlockRegistry`, block fixtures and demo providers    |
+| Default blocks          | Hero, content, CTA, accordion, FAQ, features, stats, pricing, tabs, table, team, testimonial, and more |
+| Tests                   | Package manifest, registry, provider registration, action resolution, catalog rendering, screenshots   |
 
 ## Registering Blocks
 

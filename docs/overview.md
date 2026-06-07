@@ -1,8 +1,8 @@
-# Content Blocks
+# Block Library
 
-Status: **Available, shared foundation** · Kind: **package** · Tier: **free** · Bundle: **foundation** · Contexts: **shared** · Product group: **Capell Foundation**
+Status: **Available, shared foundation** · Kind: **package** · Tier: **free** · Bundle: **foundation** · Contexts: **admin, frontend, shared** · Product group: **Capell Foundation**
 
-Content Blocks provides typed block definitions, registries, renderer contracts, fixtures, demo-content contracts, and Filament builder block discovery for packages that contribute reusable content blocks.
+Block Library provides typed block definitions, reusable foundation block views, screenshots, renderer contracts, fixtures, demo-content contracts, and Filament Builder block discovery for packages that contribute reusable content blocks.
 
 ## What This Package Adds
 
@@ -10,33 +10,35 @@ Content Blocks provides typed block definitions, registries, renderer contracts,
 - Registry actions for registering, listing, and resolving block definitions.
 - Contracts for block definition providers, renderers, fixtures, demo content, and Filament builder blocks.
 - Builder block discovery for classes implementing `FilamentBuilderBlock`.
+- Public Blade views and screenshots for the default block catalog.
 - A fallback block Blade view for unrenderable or unknown block output.
 
 ## Install Flow
 
 - Composer package: `capell-app/block-library`
 - Repository directory: `packages/block-library`
-- Hard dependencies: `capell-app/core`
+- Hard dependencies: `capell-app/admin`, `capell-app/core`
 - Optional dependencies: `capell-app/content-sections`, `capell-app/foundation-theme`
 - Run `capell:extension-install capell-app/block-library` after Composer install when validating package-installed guards.
 
 ## Admin Surfaces
 
-This package adds no standalone Filament navigation item, resource, page, widget, relation manager, or settings screen. Admin visibility appears through consuming packages that register block definitions or Filament builder blocks.
+This package adds no standalone Filament navigation item, resource, page, widget, relation manager, or settings screen. Admin visibility appears through consuming packages that place the registered Filament Builder blocks into a Builder field.
 
 ## Frontend Surfaces
 
-This package adds no standalone public route. Frontend visibility appears through consuming packages and through the fallback block view when a block renderer cannot resolve a normal output view.
+This package adds no standalone public route. Frontend visibility appears through consuming packages that render registered block views and through the fallback block view when a block renderer cannot resolve a normal output view.
 
 ## Screenshot Plan
 
-- Block registry manifest or diagnostics output from a consuming harness.
-- Filament builder block picker in a consuming package.
-- Fallback block rendering state.
+- Admin and frontend screenshots exist for every default catalog block in `docs/screenshots/`.
+- `capell.json` promotes the committed Capell runner captures for the registry list, editor form, asset settings, hero block, features block, and pricing block.
+- A Filament Builder block picker capture can still be added from a consuming admin Builder field as a future optional gallery item.
+- Fallback block rendering state should remain a controlled fixture capture when that fixture is added.
 
 ## Known Risks
 
-- Screenshots cannot be meaningful with this package alone because it is a shared foundation package; final captures should install a consuming package such as Content Sections only when documenting the consuming surface.
+- The package owns block screenshots but not a standalone preview route. Final captures still need a consuming harness or admin Builder field.
 
 ## Feature Suggestions
 
