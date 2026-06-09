@@ -39,6 +39,9 @@
             "providers": [
                 "Capell\\BlockLibrary\\Providers\\BlockLibraryServiceProvider"
             ]
+        },
+        "branch-alias": {
+            "dev-main": "4.x-dev"
         }
     },
     "config": {
