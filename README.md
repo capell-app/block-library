@@ -121,3 +121,11 @@ Run package tests from the repository root:
 ```bash
 vendor/bin/pest packages/block-library/tests --configuration=phpunit.xml
 ```
+
+## Troubleshooting
+
+| Symptom                              | Likely cause                                                        | Check                                                                                      | Fix                                                                                               |
+| ------------------------------------ | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------- |
+| A block key resolves to the fallback | The provider was not tagged or the compiled manifest is stale       | Confirm the provider is tagged with `BlockDefinitionProvider::TAG` and rerun package tests | Register the provider from the package service provider, then rebuild the consuming app cache     |
+| Public block view cannot render      | The definition points at a missing or admin-only view               | Check the `view` value in the `BlockDefinitionData` returned by the provider               | Point the public definition at a package-owned public Blade view and keep admin previews separate |
+| Registry manifest is rejected        | A provider, fixture class, or view reference is no longer installed | Run `vendor/bin/pest packages/block-library/tests --configuration=phpunit.xml`             | Remove the stale definition or install the package that owns the referenced class/view            |
