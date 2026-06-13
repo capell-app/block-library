@@ -1,47 +1,95 @@
 # Block Library
 
-Status: **Available, shared foundation** · Kind: **package** · Tier: **free** · Bundle: **foundation** · Contexts: **admin, frontend, shared** · Product group: **Capell Foundation**
+<!-- prettier-ignore-start -->
 
-Block Library provides typed block definitions, reusable foundation block views, screenshots, renderer contracts, fixtures, demo-content contracts, and Filament Builder block discovery for packages that contribute reusable content blocks.
+## What This Plugin Adds
 
-## What This Package Adds
+Block Library is an **Available**, **No schema impact** Capell package in the **Capell Foundation** product group. It ships as `capell-app/block-library` and extends these surfaces: admin, frontend, shared.
 
-- Block definition data objects and manifest metadata.
-- Registry actions for registering, listing, and resolving block definitions.
-- Contracts for block definition providers, renderers, fixtures, demo content, and Filament builder blocks.
-- Builder block discovery for classes implementing `FilamentBuilderBlock`.
-- Public Blade views and screenshots for the default block catalog.
-- A fallback block Blade view for unrenderable or unknown block output.
+Block Library provides reusable content blocks, typed definitions, screenshots, and Filament Builder blocks for Capell content packages.
 
-## Install Flow
+After install, admins get package-owned management surfaces and public users may see package-owned frontend output or routes.
 
+Status details:
+
+- Status: Available
+- Tier: free
+- Bundle: foundation
 - Composer package: `capell-app/block-library`
-- Repository directory: `packages/block-library`
-- Hard dependencies: `capell-app/admin`, `capell-app/core`
-- Optional dependencies: `capell-app/content-sections`, `capell-app/foundation-theme`
-- Run `capell:extension-install capell-app/block-library` after Composer install when validating package-installed guards.
+- Namespace: `Capell\BlockLibrary`
+- Theme key: not applicable
 
-## Admin Surfaces
+## Why It Matters
 
-This package adds no standalone Filament navigation item, resource, page, widget, relation manager, or settings screen. Admin visibility appears through consuming packages that place the registered Filament Builder blocks into a Builder field.
+**For developers:** The package gives developers package-owned service providers, Actions, Data objects, Filament classes, and Blade views instead of pushing this behaviour into core or application code.
 
-## Frontend Surfaces
+**For teams:** Reusable foundation content blocks with typed definitions, screenshots, and Filament Builder blocks for Capell packages.
 
-This package adds no standalone public route. Frontend visibility appears through consuming packages that render registered block views and through the fallback block view when a block renderer cannot resolve a normal output view.
+## Screens And Workflow
 
-## Screenshot Plan
+Screenshot contract: `screenshots.json`.
 
-- Admin and frontend screenshots exist for every default catalog block in `docs/screenshots/`.
-- `capell.json` promotes the committed Capell runner captures for the registry list, editor form, asset settings, hero block, features block, and pricing block.
-- A Filament Builder block picker capture can still be added from a consuming admin Builder field as a future optional gallery item.
-- Fallback block rendering state should remain a controlled fixture capture when that fixture is added.
+- Content block registry list (admin, required).
+- Content block editor form (admin, required).
+- Content block asset settings (admin, required).
+- Frontend hero block (frontend, required).
+- Frontend features block (frontend, required).
+- Frontend pricing block (frontend, required).
 
-## Known Risks
+## Technical Shape
 
-- The package owns block screenshots but not a standalone preview route. Final captures still need a consuming harness or admin Builder field.
+- Service providers: `Capell\BlockLibrary\Providers\BlockLibraryServiceProvider`.
+- Filament classes: `AbstractCatalogBuilderBlock`, `AccordionBlock`, `CallToActionBlock`, `ComparisonBlock`, `ContentBlock`, `CounterBlock`, `DividerBlock`, `FaqBlock`, `FeaturesBlock`, `HeroBlock`, `LogosBlock`, `PricingBlock`, `and 6 more`.
+- Actions: `ListBlockDefinitionsAction`, `RegisterBlockDefinitionProviderAction`, `ResolveBlockDefinitionAction`.
+- Data objects: `AdminPreviewBlockViewReference`, `BlockAccessibilityContractData`, `BlockCompatibilityData`, `BlockContentContractData`, `BlockDefinitionData`, `BlockFixtureData`, `BlockScreenshotData`, `BlockSettingDefinitionData`, `BlockVariantData`, `BlockVariantKey`, `PublicBlockPresentationData`, `PublicBlockViewReference`.
+- Health checks: `Capell\BlockLibrary\Health\BlockLibraryHealthCheck`.
+- Blade views: `packages/block-library/resources/views/blocks/catalog/accordion.blade.php`, `packages/block-library/resources/views/blocks/catalog/call-to-action.blade.php`, `packages/block-library/resources/views/blocks/catalog/comparison.blade.php`, `packages/block-library/resources/views/blocks/catalog/content.blade.php`, `packages/block-library/resources/views/blocks/catalog/counter.blade.php`, `packages/block-library/resources/views/blocks/catalog/divider.blade.php`, `packages/block-library/resources/views/blocks/catalog/faq.blade.php`, `packages/block-library/resources/views/blocks/catalog/features.blade.php`, `packages/block-library/resources/views/blocks/catalog/hero.blade.php`, `packages/block-library/resources/views/blocks/catalog/logos.blade.php`, `packages/block-library/resources/views/blocks/catalog/pricing.blade.php`, `packages/block-library/resources/views/blocks/catalog/stats.blade.php`, `and 7 more`.
+- Cache tags: `block-library`.
 
-## Feature Suggestions
+## Data Model
 
-- Add a lightweight diagnostics command that lists registered block definitions, providers, renderers, and missing views.
-- Add a developer-facing preview page gated to admins that renders each registered block fixture from the registry.
-- Add schema validation output for block definitions so consuming packages can catch missing labels, categories, preview views, and accessibility metadata.
+This package has no schema impact. It does not declare package-owned migrations or required tables.
+
+Docs gap: document extension points here if the package delegates persistence to a host package.
+
+## Install Impact
+
+- Admin navigation: adds package-owned Filament classes when registered.
+- Permissions: none declared in `capell.json`.
+- Public routes: none detected in package route files.
+- Database changes: no package migrations declared.
+- Settings: no package settings declared.
+- Queues or schedules: none detected in standard package paths.
+- Cache tags: `block-library`.
+- Commands: none declared.
+
+## Common Pitfalls
+
+- Keep public Blade and cached HTML free of authoring markers, model IDs, permissions, signed editor URLs, and lazy database queries.
+- Keep `composer.json`, `composer.local.json`, `capell.json`, docs, screenshots, and tests aligned when the package surface changes.
+
+## Troubleshooting
+
+| Symptom | Likely cause | Check | Fix |
+| --- | --- | --- | --- |
+| Package surface is missing after install | Provider or manifest is not loaded | Confirm `capell.json`, package `composer.json`, and provider registration | Reinstall the package, refresh Composer autoload, and clear host caches |
+| Public output leaks unexpected state | Render data, cache variation, or authoring boundary has regressed | Check public Blade, cache tags, and public-output safety tests | Move data loading out of Blade and rerun the package public-output tests |
+
+## Quick Start
+
+1. Install the package: `composer require capell-app/block-library`.
+2. Run the required setup: no package migrations are declared; clear cached config and routes if the host app uses caches.
+3. Open the related Capell admin surface and verify Block Library appears.
+
+## Next Steps
+
+- [Package docs index](README.md)
+- [Screenshot contract](screenshots.json)
+- [Marketplace assets](assets/marketplace/)
+- [Capell content language plan](../../../docs/CONTENT_LANGUAGE_PLAN.md)
+- [Capell documentation design system](../../../docs/DESIGN_SYSTEM.md)
+- [Capell and package ERD notes](../../../docs/erd/capell-and-package-erds.md)
+- Related packages: [Content Sections](../../content-sections/README.md), [Foundation Theme](../../foundation-theme/README.md).
+- Focused tests: `vendor/bin/pest packages/block-library/tests --configuration=phpunit.xml`.
+
+<!-- prettier-ignore-end -->
