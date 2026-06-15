@@ -36,6 +36,8 @@ Screenshot contract: `screenshots.json`.
 - Frontend features block (frontend, required).
 - Frontend pricing block (frontend, required).
 
+Marketplace screenshot policy: keep the gallery curated. `screenshots.json` may track broader admin/frontend runner evidence for the full catalog, but `capell.json marketplace.screenshots` should only promote captures that are route-backed, visually reviewed, and useful to buyers. Promote additional catalog blocks only when the capture proves a distinct block family or workflow that the current gallery does not already communicate.
+
 ## Technical Shape
 
 - Service providers: `Capell\BlockLibrary\Providers\BlockLibraryServiceProvider`.
@@ -66,6 +68,7 @@ Docs gap: document extension points here if the package delegates persistence to
 ## Common Pitfalls
 
 - Keep public Blade and cached HTML free of authoring markers, model IDs, permissions, signed editor URLs, and lazy database queries.
+- Keep the public gallery and runner evidence separate: runner screenshots prove coverage, while Marketplace screenshots sell the stable, reviewed subset.
 - Keep `composer.json`, `composer.local.json`, `capell.json`, docs, screenshots, and tests aligned when the package surface changes.
 
 ## Troubleshooting

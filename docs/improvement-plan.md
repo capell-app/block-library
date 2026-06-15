@@ -51,10 +51,10 @@ Block Library should be positioned as the reusable content-block foundation for 
 
 | Item                                                      | Bucket | Effort | Impact | Section ref |
 | --------------------------------------------------------- | ------ | ------ | ------ | ----------- |
-| Add catalog health diagnostics                            | Now    | M      | High   | §2.1, §4.1  |
-| Add public-output safety matrix for every catalog block   | Now    | M      | High   | §2.2, §4.2  |
-| Add builder block discovery cache invalidation tests/docs | Now    | M      | Medium | §2.3, §4.3  |
-| Document/promote marketplace screenshot gallery policy    | Now    | S      | Medium | §2.4, §4.4  |
+| Add catalog health diagnostics                            | Done   | M      | High   | §2.1, §4.1  |
+| Add public-output safety matrix for every catalog block   | Done   | M      | High   | §2.2, §4.2  |
+| Add builder block discovery cache invalidation tests/docs | Done   | M      | Medium | §2.3, §4.3  |
+| Document/promote marketplace screenshot gallery policy    | Done   | S      | Medium | §2.4, §4.4  |
 | Enforce per-block accessibility contracts                 | Next   | M      | High   | §3          |
 | Add custom block integration guide for package authors    | Next   | S      | Medium | §3, §5      |
 | Add fixture/demo provider completeness checks             | Next   | M      | Medium | §3          |
@@ -63,7 +63,7 @@ Block Library should be positioned as the reusable content-block foundation for 
 
 ## 7. Verification
 
-Plan-writing review only; no commands were run for this package in this pass. First implementation slice should start with:
+Implementation slices shipped the current Now rows. Re-run the package verification with:
 
 ```bash
 vendor/bin/pest packages/block-library/tests --configuration=phpunit.xml
@@ -80,7 +80,7 @@ vendor/bin/pest packages/block-library/tests/Feature/DefaultBlockCatalogTest.php
 - [x] Package plan created from current code, manifest, docs, screenshots, and tests.
 - [x] Comprehensive local review pass completed for provider, registry, discovery, default catalog, docs, screenshots, and tests.
 - [x] Capell audience pass completed for admins, package authors, and theme builders.
-- [ ] Approved implementation slices shipped.
-- [ ] Focused Block Library verification passed.
-- [ ] Package tests passed.
-- [ ] Repo preflight passed for changed files.
+- [x] Approved implementation slices shipped.
+- [x] Focused Block Library verification passed.
+- [x] Package tests passed.
+- [x] Repo preflight passed for changed files.
