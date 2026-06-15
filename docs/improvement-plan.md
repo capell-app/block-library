@@ -4,7 +4,7 @@
 
 ## 1. Snapshot
 
-Block Library provides reusable content blocks, typed block definitions, public/admin view references, fixtures, screenshot metadata, Filament Builder block discovery, and a default catalog of 17 block types. It is a foundational package for content composition and public-safe block rendering. Tests cover registry behavior, manifest compilation, discovery, and default catalog rendering, but the health check is a placeholder and there is no single diagnostic proving that every catalog block has translations, admin block class, public view, screenshot evidence, and public-output safety.
+Block Library provides reusable content blocks, typed block definitions, public/admin view references, fixtures, screenshot metadata, Filament Builder block discovery, package-author integration guidance, and a default catalog of 17 block types. It is a foundational package for content composition and public-safe block rendering. Tests cover registry behavior, manifest compilation, discovery, default catalog rendering, and docs discoverability. Remaining Next rows focus on accessibility enforcement and fixture/demo completeness.
 
 ## 2. Improvements (existing functionality)
 
@@ -23,7 +23,7 @@ Capabilities declared: `content-blocks`, `filament-builder-blocks`, and `safe-pu
 - **No actionable health report.** Installers cannot tell which block/view/translation is missing.
 - **No per-block accessibility gate.** `BlockAccessibilityContractData` exists, but catalog blocks need enforced checks for headings, labels, reduced motion, and contrast where applicable.
 - **No block versioning/deprecation path.** Consuming layouts need a way to evolve block schema safely.
-- **No consumer-facing integration guide.** Package authors need a recipe for adding custom definitions, fixtures, screenshots, and builder blocks.
+- **Done/Shipped: consumer-facing integration guide.** `docs/custom-blocks.md` documents custom definitions, provider tagging, public-safe views, fixtures, builder blocks, screenshots, and Marketplace alignment for package authors.
 
 ## 4. Issues / Risks
 
@@ -56,7 +56,7 @@ Block Library should be positioned as the reusable content-block foundation for 
 | Add builder block discovery cache invalidation tests/docs | Done   | M      | Medium | §2.3, §4.3  |
 | Document/promote marketplace screenshot gallery policy    | Done   | S      | Medium | §2.4, §4.4  |
 | Enforce per-block accessibility contracts                 | Next   | M      | High   | §3          |
-| Add custom block integration guide for package authors    | Next   | S      | Medium | §3, §5      |
+| Add custom block integration guide for package authors    | Done   | S      | Medium | §3, §5      |
 | Add fixture/demo provider completeness checks             | Next   | M      | Medium | §3          |
 | Add block schema versioning/deprecation support           | Later  | L      | Medium | §3          |
 | Add richer admin block picker/search UX                   | Later  | M      | Medium | §5          |
@@ -73,6 +73,12 @@ For catalog or discovery changes, include:
 
 ```bash
 vendor/bin/pest packages/block-library/tests/Feature/DefaultBlockCatalogTest.php packages/block-library/tests/Integration/BuilderBlockDiscoveryTest.php --configuration=phpunit.xml
+```
+
+For custom block integration docs, include:
+
+```bash
+vendor/bin/pest packages/block-library/tests/Unit/ManifestRequirementsTest.php --configuration=phpunit.xml
 ```
 
 ## 8. Completion Checklist
