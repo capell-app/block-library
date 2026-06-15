@@ -12,6 +12,22 @@ use Capell\BlockLibrary\Tests\Fixtures\BuilderBlocks\LegacyBuilderBlock;
 use Filament\Forms\Components\Builder\Block;
 use Illuminate\Filesystem\Filesystem;
 
+function forceBuilderBlockDiscoveryCacheHit(BuilderBlockDiscovery $discovery): void
+{
+    $hasCachedBlocks = new ReflectionProperty($discovery, 'hasCachedBlocks');
+    $hasCachedBlocks->setValue($discovery, true);
+}
+
+function temporaryBuilderBlockCachePath(string $suffix): string
+{
+    return sys_get_temp_dir() . '/capell-block-library-builder-blocks-' . $suffix . '.php';
+}
+
+function temporaryBuilderBlockDirectory(string $suffix): string
+{
+    return sys_get_temp_dir() . '/capell-block-library-builder-blocks-' . $suffix;
+}
+
 it('binds the builder block registry and discovery separately from typed content blocks', function (): void {
     expect(resolve(BuilderBlockRegistry::class))->toBeInstanceOf(BuilderBlockRegistry::class)
         ->and(resolve(BuilderBlockDiscovery::class))->toBeInstanceOf(BuilderBlockDiscovery::class)
@@ -64,7 +80,7 @@ it('discovers concrete filament builder block implementations from registered pa
 
 it('caches discovered builder block classes for warm starts', function (): void {
     $filesystem = new Filesystem;
-    $cachePath = sys_get_temp_dir() . '/capell-block-library-builder-blocks.php';
+    $cachePath = temporaryBuilderBlockCachePath('warm-start');
     $registry = new BuilderBlockRegistry;
     $discovery = new BuilderBlockDiscovery($registry, $filesystem, $cachePath);
 
@@ -78,12 +94,124 @@ it('caches discovered builder block classes for warm starts', function (): void 
     $discovery->cacheBlocks();
 
     try {
-        expect(require $cachePath)->toBe([
+        $cached = require $cachePath;
+
+        expect($cached)->toMatchArray([
+            'version' => 2,
+            'blocks' => [
+                'hero' => HeroBuilderBlock::class,
+                'legacy' => LegacyBuilderBlock::class,
+            ],
+        ])
+            ->and($cached['signature'])->toBeString()->not->toBe('');
+    } finally {
+        $filesystem->delete($cachePath);
+    }
+});
+
+it('restores cached builder block classes when discovery sources are unchanged', function (): void {
+    $filesystem = new Filesystem;
+    $cachePath = temporaryBuilderBlockCachePath('restore');
+    $sourceDirectory = __DIR__ . '/../Fixtures/BuilderBlocks';
+
+    $filesystem->delete($cachePath);
+
+    $writer = new BuilderBlockDiscovery(new BuilderBlockRegistry, $filesystem, $cachePath);
+    $writer->registerDiscoverableBlocks(
+        $sourceDirectory,
+        'Capell\\BlockLibrary\\Tests\\Fixtures\\BuilderBlocks',
+    );
+    $writer->cacheBlocks();
+
+    $registry = new BuilderBlockRegistry;
+    $reader = new BuilderBlockDiscovery($registry, $filesystem, $cachePath);
+    $reader->registerDiscoverableBlocks(
+        $sourceDirectory,
+        'Capell\\BlockLibrary\\Tests\\Fixtures\\BuilderBlocks',
+    );
+
+    forceBuilderBlockDiscoveryCacheHit($reader);
+
+    try {
+        $reader->restoreCachedBlocks();
+
+        expect($registry->allForTarget(BuilderBlockTarget::AdminFilament))->toBe([
             'hero' => HeroBuilderBlock::class,
             'legacy' => LegacyBuilderBlock::class,
         ]);
     } finally {
         $filesystem->delete($cachePath);
+    }
+});
+
+it('clears stale legacy cache files and falls back to filesystem discovery', function (): void {
+    $filesystem = new Filesystem;
+    $cachePath = temporaryBuilderBlockCachePath('legacy');
+    $registry = new BuilderBlockRegistry;
+    $discovery = new BuilderBlockDiscovery($registry, $filesystem, $cachePath);
+
+    $filesystem->put($cachePath, '<?php return ' . var_export([
+        'hero' => HeroBuilderBlock::class,
+    ], true) . ';');
+
+    $discovery->registerDiscoverableBlocks(
+        __DIR__ . '/../Fixtures/BuilderBlocks',
+        'Capell\\BlockLibrary\\Tests\\Fixtures\\BuilderBlocks',
+    );
+
+    forceBuilderBlockDiscoveryCacheHit($discovery);
+
+    try {
+        expect($discovery->filamentBlocks())->toHaveCount(2)
+            ->and($registry->allForTarget(BuilderBlockTarget::AdminFilament))->toBe([
+                'hero' => HeroBuilderBlock::class,
+                'legacy' => LegacyBuilderBlock::class,
+            ])
+            ->and($filesystem->exists($cachePath))->toBeFalse();
+    } finally {
+        $filesystem->delete($cachePath);
+    }
+});
+
+it('invalidates cached builder blocks when discoverable files change', function (): void {
+    $filesystem = new Filesystem;
+    $cachePath = temporaryBuilderBlockCachePath('changed-files');
+    $sourceDirectory = temporaryBuilderBlockDirectory('changed-files');
+    $fixtureDirectory = __DIR__ . '/../Fixtures/BuilderBlocks';
+
+    $filesystem->delete($cachePath);
+    $filesystem->deleteDirectory($sourceDirectory);
+    $filesystem->ensureDirectoryExists($sourceDirectory);
+    $filesystem->copy($fixtureDirectory . '/HeroBuilderBlock.php', $sourceDirectory . '/HeroBuilderBlock.php');
+
+    $writer = new BuilderBlockDiscovery(new BuilderBlockRegistry, $filesystem, $cachePath);
+    $writer->registerDiscoverableBlocks(
+        $sourceDirectory,
+        'Capell\\BlockLibrary\\Tests\\Fixtures\\BuilderBlocks',
+    );
+    $writer->cacheBlocks();
+
+    $filesystem->copy($fixtureDirectory . '/LegacyBuilderBlock.php', $sourceDirectory . '/LegacyBuilderBlock.php');
+
+    $registry = new BuilderBlockRegistry;
+    $reader = new BuilderBlockDiscovery($registry, $filesystem, $cachePath);
+    $reader->registerDiscoverableBlocks(
+        $sourceDirectory,
+        'Capell\\BlockLibrary\\Tests\\Fixtures\\BuilderBlocks',
+    );
+
+    forceBuilderBlockDiscoveryCacheHit($reader);
+
+    try {
+        expect($reader->filamentBlocks())->toHaveCount(2)
+            ->and($registry->allForTarget(BuilderBlockTarget::AdminFilament))->toBe([
+                'hero' => HeroBuilderBlock::class,
+                'legacy' => LegacyBuilderBlock::class,
+            ])
+            ->and($filesystem->exists($cachePath))->toBeFalse();
+    } finally {
+        $filesystem->delete($cachePath);
+        $filesystem->deleteDirectory($sourceDirectory);
     }
 });
 
