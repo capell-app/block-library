@@ -4,7 +4,7 @@
 
 ## 1. Snapshot
 
-Block Library provides reusable content blocks, typed block definitions, public/admin view references, fixtures, screenshot metadata, Filament Builder block discovery, package-author integration guidance, accessibility contracts, and a default catalog of 17 block types. It is a foundational package for content composition and public-safe block rendering. Tests cover registry behavior, manifest compilation, discovery, default catalog rendering, accessibility contracts, and docs discoverability. The remaining Next row focuses on fixture/demo completeness.
+Block Library provides reusable content blocks, typed block definitions, public/admin view references, fixtures, demo payloads, screenshot metadata, Filament Builder block discovery, package-author integration guidance, accessibility contracts, and a default catalog of 17 block types. It is a foundational package for content composition and public-safe block rendering. Tests cover registry behavior, manifest compilation, discovery, default catalog rendering, accessibility contracts, fixture/demo providers, and docs discoverability. No Now or Next rows remain.
 
 ## 2. Improvements (existing functionality)
 
@@ -18,10 +18,11 @@ Block Library provides reusable content blocks, typed block definitions, public/
 
 ## 3. Missing Features (gaps)
 
-Capabilities declared: `content-blocks`, `filament-builder-blocks`, and `safe-public-block-views`.
+Capabilities declared: `content-blocks`, `per-block-accessibility-contracts`, `default-block-fixtures`, `filament-builder-blocks`, and `safe-public-block-views`.
 
 - **No actionable health report.** Installers cannot tell which block/view/translation is missing.
 - **Done/Shipped: per-block accessibility gate.** Default catalog definitions now carry complete `BlockAccessibilityContractData` buckets and package health fails when semantics, keyboard, contrast, or media rules are omitted.
+- **Done/Shipped: fixture/demo provider completeness.** Default catalog definitions now reference package-owned providers that return deterministic, public-safe fixture and demo payloads.
 - **No block versioning/deprecation path.** Consuming layouts need a way to evolve block schema safely.
 - **Done/Shipped: consumer-facing integration guide.** `docs/custom-blocks.md` documents custom definitions, provider tagging, public-safe views, fixtures, builder blocks, screenshots, and Marketplace alignment for package authors.
 
@@ -57,7 +58,7 @@ Block Library should be positioned as the reusable content-block foundation for 
 | Document/promote marketplace screenshot gallery policy    | Done   | S      | Medium | §2.4, §4.4  |
 | Enforce per-block accessibility contracts                 | Done   | M      | High   | §3          |
 | Add custom block integration guide for package authors    | Done   | S      | Medium | §3, §5      |
-| Add fixture/demo provider completeness checks             | Next   | M      | Medium | §3          |
+| Add fixture/demo provider completeness checks             | Done   | M      | Medium | §3          |
 | Add block schema versioning/deprecation support           | Later  | L      | Medium | §3          |
 | Add richer admin block picker/search UX                   | Later  | M      | Medium | §5          |
 
@@ -76,6 +77,12 @@ vendor/bin/pest packages/block-library/tests/Feature/DefaultBlockCatalogTest.php
 ```
 
 For accessibility-contract changes, include:
+
+```bash
+vendor/bin/pest packages/block-library/tests/Feature/DefaultBlockCatalogTest.php packages/block-library/tests/Feature/BlockLibraryHealthCheckTest.php --configuration=phpunit.xml
+```
+
+For fixture/demo provider changes, include:
 
 ```bash
 vendor/bin/pest packages/block-library/tests/Feature/DefaultBlockCatalogTest.php packages/block-library/tests/Feature/BlockLibraryHealthCheckTest.php --configuration=phpunit.xml

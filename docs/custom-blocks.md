@@ -75,6 +75,8 @@ Use `BlockFixtureProvider` when a block needs reusable example payloads for test
 
 Fixtures should be small, deterministic, and safe to render publicly. Do not store theme wrappers, utility classes, or complex layout HTML in fixture payloads.
 
+The default Block Library catalog uses one provider for both contracts so every shipped block has a renderable fixture and demo payload. Custom packages should add provider completeness tests that instantiate each declared provider, assert at least one non-empty fixture payload, and render the payload through the public view safety test.
+
 ## Builder Blocks
 
 If the block should appear in Filament Builder, add a class implementing `FilamentBuilderBlock`. For catalog-style blocks, mirror the local `AbstractCatalogBuilderBlock` pattern: keep the schema thin, delegate content structure to typed settings, and keep runtime rendering in public views.
@@ -90,6 +92,6 @@ For every custom block definition, keep these aligned:
 - `BlockDefinitionData` key, label, description, public view, source package.
 - Translation keys used by labels, descriptions, defaults, and settings.
 - Public view tests for output safety.
-- Fixture/demo provider coverage when fixtures are declared.
+- Fixture/demo provider coverage for every block that declares providers.
 - Screenshot contract entries for admin/builder and public render states.
 - Builder block registration or discovery cache invalidation tests when Filament Builder support is included.

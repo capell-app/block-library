@@ -52,6 +52,7 @@
     "capabilities": [
         "content-blocks",
         "per-block-accessibility-contracts",
+        "default-block-fixtures",
         "filament-builder-blocks",
         "safe-public-block-views"
     ],

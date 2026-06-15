@@ -5,10 +5,10 @@ declare(strict_types=1);
 use Capell\BlockLibrary\Actions\ResolveBlockDefinitionAction;
 use Capell\BlockLibrary\Support\BuilderBlockDiscovery;
 use Capell\BlockLibrary\Support\DefaultBlockCatalog;
+use Capell\BlockLibrary\Support\DefaultBlockContentProvider;
 use Filament\Forms\Components\Builder\Block;
 use Illuminate\Http\Response;
 use Illuminate\Testing\TestResponse;
-use Sinnbeck\DomAssertions\Asserts\AssertElement;
 
 it('registers every default catalog block with public views and screenshots', function (): void {
     foreach (DefaultBlockCatalog::keys() as $key) {
@@ -33,6 +33,25 @@ it('declares complete accessibility contracts for every default catalog block', 
             ->and($contract->keyboardRules)->not->toBeEmpty($key . ' keyboard rules')
             ->and($contract->contrastPairs)->not->toBeEmpty($key . ' contrast pairs')
             ->and($contract->mediaRules)->not->toBeEmpty($key . ' media rules');
+    }
+});
+
+it('provides fixture and demo payloads for every default catalog block', function (): void {
+    foreach (DefaultBlockCatalog::keys() as $key) {
+        $definition = ResolveBlockDefinitionAction::run($key);
+
+        expect($definition->fixtureProvider)->toBe(DefaultBlockContentProvider::class)
+            ->and($definition->demoContentProvider)->toBe(DefaultBlockContentProvider::class);
+
+        $provider = resolve($definition->fixtureProvider);
+        expect($provider)->toBeInstanceOf(DefaultBlockContentProvider::class);
+
+        $fixtures = iterator_to_array($provider->fixtures($definition));
+
+        expect($fixtures)->toHaveCount(1)
+            ->and($fixtures[0]->key)->toBe($key . '.default')
+            ->and($fixtures[0]->payload)->toBe(DefaultBlockCatalog::fixturePayload($key))
+            ->and($provider->demoContent($definition))->toBe(DefaultBlockCatalog::fixturePayload($key));
     }
 });
 
@@ -73,18 +92,10 @@ it('renders every default public block view', function (): void {
         /** @var view-string $viewName */
         $viewName = DefaultBlockCatalog::viewName($key);
 
-        $html = view($viewName, [
-            'asset' => null,
-            'title' => 'Preview',
-            'summary' => '<p>Summary</p>',
-            'meta' => [],
-            'url' => '#',
-        ])->render();
+        $html = view($viewName, DefaultBlockCatalog::fixturePayload($key))->render();
 
         TestResponse::fromBaseResponse(new Response('<!DOCTYPE html><html><body>' . $html . '</body></html>'))
-            ->assertElementExists('body', static function (AssertElement $body): void {
-                $body->contains('.section', 1);
-            });
+            ->assertContainsElement('body .section');
     }
 });
 
@@ -112,7 +123,7 @@ it('keeps every default public block view free of authoring and package internal
     foreach (DefaultBlockCatalog::keys() as $key) {
         /** @var view-string $viewName */
         $viewName = DefaultBlockCatalog::viewName($key);
-        $payload = blockLibraryCatalogRenderPayload($key);
+        $payload = DefaultBlockCatalog::fixturePayload($key);
         $html = view($viewName, $payload)->render();
 
         $response = TestResponse::fromBaseResponse(new Response('<!DOCTYPE html><html><body>' . $html . '</body></html>'));
@@ -130,120 +141,3 @@ it('keeps every default public block view free of authoring and package internal
         }
     }
 });
-
-/**
- * @return array{asset: null, title: string, summary: string, meta: array<string, mixed>, url?: string}
- */
-function blockLibraryCatalogRenderPayload(string $key): array
-{
-    return [
-        'asset' => null,
-        'title' => 'Preview',
-        'summary' => '<p>Reusable public output.</p>',
-        'url' => '#',
-        'meta' => match ($key) {
-            'accordion' => [
-                'first_open' => true,
-                'items' => [
-                    ['heading' => 'Question one', 'content' => '<p>Answer one.</p>'],
-                ],
-            ],
-            'call_to_action' => [
-                'alignment' => 'center',
-                'actions' => [
-                    ['label' => 'Start', 'url' => '#'],
-                ],
-            ],
-            'comparison' => [
-                'columns' => [
-                    ['heading' => 'Standard', 'description' => 'Default plan.'],
-                    ['heading' => 'Pro', 'description' => 'Advanced plan.', 'highlighted' => true],
-                ],
-                'rows' => [
-                    ['label' => 'Blocks', 'values' => '17|17'],
-                ],
-            ],
-            'counter' => [
-                'counters' => [
-                    ['value' => '17', 'suffix' => '+', 'label' => 'Blocks', 'description' => 'Default catalog blocks.'],
-                ],
-            ],
-            'divider' => [
-                'style' => 'dots',
-            ],
-            'faq' => [
-                'first_open' => true,
-                'questions' => [
-                    ['question' => 'Is it public-safe?', 'answer' => '<p>Yes.</p>'],
-                ],
-            ],
-            'features' => [
-                'columns' => '3',
-                'features' => [
-                    ['heading' => 'Typed definitions', 'description' => 'Blocks are registered with typed data.', 'url' => '#'],
-                ],
-            ],
-            'hero' => [
-                'alignment' => 'center',
-            ],
-            'logos' => [
-                'columns' => '4',
-                'logos' => [
-                    ['name' => 'Capell', 'url' => '#'],
-                ],
-            ],
-            'pricing' => [
-                'plans' => [
-                    [
-                        'name' => 'Foundation',
-                        'price' => 'Free',
-                        'period' => 'site',
-                        'description' => 'Included with Capell.',
-                        'features' => "Blocks\nBuilder integration",
-                        'highlighted' => true,
-                        'action_label' => 'Use block',
-                        'action_url' => '#',
-                    ],
-                ],
-            ],
-            'stats' => [
-                'columns' => '3',
-                'stats' => [
-                    ['value' => '17', 'label' => 'Blocks', 'description' => 'Catalog size.'],
-                ],
-            ],
-            'table' => [
-                'caption' => 'Catalog coverage',
-                'headers' => [
-                    ['label' => 'Block'],
-                    ['label' => 'Safe'],
-                ],
-                'rows' => [
-                    ['cells' => 'Hero|Yes'],
-                ],
-            ],
-            'tabs' => [
-                'tabs' => [
-                    ['label' => 'Plan', 'content' => '<p>Build with approved blocks.</p>'],
-                ],
-            ],
-            'team' => [
-                'columns' => '3',
-                'members' => [
-                    ['name' => 'Editor', 'role' => 'Publisher', 'bio' => 'Builds pages.', 'url' => '#'],
-                ],
-            ],
-            'testimonial' => [
-                'quote' => 'Reusable blocks keep public output predictable.',
-                'author' => 'Capell',
-                'role' => 'Package developer',
-            ],
-            'timeline' => [
-                'milestones' => [
-                    ['date' => '2026', 'heading' => 'Catalog', 'description' => 'Default blocks ship.'],
-                ],
-            ],
-            default => [],
-        },
-    ];
-}

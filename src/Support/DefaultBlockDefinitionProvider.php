@@ -24,6 +24,8 @@ final class DefaultBlockDefinitionProvider implements BlockDefinitionProvider
                 safeForPublicOutput: true,
                 sourcePackage: 'capell-app/block-library',
                 accessibilityContract: DefaultBlockCatalog::accessibilityContract($key),
+                fixtureProvider: DefaultBlockContentProvider::class,
+                demoContentProvider: DefaultBlockContentProvider::class,
                 screenshots: DefaultBlockCatalog::screenshots($key),
             );
         }

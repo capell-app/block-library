@@ -6,7 +6,7 @@
 
 Block Library is an **Available**, **No schema impact** Capell package in the **Capell Foundation** product group. It ships as `capell-app/block-library` and extends these surfaces: admin, frontend, shared.
 
-Block Library provides reusable content blocks, typed definitions, screenshots, and Filament Builder blocks for Capell content packages.
+Block Library provides reusable content blocks, typed definitions, fixtures, demo payloads, screenshots, and Filament Builder blocks for Capell content packages.
 
 After install, admins get package-owned management surfaces and public users may see package-owned frontend output or routes.
 
@@ -23,7 +23,7 @@ Status details:
 
 **For developers:** The package gives developers package-owned service providers, Actions, Data objects, Filament classes, and Blade views instead of pushing this behaviour into core or application code.
 
-**For teams:** Reusable foundation content blocks with typed definitions, screenshots, and Filament Builder blocks for Capell packages.
+**For teams:** Reusable foundation content blocks with typed definitions, fixtures, demo payloads, screenshots, and Filament Builder blocks for Capell packages.
 
 ## Screens And Workflow
 
@@ -44,7 +44,7 @@ Marketplace screenshot policy: keep the gallery curated. `screenshots.json` may 
 - Filament classes: `AbstractCatalogBuilderBlock`, `AccordionBlock`, `CallToActionBlock`, `ComparisonBlock`, `ContentBlock`, `CounterBlock`, `DividerBlock`, `FaqBlock`, `FeaturesBlock`, `HeroBlock`, `LogosBlock`, `PricingBlock`, `and 6 more`.
 - Actions: `ListBlockDefinitionsAction`, `RegisterBlockDefinitionProviderAction`, `ResolveBlockDefinitionAction`.
 - Data objects: `AdminPreviewBlockViewReference`, `BlockAccessibilityContractData`, `BlockCompatibilityData`, `BlockContentContractData`, `BlockDefinitionData`, `BlockFixtureData`, `BlockScreenshotData`, `BlockSettingDefinitionData`, `BlockVariantData`, `BlockVariantKey`, `PublicBlockPresentationData`, `PublicBlockViewReference`.
-- Health checks: `Capell\BlockLibrary\Health\BlockLibraryHealthCheck` verifies registry bindings, default definitions, accessibility contracts, translations, views, builder blocks, screenshots, and manifest wiring.
+- Health checks: `Capell\BlockLibrary\Health\BlockLibraryHealthCheck` verifies registry bindings, default definitions, accessibility contracts, fixture/demo providers, translations, views, builder blocks, screenshots, and manifest wiring.
 - Blade views: `packages/block-library/resources/views/blocks/catalog/accordion.blade.php`, `packages/block-library/resources/views/blocks/catalog/call-to-action.blade.php`, `packages/block-library/resources/views/blocks/catalog/comparison.blade.php`, `packages/block-library/resources/views/blocks/catalog/content.blade.php`, `packages/block-library/resources/views/blocks/catalog/counter.blade.php`, `packages/block-library/resources/views/blocks/catalog/divider.blade.php`, `packages/block-library/resources/views/blocks/catalog/faq.blade.php`, `packages/block-library/resources/views/blocks/catalog/features.blade.php`, `packages/block-library/resources/views/blocks/catalog/hero.blade.php`, `packages/block-library/resources/views/blocks/catalog/logos.blade.php`, `packages/block-library/resources/views/blocks/catalog/pricing.blade.php`, `packages/block-library/resources/views/blocks/catalog/stats.blade.php`, `and 7 more`.
 - Cache tags: `block-library`.
 
@@ -69,6 +69,7 @@ Docs gap: document extension points here if the package delegates persistence to
 
 - Keep public Blade and cached HTML free of authoring markers, model IDs, permissions, signed editor URLs, and lazy database queries.
 - Keep every public block definition paired with a non-empty accessibility contract for semantics, keyboard behavior, contrast pairs, and media handling.
+- Keep every default block paired with deterministic fixture and demo payloads that render safely through the public view.
 - Keep the public gallery and runner evidence separate: runner screenshots prove coverage, while Marketplace screenshots sell the stable, reviewed subset.
 - Keep `composer.json`, `composer.local.json`, `capell.json`, docs, screenshots, and tests aligned when the package surface changes.
 
