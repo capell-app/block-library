@@ -13,6 +13,8 @@ use ReflectionClass;
 
 final class BuilderBlockDiscovery
 {
+    private const int CACHE_VERSION = 2;
+
     /** @var array<string, string> */
     private array $blockDiscoveryPaths = [];
 
@@ -91,7 +93,11 @@ final class BuilderBlockDiscovery
 
         $this->filesystem->put(
             $cachePath,
-            '<?php return ' . var_export($this->discoveredBlocks ?? [], true) . ';',
+            '<?php return ' . var_export([
+                'version' => self::CACHE_VERSION,
+                'signature' => $this->cacheSignature(),
+                'blocks' => $this->discoveredBlocks ?? [],
+            ], true) . ';',
         );
 
         $this->hasCachedBlocks = true;
@@ -99,18 +105,7 @@ final class BuilderBlockDiscovery
 
     public function restoreCachedBlocks(): void
     {
-        if (! $this->hasCachedBlocks()) {
-            return;
-        }
-
-        /** @var array<string, class-string> $cached */
-        $cached = require $this->getBlockCachePath();
-
-        $this->discoveredBlocks = $cached;
-
-        foreach ($cached as $blockName => $blockClass) {
-            $this->registry->register($blockName, BuilderBlockTarget::AdminFilament, $blockClass);
-        }
+        $this->restoreValidCachedBlocks();
     }
 
     public function clearCachedBlocks(): void
@@ -127,15 +122,39 @@ final class BuilderBlockDiscovery
             ?? config('filament.cache_path', base_path('bootstrap/cache/filament')) . DIRECTORY_SEPARATOR . 'builder-blocks.php';
     }
 
+    private function restoreValidCachedBlocks(): bool
+    {
+        if (! $this->hasCachedBlocks()) {
+            return false;
+        }
+
+        $cached = require $this->getBlockCachePath();
+
+        if (! $this->isValidCachePayload($cached)) {
+            $this->clearCachedBlocks();
+
+            return false;
+        }
+
+        /** @var array<string, class-string> $blocks */
+        $blocks = $cached['blocks'];
+
+        $this->discoveredBlocks = $blocks;
+
+        foreach ($blocks as $blockName => $blockClass) {
+            $this->registry->register($blockName, BuilderBlockTarget::AdminFilament, $blockClass);
+        }
+
+        return true;
+    }
+
     private function ensureBlocksDiscovered(): void
     {
         if ($this->discoveredBlocks !== null) {
             return;
         }
 
-        if ($this->hasCachedBlocks()) {
-            $this->restoreCachedBlocks();
-
+        if ($this->restoreValidCachedBlocks()) {
             return;
         }
 
@@ -176,6 +195,79 @@ final class BuilderBlockDiscovery
 
             $this->discoveredBlocks[$this->blockNameFor($blockClass)] = $blockClass;
         }
+    }
+
+    private function cacheSignature(): string
+    {
+        $sources = [];
+
+        foreach ($this->blockDiscoveryPaths as $directory => $namespace) {
+            $sources[] = [
+                'directory' => $directory,
+                'namespace' => $namespace,
+                'files' => $this->cacheFileSignatures($directory),
+            ];
+        }
+
+        return hash('sha256', (string) json_encode($sources, JSON_THROW_ON_ERROR));
+    }
+
+    /**
+     * @return list<array{path: string, size: int, modified: int}>
+     */
+    private function cacheFileSignatures(string $directory): array
+    {
+        if (! $this->filesystem->isDirectory($directory)) {
+            return [];
+        }
+
+        $files = [];
+
+        foreach ($this->filesystem->allFiles($directory) as $file) {
+            if ($file->getExtension() !== 'php') {
+                continue;
+            }
+
+            $files[] = [
+                'path' => $file->getRelativePathname(),
+                'size' => $file->getSize(),
+                'modified' => $file->getMTime(),
+            ];
+        }
+
+        usort(
+            $files,
+            static fn (array $firstFile, array $secondFile): int => $firstFile['path'] <=> $secondFile['path'],
+        );
+
+        return $files;
+    }
+
+    private function isValidCachePayload(mixed $cached): bool
+    {
+        if (! is_array($cached)) {
+            return false;
+        }
+
+        if (($cached['version'] ?? null) !== self::CACHE_VERSION) {
+            return false;
+        }
+
+        if (($cached['signature'] ?? null) !== $this->cacheSignature()) {
+            return false;
+        }
+
+        if (! is_array($cached['blocks'] ?? null)) {
+            return false;
+        }
+
+        foreach ($cached['blocks'] as $blockName => $blockClass) {
+            if (! is_string($blockName) || ! is_string($blockClass)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
