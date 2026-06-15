@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Vendor\Package\Blocks;
 
 use Capell\BlockLibrary\Contracts\BlockDefinitionProvider;
+use Capell\BlockLibrary\Data\BlockAccessibilityContractData;
 use Capell\BlockLibrary\Data\BlockDefinitionData;
 
 final class MarketingBlockDefinitionProvider implements BlockDefinitionProvider
@@ -31,6 +32,12 @@ final class MarketingBlockDefinitionProvider implements BlockDefinitionProvider
             ],
             safeForPublicOutput: true,
             sourcePackage: 'vendor/package',
+            accessibilityContract: new BlockAccessibilityContractData(
+                semanticRules: ['Render one section with a visible heading when a title is present.'],
+                keyboardRules: ['Expose every public action as a native focusable link or button.'],
+                contrastPairs: ['Text and action tokens meet WCAG AA contrast on the section background.'],
+                mediaRules: ['Images require descriptive alternative text or explicit decorative treatment.'],
+            ),
         );
     }
 }
@@ -55,6 +62,12 @@ Recommended view contract:
 - Render only portable, intentionally public HTML.
 - Keep presentation wrappers in Blade or theme assets, not seeded content fields.
 - Add package tests that render every public block view through representative payloads and assert no authoring markers, signed editor URLs, secrets, or package-internal metadata leak.
+
+## Accessibility Contracts
+
+Every public block definition should declare a `BlockAccessibilityContractData` with semantic, keyboard, contrast, and media rules. Treat the contract as the package-owned checklist that keeps public block output usable across themes.
+
+The default catalog health check fails when a shipped block has an empty rule bucket. Custom packages should add the same focused test around their provider output before relying on the block in Layout Builder or Content Sections.
 
 ## Fixtures And Demo Content
 

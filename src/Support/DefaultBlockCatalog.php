@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Capell\BlockLibrary\Support;
 
+use Capell\BlockLibrary\Data\BlockAccessibilityContractData;
 use Capell\BlockLibrary\Data\BlockScreenshotData;
 
 final class DefaultBlockCatalog
@@ -78,6 +79,48 @@ final class DefaultBlockCatalog
         }
 
         return $screenshots;
+    }
+
+    public static function accessibilityContract(string $key): BlockAccessibilityContractData
+    {
+        $semanticRules = [
+            'Render exactly one section landmark with a visible heading when a title is present.',
+            'Keep heading hierarchy controlled by the host page; do not emit a hard-coded h1.',
+        ];
+
+        $keyboardRules = [
+            'Expose links, buttons, tabs, accordions, and disclosures through native focusable controls.',
+            'Do not require pointer-only interaction for any public action.',
+        ];
+
+        $contrastPairs = [
+            'Text foreground and section background tokens meet WCAG AA contrast.',
+            'Interactive states preserve visible focus and hover contrast.',
+        ];
+
+        $mediaRules = [
+            'Images and logos require descriptive alternative text or explicit decorative treatment.',
+            'Motion, counters, and decorative dividers remain understandable when animation is unavailable.',
+        ];
+
+        if (in_array($key, ['accordion', 'faq', 'tabs'], true)) {
+            $keyboardRules[] = 'Interactive panels expose expanded, selected, and labelled state to assistive technology.';
+        }
+
+        if (in_array($key, ['comparison', 'pricing', 'table'], true)) {
+            $semanticRules[] = 'Grouped rows, columns, plans, or table headers preserve readable relationships.';
+        }
+
+        if (in_array($key, ['hero', 'call_to_action', 'features'], true)) {
+            $keyboardRules[] = 'Primary and secondary calls to action have clear accessible names.';
+        }
+
+        return new BlockAccessibilityContractData(
+            semanticRules: $semanticRules,
+            keyboardRules: $keyboardRules,
+            contrastPairs: $contrastPairs,
+            mediaRules: $mediaRules,
+        );
     }
 
     public static function viewSlug(string $key): string

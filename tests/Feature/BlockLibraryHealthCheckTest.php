@@ -12,11 +12,12 @@ it('returns a compatible capell api version', function (): void {
 it('runs actionable catalog diagnostics', function (): void {
     $results = BlockLibraryHealthCheck::runDiagnostics();
 
-    expect($results)->toHaveCount(7)
+    expect($results)->toHaveCount(8)
         ->and($results->every(static fn (mixed $check): bool => $check instanceof DoctorCheckResultData))->toBeTrue()
         ->and($results->pluck('label')->all())->toBe([
             'Block Library registry binding',
             'Block Library default catalog definitions',
+            'Block Library accessibility contracts',
             'Block Library catalog translations',
             'Block Library catalog views',
             'Block Library Filament builder blocks',

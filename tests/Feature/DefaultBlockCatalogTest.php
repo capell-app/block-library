@@ -24,6 +24,18 @@ it('registers every default catalog block with public views and screenshots', fu
     }
 });
 
+it('declares complete accessibility contracts for every default catalog block', function (): void {
+    foreach (DefaultBlockCatalog::keys() as $key) {
+        $definition = ResolveBlockDefinitionAction::run($key);
+        $contract = $definition->accessibilityContract;
+
+        expect($contract->semanticRules)->not->toBeEmpty($key . ' semantic rules')
+            ->and($contract->keyboardRules)->not->toBeEmpty($key . ' keyboard rules')
+            ->and($contract->contrastPairs)->not->toBeEmpty($key . ' contrast pairs')
+            ->and($contract->mediaRules)->not->toBeEmpty($key . ' media rules');
+    }
+});
+
 it('discovers the default filament builder blocks', function (): void {
     $blocks = resolve(BuilderBlockDiscovery::class)->filamentBlocks();
     $names = array_map(

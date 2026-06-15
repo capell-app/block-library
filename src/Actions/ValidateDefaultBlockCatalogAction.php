@@ -31,6 +31,7 @@ final class ValidateDefaultBlockCatalogAction
         return collect([
             $this->checkRegistry(),
             $this->checkCatalogDefinitions(),
+            $this->checkAccessibilityContracts(),
             $this->checkTranslations(),
             $this->checkViews(),
             $this->checkBuilderBlocks(),
@@ -102,6 +103,53 @@ final class ValidateDefaultBlockCatalogAction
             label: 'Block Library default catalog definitions',
             passed: true,
             message: sprintf('All %d default catalog block definition(s) are registered and public-safe.', count(DefaultBlockCatalog::keys())),
+        );
+    }
+
+    private function checkAccessibilityContracts(): DoctorCheckResultData
+    {
+        $missing = [];
+        $incomplete = [];
+
+        foreach (DefaultBlockCatalog::keys() as $key) {
+            $definition = $this->definitionFor($key);
+
+            if (! $definition instanceof BlockDefinitionData) {
+                $missing[] = $key;
+
+                continue;
+            }
+
+            $contract = $definition->accessibilityContract;
+
+            if (
+                $contract->semanticRules === []
+                || $contract->keyboardRules === []
+                || $contract->contrastPairs === []
+                || $contract->mediaRules === []
+            ) {
+                $incomplete[] = $key;
+            }
+        }
+
+        $issues = [
+            ...$this->formatIssues('missing definitions', $missing),
+            ...$this->formatIssues('with incomplete accessibility contracts', $incomplete),
+        ];
+
+        if ($issues !== []) {
+            return new DoctorCheckResultData(
+                label: 'Block Library accessibility contracts',
+                passed: false,
+                message: 'Accessibility contract issues: ' . implode('; ', $issues) . '.',
+                remediation: 'Declare semantic, keyboard, contrast, and media accessibility rules for every default block definition.',
+            );
+        }
+
+        return new DoctorCheckResultData(
+            label: 'Block Library accessibility contracts',
+            passed: true,
+            message: sprintf('All %d default catalog block definition(s) declare complete accessibility contracts.', count(DefaultBlockCatalog::keys())),
         );
     }
 

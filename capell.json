@@ -51,6 +51,7 @@
     "permissions": [],
     "capabilities": [
         "content-blocks",
+        "per-block-accessibility-contracts",
         "filament-builder-blocks",
         "safe-public-block-views"
     ],
