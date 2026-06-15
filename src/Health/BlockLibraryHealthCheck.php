@@ -21,7 +21,9 @@ final class BlockLibraryHealthCheck implements ChecksExtensionHealth
      */
     public static function runDiagnostics(): Collection
     {
-        return ValidateDefaultBlockCatalogAction::run();
+        $diagnostics = ValidateDefaultBlockCatalogAction::run();
+
+        return $diagnostics instanceof Collection ? $diagnostics : collect();
     }
 
     public static function passed(): bool

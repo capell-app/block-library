@@ -291,7 +291,9 @@ final class ValidateDefaultBlockCatalogAction
     private function definitionFor(string $key): ?BlockDefinitionData
     {
         try {
-            return ResolveBlockDefinitionAction::run($key);
+            $definition = ResolveBlockDefinitionAction::run($key);
+
+            return $definition instanceof BlockDefinitionData ? $definition : null;
         } catch (Throwable) {
             return null;
         }
