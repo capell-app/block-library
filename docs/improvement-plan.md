@@ -49,17 +49,17 @@ Block Library should be positioned as the reusable content-block foundation for 
 
 ## 6. Prioritized Roadmap
 
-| Item                                                         | Bucket | Effort | Impact | Section ref |
-| ------------------------------------------------------------ | ------ | ------ | ------ | ----------- |
-| Add catalog health diagnostics                               | Now    | M      | High   | §2.1, §4.1  |
-| Add public-output safety matrix for every catalog block      | Now    | M      | High   | §2.2, §4.2  |
-| Add builder block discovery cache invalidation tests/docs    | Now    | M      | Medium | §2.3, §4.3  |
-| Document/promote marketplace screenshot gallery policy       | Now    | S      | Medium | §2.4, §4.4  |
-| Enforce per-block accessibility contracts                    | Next   | M      | High   | §3          |
-| Add custom block integration guide for package authors       | Next   | S      | Medium | §3, §5      |
-| Add fixture/demo provider completeness checks                | Next   | M      | Medium | §3          |
-| Add block schema versioning/deprecation support              | Later  | L      | Medium | §3          |
-| Add richer admin block picker/search UX                      | Later  | M      | Medium | §5          |
+| Item                                                      | Bucket | Effort | Impact | Section ref |
+| --------------------------------------------------------- | ------ | ------ | ------ | ----------- |
+| Add catalog health diagnostics                            | Now    | M      | High   | §2.1, §4.1  |
+| Add public-output safety matrix for every catalog block   | Now    | M      | High   | §2.2, §4.2  |
+| Add builder block discovery cache invalidation tests/docs | Now    | M      | Medium | §2.3, §4.3  |
+| Document/promote marketplace screenshot gallery policy    | Now    | S      | Medium | §2.4, §4.4  |
+| Enforce per-block accessibility contracts                 | Next   | M      | High   | §3          |
+| Add custom block integration guide for package authors    | Next   | S      | Medium | §3, §5      |
+| Add fixture/demo provider completeness checks             | Next   | M      | Medium | §3          |
+| Add block schema versioning/deprecation support           | Later  | L      | Medium | §3          |
+| Add richer admin block picker/search UX                   | Later  | M      | Medium | §5          |
 
 ## 7. Verification
 
