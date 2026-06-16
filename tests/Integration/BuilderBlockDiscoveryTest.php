@@ -7,6 +7,7 @@ use Capell\BlockLibrary\Enums\BuilderBlockTarget;
 use Capell\BlockLibrary\Support\BlockRegistry;
 use Capell\BlockLibrary\Support\BuilderBlockDiscovery;
 use Capell\BlockLibrary\Support\BuilderBlockRegistry;
+use Capell\BlockLibrary\Support\DefaultBlockCatalog;
 use Capell\BlockLibrary\Tests\Fixtures\BuilderBlocks\HeroBuilderBlock;
 use Capell\BlockLibrary\Tests\Fixtures\BuilderBlocks\LegacyBuilderBlock;
 use Filament\Forms\Components\Builder\Block;
@@ -76,6 +77,16 @@ it('discovers concrete filament builder block implementations from registered pa
             'hero' => HeroBuilderBlock::class,
             'legacy' => LegacyBuilderBlock::class,
         ]);
+});
+
+it('adds catalog icons to discovered default Filament builder blocks', function (): void {
+    $blocksByName = collect(resolve(BuilderBlockDiscovery::class)->filamentBlocks())
+        ->keyBy(fn (Block $block): string => $block->getName());
+
+    foreach (DefaultBlockCatalog::keys() as $key) {
+        expect($blocksByName->has($key))->toBeTrue()
+            ->and($blocksByName->get($key)?->getIcon())->toBe(DefaultBlockCatalog::icon($key));
+    }
 });
 
 it('caches discovered builder block classes for warm starts', function (): void {

@@ -6,6 +6,7 @@ namespace Capell\BlockLibrary\Support;
 
 use Capell\BlockLibrary\Data\BlockAccessibilityContractData;
 use Capell\BlockLibrary\Data\BlockScreenshotData;
+use Filament\Support\Icons\Heroicon;
 
 final class DefaultBlockCatalog
 {
@@ -61,6 +62,74 @@ final class DefaultBlockCatalog
     public static function description(string $key): string
     {
         return __('capell-block-library::blocks.catalog.' . $key . '.description');
+    }
+
+    public static function icon(string $key): Heroicon
+    {
+        return match ($key) {
+            'accordion' => Heroicon::OutlinedBars3BottomLeft,
+            'call_to_action' => Heroicon::OutlinedMegaphone,
+            'comparison' => Heroicon::OutlinedScale,
+            'content' => Heroicon::OutlinedDocumentText,
+            'counter' => Heroicon::OutlinedCalculator,
+            'divider' => Heroicon::OutlinedMinus,
+            'faq' => Heroicon::OutlinedQuestionMarkCircle,
+            'features' => Heroicon::OutlinedSquares2x2,
+            'hero' => Heroicon::OutlinedSparkles,
+            'logos' => Heroicon::OutlinedBuildingOffice2,
+            'pricing' => Heroicon::OutlinedBanknotes,
+            'stats' => Heroicon::OutlinedChartBar,
+            'table' => Heroicon::OutlinedTableCells,
+            'tabs' => Heroicon::OutlinedRectangleGroup,
+            'team' => Heroicon::OutlinedUserGroup,
+            'testimonial' => Heroicon::OutlinedChatBubbleLeftRight,
+            'timeline' => Heroicon::OutlinedClock,
+            default => Heroicon::OutlinedSquare3Stack3d,
+        };
+    }
+
+    /**
+     * @return list<string>
+     */
+    public static function searchTerms(string $key): array
+    {
+        $terms = [
+            $key,
+            str_replace('_', ' ', $key),
+            self::label($key),
+            self::description($key),
+            'foundation',
+            'content block',
+        ];
+
+        $terms = [
+            ...$terms,
+            ...match ($key) {
+                'accordion' => ['collapsible', 'disclosure', 'sections'],
+                'call_to_action' => ['cta', 'button', 'conversion'],
+                'comparison' => ['compare', 'columns', 'features'],
+                'content' => ['copy', 'article', 'text'],
+                'counter' => ['metrics', 'number', 'kpi'],
+                'divider' => ['separator', 'rule', 'spacing'],
+                'faq' => ['questions', 'answers', 'support'],
+                'features' => ['benefits', 'grid', 'cards'],
+                'hero' => ['banner', 'headline', 'intro'],
+                'logos' => ['brands', 'partners', 'trust'],
+                'pricing' => ['plans', 'tiers', 'commerce'],
+                'stats' => ['metrics', 'numbers', 'proof'],
+                'table' => ['rows', 'columns', 'comparison'],
+                'tabs' => ['sections', 'switcher', 'panels'],
+                'team' => ['people', 'members', 'profiles'],
+                'testimonial' => ['quote', 'review', 'social proof'],
+                'timeline' => ['milestones', 'history', 'steps'],
+                default => [],
+            },
+        ];
+
+        return array_values(array_unique(array_map(
+            static fn (string $term): string => strtolower(trim($term)),
+            array_filter($terms, static fn (string $term): bool => trim($term) !== ''),
+        )));
     }
 
     /**

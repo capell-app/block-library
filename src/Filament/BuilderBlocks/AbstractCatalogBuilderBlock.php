@@ -26,6 +26,7 @@ abstract class AbstractCatalogBuilderBlock implements FilamentBuilderBlock
     {
         return Block::make(static::KEY)
             ->label(DefaultBlockCatalog::label(static::KEY))
+            ->icon(DefaultBlockCatalog::icon(static::KEY))
             ->schema(static::schema());
     }
 
