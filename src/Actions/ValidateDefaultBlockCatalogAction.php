@@ -35,6 +35,7 @@ final class ValidateDefaultBlockCatalogAction
             $this->checkRegistry(),
             $this->checkCatalogDefinitions(),
             $this->checkAccessibilityContracts(),
+            $this->checkSchemaLifecycleMetadata(),
             $this->checkFixtureAndDemoProviders(),
             $this->checkTranslations(),
             $this->checkViews(),
@@ -154,6 +155,58 @@ final class ValidateDefaultBlockCatalogAction
             label: 'Block Library accessibility contracts',
             passed: true,
             message: sprintf('All %d default catalog block definition(s) declare complete accessibility contracts.', count(DefaultBlockCatalog::keys())),
+        );
+    }
+
+    private function checkSchemaLifecycleMetadata(): DoctorCheckResultData
+    {
+        $missing = [];
+        $invalidVersions = [];
+        $selfReplacing = [];
+        $missingDeprecationNotes = [];
+
+        foreach (DefaultBlockCatalog::keys() as $key) {
+            $definition = $this->definitionFor($key);
+
+            if (! $definition instanceof BlockDefinitionData) {
+                $missing[] = $key;
+
+                continue;
+            }
+
+            if ($definition->schemaVersion < 1) {
+                $invalidVersions[] = $key;
+            }
+
+            if ($definition->replacementKey === $definition->key) {
+                $selfReplacing[] = $key;
+            }
+
+            if ($definition->deprecated && ($definition->deprecationNote === null || trim($definition->deprecationNote) === '')) {
+                $missingDeprecationNotes[] = $key;
+            }
+        }
+
+        $issues = [
+            ...$this->formatIssues('missing definitions', $missing),
+            ...$this->formatIssues('with invalid schema versions', $invalidVersions),
+            ...$this->formatIssues('that replace themselves', $selfReplacing),
+            ...$this->formatIssues('deprecated without notes', $missingDeprecationNotes),
+        ];
+
+        if ($issues !== []) {
+            return new DoctorCheckResultData(
+                label: 'Block Library schema lifecycle metadata',
+                passed: false,
+                message: 'Schema lifecycle issues: ' . implode('; ', $issues) . '.',
+                remediation: 'Declare schemaVersion >= 1 for every block and include deprecation notes plus a distinct replacement key for deprecated blocks.',
+            );
+        }
+
+        return new DoctorCheckResultData(
+            label: 'Block Library schema lifecycle metadata',
+            passed: true,
+            message: sprintf('All %d default catalog block definition(s) declare valid schema lifecycle metadata.', count(DefaultBlockCatalog::keys())),
         );
     }
 

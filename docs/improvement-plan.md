@@ -23,7 +23,7 @@ Capabilities declared: `content-blocks`, `per-block-accessibility-contracts`, `d
 - **No actionable health report.** Installers cannot tell which block/view/translation is missing.
 - **Done/Shipped: per-block accessibility gate.** Default catalog definitions now carry complete `BlockAccessibilityContractData` buckets and package health fails when semantics, keyboard, contrast, or media rules are omitted.
 - **Done/Shipped: fixture/demo provider completeness.** Default catalog definitions now reference package-owned providers that return deterministic, public-safe fixture and demo payloads.
-- **No block versioning/deprecation path.** Consuming layouts need a way to evolve block schema safely.
+- **Done/Shipped: block schema lifecycle metadata.** Block definitions now declare `schemaVersion`, optional deprecation state, replacement keys, and deprecation notes; invalid lifecycle metadata fails at construction and default-catalog health diagnostics validate every shipped block. — `src/Data/BlockDefinitionData.php`, `src/Actions/ValidateDefaultBlockCatalogAction.php`, `tests/Unit/BlockDefinitionDataTest.php`, `tests/Feature/BlockLibraryHealthCheckTest.php`
 - **Done/Shipped: consumer-facing integration guide.** `docs/custom-blocks.md` documents custom definitions, provider tagging, public-safe views, fixtures, builder blocks, screenshots, and Marketplace alignment for package authors.
 
 ## 4. Issues / Risks
@@ -50,17 +50,17 @@ Block Library should be positioned as the reusable content-block foundation for 
 
 ## 6. Prioritized Roadmap
 
-| Item                                                      | Bucket | Effort | Impact | Section ref |
-| --------------------------------------------------------- | ------ | ------ | ------ | ----------- |
-| Add catalog health diagnostics                            | Done   | M      | High   | §2.1, §4.1  |
-| Add public-output safety matrix for every catalog block   | Done   | M      | High   | §2.2, §4.2  |
-| Add builder block discovery cache invalidation tests/docs | Done   | M      | Medium | §2.3, §4.3  |
-| Document/promote marketplace screenshot gallery policy    | Done   | S      | Medium | §2.4, §4.4  |
-| Enforce per-block accessibility contracts                 | Done   | M      | High   | §3          |
-| Add custom block integration guide for package authors    | Done   | S      | Medium | §3, §5      |
-| Add fixture/demo provider completeness checks             | Done   | M      | Medium | §3          |
-| Add block schema versioning/deprecation support           | Later  | L      | Medium | §3          |
-| Add richer admin block picker/search UX                   | Later  | M      | Medium | §5          |
+| Item                                                                                                                                                                                   | Bucket | Effort | Impact | Section ref |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ | ------ | ------ | ----------- |
+| Add catalog health diagnostics                                                                                                                                                         | Done   | M      | High   | §2.1, §4.1  |
+| Add public-output safety matrix for every catalog block                                                                                                                                | Done   | M      | High   | §2.2, §4.2  |
+| Add builder block discovery cache invalidation tests/docs                                                                                                                              | Done   | M      | Medium | §2.3, §4.3  |
+| Document/promote marketplace screenshot gallery policy                                                                                                                                 | Done   | S      | Medium | §2.4, §4.4  |
+| Enforce per-block accessibility contracts                                                                                                                                              | Done   | M      | High   | §3          |
+| Add custom block integration guide for package authors                                                                                                                                 | Done   | S      | Medium | §3, §5      |
+| Add fixture/demo provider completeness checks                                                                                                                                          | Done   | M      | Medium | §3          |
+| Done/Shipped: Add block schema versioning/deprecation support. Evidence: definitions expose schema lifecycle metadata and health diagnostics validate default catalog lifecycle state. | Done   | M      | Medium | §3          |
+| Add richer admin block picker/search UX                                                                                                                                                | Later  | M      | Medium | §5          |
 
 ## 7. Verification
 
