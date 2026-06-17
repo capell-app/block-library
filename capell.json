@@ -51,6 +51,10 @@
     "permissions": [],
     "capabilities": [
         "content-blocks",
+        "block-schema-lifecycle",
+        "admin-block-picker-search",
+        "per-block-accessibility-contracts",
+        "default-block-fixtures",
         "filament-builder-blocks",
         "safe-public-block-views"
     ],

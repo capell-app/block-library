@@ -6,7 +6,7 @@
 
 Block Library is an **Available**, **No schema impact** Capell package in the **Capell Foundation** product group. It ships as `capell-app/block-library` and extends these surfaces: admin, frontend, shared.
 
-Block Library provides reusable content blocks, typed definitions, screenshots, and Filament Builder blocks for Capell content packages.
+Block Library provides reusable content blocks, typed definitions, fixtures, demo payloads, screenshots, and Filament Builder blocks for Capell content packages.
 
 After install, admins get package-owned management surfaces and public users may see package-owned frontend output or routes.
 
@@ -23,7 +23,7 @@ Status details:
 
 **For developers:** The package gives developers package-owned service providers, Actions, Data objects, Filament classes, and Blade views instead of pushing this behaviour into core or application code.
 
-**For teams:** Reusable foundation content blocks with typed definitions, screenshots, and Filament Builder blocks for Capell packages.
+**For teams:** Reusable foundation content blocks with typed definitions, fixtures, demo payloads, screenshots, and Filament Builder blocks for Capell packages.
 
 ## Screens And Workflow
 
@@ -36,13 +36,15 @@ Screenshot contract: `docs/screenshots.json`.
 - Frontend features block (frontend, required).
 - Frontend pricing block (frontend, required).
 
+The Marketplace gallery intentionally promotes a curated subset instead of every committed catalog capture. The promoted set must show the admin registry/editor workflow plus representative public output for the highest-value block families; the remaining runner captures stay as package evidence until they are visually reviewed and mapped to buyer-facing gallery slots.
+
 ## Technical Shape
 
 - Service providers: `Capell\BlockLibrary\Providers\BlockLibraryServiceProvider`.
 - Filament classes: `AbstractCatalogBuilderBlock`, `AccordionBlock`, `CallToActionBlock`, `ComparisonBlock`, `ContentBlock`, `CounterBlock`, `DividerBlock`, `FaqBlock`, `FeaturesBlock`, `HeroBlock`, `LogosBlock`, `PricingBlock`, `and 6 more`.
-- Actions: `ListBlockDefinitionsAction`, `RegisterBlockDefinitionProviderAction`, `ResolveBlockDefinitionAction`.
-- Data objects: `AdminPreviewBlockViewReference`, `BlockAccessibilityContractData`, `BlockCompatibilityData`, `BlockContentContractData`, `BlockDefinitionData`, `BlockFixtureData`, `BlockScreenshotData`, `BlockSettingDefinitionData`, `BlockVariantData`, `BlockVariantKey`, `PublicBlockPresentationData`, `PublicBlockViewReference`.
-- Health checks: `Capell\BlockLibrary\Health\BlockLibraryHealthCheck`.
+- Actions: `ListBlockDefinitionsAction`, `ListBuilderBlockPickerItemsAction`, `RegisterBlockDefinitionProviderAction`, `ResolveBlockDefinitionAction`.
+- Data objects: `AdminPreviewBlockViewReference`, `BlockAccessibilityContractData`, `BlockCompatibilityData`, `BlockContentContractData`, `BlockDefinitionData`, `BlockFixtureData`, `BlockScreenshotData`, `BlockSettingDefinitionData`, `BlockVariantData`, `BlockVariantKey`, `BuilderBlockPickerItemData`, `PublicBlockPresentationData`, `PublicBlockViewReference`.
+- Health checks: `Capell\BlockLibrary\Health\BlockLibraryHealthCheck` verifies registry bindings, default definitions, accessibility contracts, fixture/demo providers, translations, views, builder blocks, screenshots, and manifest wiring.
 - Blade views: `packages/block-library/resources/views/blocks/catalog/accordion.blade.php`, `packages/block-library/resources/views/blocks/catalog/call-to-action.blade.php`, `packages/block-library/resources/views/blocks/catalog/comparison.blade.php`, `packages/block-library/resources/views/blocks/catalog/content.blade.php`, `packages/block-library/resources/views/blocks/catalog/counter.blade.php`, `packages/block-library/resources/views/blocks/catalog/divider.blade.php`, `packages/block-library/resources/views/blocks/catalog/faq.blade.php`, `packages/block-library/resources/views/blocks/catalog/features.blade.php`, `packages/block-library/resources/views/blocks/catalog/hero.blade.php`, `packages/block-library/resources/views/blocks/catalog/logos.blade.php`, `packages/block-library/resources/views/blocks/catalog/pricing.blade.php`, `packages/block-library/resources/views/blocks/catalog/stats.blade.php`, `and 7 more`.
 - Cache tags: `block-library`.
 
@@ -66,6 +68,10 @@ Docs gap: document extension points here if the package delegates persistence to
 ## Common Pitfalls
 
 - Keep public Blade and cached HTML free of authoring markers, model IDs, permissions, signed editor URLs, and lazy database queries.
+- Keep every public block definition paired with a non-empty accessibility contract for semantics, keyboard behavior, contrast pairs, and media handling.
+- Keep every default block paired with deterministic fixture and demo payloads that render safely through the public view.
+- Keep default builder blocks paired with picker icons and search terms so consuming admin surfaces can offer a usable searchable block picker.
+- Treat `capell.json marketplace.screenshots` as the buyer-facing gallery and `docs/screenshots.json` as the broader runner contract. Do not promote new block screenshots until the public-output safety matrix and visual review both pass.
 - Keep `composer.json`, `composer.local.json`, `capell.json`, docs, screenshots, and tests aligned when the package surface changes.
 
 ## Troubleshooting
@@ -84,6 +90,7 @@ Docs gap: document extension points here if the package delegates persistence to
 ## Next Steps
 
 - [Package docs](docs/README.md)
+- [Custom block integration guide](docs/custom-blocks.md)
 - [Overview](docs/overview.md)
 - [Screenshot contract](docs/screenshots.json)
 - [Marketplace assets](docs/assets/marketplace/)

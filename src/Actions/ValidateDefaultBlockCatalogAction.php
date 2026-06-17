@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Capell\BlockLibrary\Actions;
 
+use Capell\BlockLibrary\Contracts\BlockDemoContentProvider;
+use Capell\BlockLibrary\Contracts\BlockFixtureProvider;
 use Capell\BlockLibrary\Data\BlockDefinitionData;
+use Capell\BlockLibrary\Data\BlockFixtureData;
 use Capell\BlockLibrary\Health\BlockLibraryHealthCheck;
 use Capell\BlockLibrary\Support\BlockRegistry;
 use Capell\BlockLibrary\Support\BuilderBlockDiscovery;
@@ -31,6 +34,9 @@ final class ValidateDefaultBlockCatalogAction
         return collect([
             $this->checkRegistry(),
             $this->checkCatalogDefinitions(),
+            $this->checkAccessibilityContracts(),
+            $this->checkSchemaLifecycleMetadata(),
+            $this->checkFixtureAndDemoProviders(),
             $this->checkTranslations(),
             $this->checkViews(),
             $this->checkBuilderBlocks(),
@@ -102,6 +108,155 @@ final class ValidateDefaultBlockCatalogAction
             label: 'Block Library default catalog definitions',
             passed: true,
             message: sprintf('All %d default catalog block definition(s) are registered and public-safe.', count(DefaultBlockCatalog::keys())),
+        );
+    }
+
+    private function checkAccessibilityContracts(): DoctorCheckResultData
+    {
+        $missing = [];
+        $incomplete = [];
+
+        foreach (DefaultBlockCatalog::keys() as $key) {
+            $definition = $this->definitionFor($key);
+
+            if (! $definition instanceof BlockDefinitionData) {
+                $missing[] = $key;
+
+                continue;
+            }
+
+            $contract = $definition->accessibilityContract;
+
+            if (
+                $contract->semanticRules === []
+                || $contract->keyboardRules === []
+                || $contract->contrastPairs === []
+                || $contract->mediaRules === []
+            ) {
+                $incomplete[] = $key;
+            }
+        }
+
+        $issues = [
+            ...$this->formatIssues('missing definitions', $missing),
+            ...$this->formatIssues('with incomplete accessibility contracts', $incomplete),
+        ];
+
+        if ($issues !== []) {
+            return new DoctorCheckResultData(
+                label: 'Block Library accessibility contracts',
+                passed: false,
+                message: 'Accessibility contract issues: ' . implode('; ', $issues) . '.',
+                remediation: 'Declare semantic, keyboard, contrast, and media accessibility rules for every default block definition.',
+            );
+        }
+
+        return new DoctorCheckResultData(
+            label: 'Block Library accessibility contracts',
+            passed: true,
+            message: sprintf('All %d default catalog block definition(s) declare complete accessibility contracts.', count(DefaultBlockCatalog::keys())),
+        );
+    }
+
+    private function checkSchemaLifecycleMetadata(): DoctorCheckResultData
+    {
+        $missing = [];
+        $invalidVersions = [];
+        $selfReplacing = [];
+        $missingDeprecationNotes = [];
+
+        foreach (DefaultBlockCatalog::keys() as $key) {
+            $definition = $this->definitionFor($key);
+
+            if (! $definition instanceof BlockDefinitionData) {
+                $missing[] = $key;
+
+                continue;
+            }
+
+            if ($definition->schemaVersion < 1) {
+                $invalidVersions[] = $key;
+            }
+
+            if ($definition->replacementKey === $definition->key) {
+                $selfReplacing[] = $key;
+            }
+
+            if ($definition->deprecated && ($definition->deprecationNote === null || trim($definition->deprecationNote) === '')) {
+                $missingDeprecationNotes[] = $key;
+            }
+        }
+
+        $issues = [
+            ...$this->formatIssues('missing definitions', $missing),
+            ...$this->formatIssues('with invalid schema versions', $invalidVersions),
+            ...$this->formatIssues('that replace themselves', $selfReplacing),
+            ...$this->formatIssues('deprecated without notes', $missingDeprecationNotes),
+        ];
+
+        if ($issues !== []) {
+            return new DoctorCheckResultData(
+                label: 'Block Library schema lifecycle metadata',
+                passed: false,
+                message: 'Schema lifecycle issues: ' . implode('; ', $issues) . '.',
+                remediation: 'Declare schemaVersion >= 1 for every block and include deprecation notes plus a distinct replacement key for deprecated blocks.',
+            );
+        }
+
+        return new DoctorCheckResultData(
+            label: 'Block Library schema lifecycle metadata',
+            passed: true,
+            message: sprintf('All %d default catalog block definition(s) declare valid schema lifecycle metadata.', count(DefaultBlockCatalog::keys())),
+        );
+    }
+
+    private function checkFixtureAndDemoProviders(): DoctorCheckResultData
+    {
+        $missingFixtureProviders = [];
+        $emptyFixtures = [];
+        $missingDemoProviders = [];
+        $emptyDemoContent = [];
+
+        foreach (DefaultBlockCatalog::keys() as $key) {
+            $definition = $this->definitionFor($key);
+
+            if (! $definition instanceof BlockDefinitionData) {
+                continue;
+            }
+
+            if ($definition->fixtureProvider === null) {
+                $missingFixtureProviders[] = $key;
+            } elseif (! $this->fixtureProviderHasFixtures($definition)) {
+                $emptyFixtures[] = $key;
+            }
+
+            if ($definition->demoContentProvider === null) {
+                $missingDemoProviders[] = $key;
+            } elseif (! $this->demoProviderHasContent($definition)) {
+                $emptyDemoContent[] = $key;
+            }
+        }
+
+        $issues = [
+            ...$this->formatIssues('missing fixture providers', $missingFixtureProviders),
+            ...$this->formatIssues('with empty fixtures', $emptyFixtures),
+            ...$this->formatIssues('missing demo content providers', $missingDemoProviders),
+            ...$this->formatIssues('with empty demo content', $emptyDemoContent),
+        ];
+
+        if ($issues !== []) {
+            return new DoctorCheckResultData(
+                label: 'Block Library fixture and demo providers',
+                passed: false,
+                message: 'Fixture or demo provider issues: ' . implode('; ', $issues) . '.',
+                remediation: 'Attach package-owned fixture and demo content providers that return deterministic public-safe payloads for every default block.',
+            );
+        }
+
+        return new DoctorCheckResultData(
+            label: 'Block Library fixture and demo providers',
+            passed: true,
+            message: sprintf('All %d default catalog block definition(s) provide fixture and demo payloads.', count(DefaultBlockCatalog::keys())),
         );
     }
 
@@ -296,6 +451,47 @@ final class ValidateDefaultBlockCatalogAction
             return $definition instanceof BlockDefinitionData ? $definition : null;
         } catch (Throwable) {
             return null;
+        }
+    }
+
+    private function fixtureProviderHasFixtures(BlockDefinitionData $definition): bool
+    {
+        if ($definition->fixtureProvider === null || ! is_a($definition->fixtureProvider, BlockFixtureProvider::class, true)) {
+            return false;
+        }
+
+        try {
+            $provider = resolve($definition->fixtureProvider);
+
+            if (! $provider instanceof BlockFixtureProvider) {
+                return false;
+            }
+
+            foreach ($provider->fixtures($definition) as $fixture) {
+                if ($fixture instanceof BlockFixtureData && $fixture->payload !== []) {
+                    return true;
+                }
+            }
+        } catch (Throwable) {
+            return false;
+        }
+
+        return false;
+    }
+
+    private function demoProviderHasContent(BlockDefinitionData $definition): bool
+    {
+        if ($definition->demoContentProvider === null || ! is_a($definition->demoContentProvider, BlockDemoContentProvider::class, true)) {
+            return false;
+        }
+
+        try {
+            $provider = resolve($definition->demoContentProvider);
+
+            return $provider instanceof BlockDemoContentProvider
+                && $provider->demoContent($definition) !== [];
+        } catch (Throwable) {
+            return false;
         }
     }
 

@@ -127,6 +127,52 @@ it('requires fixture and demo providers to implement their contracts', function 
     ))->toThrow(InvalidArgumentException::class, 'must implement ' . BlockDemoContentProvider::class);
 });
 
+it('validates schema lifecycle metadata', function (): void {
+    expect(fn (): BlockDefinitionData => new BlockDefinitionData(
+        key: 'marketing.hero',
+        label: 'Hero',
+        description: 'Hero block.',
+        category: 'marketing',
+        view: 'vendor-package::blocks.hero',
+        schemaVersion: 0,
+    ))->toThrow(InvalidArgumentException::class, 'schema version must be at least 1');
+
+    expect(fn (): BlockDefinitionData => new BlockDefinitionData(
+        key: 'marketing.hero',
+        label: 'Hero',
+        description: 'Hero block.',
+        category: 'marketing',
+        view: 'vendor-package::blocks.hero',
+        deprecated: true,
+    ))->toThrow(InvalidArgumentException::class, 'must include a deprecation note');
+
+    expect(fn (): BlockDefinitionData => new BlockDefinitionData(
+        key: 'marketing.hero',
+        label: 'Hero',
+        description: 'Hero block.',
+        category: 'marketing',
+        view: 'vendor-package::blocks.hero',
+        replacementKey: 'marketing.hero',
+    ))->toThrow(InvalidArgumentException::class, 'cannot replace itself');
+
+    $definition = new BlockDefinitionData(
+        key: 'marketing.legacy-hero',
+        label: 'Legacy hero',
+        description: 'Legacy hero block.',
+        category: 'marketing',
+        view: 'vendor-package::blocks.legacy-hero',
+        schemaVersion: 2,
+        deprecated: true,
+        replacementKey: 'marketing.hero',
+        deprecationNote: 'Use the new marketing hero block.',
+    );
+
+    expect($definition->schemaVersion)->toBe(2)
+        ->and($definition->deprecated)->toBeTrue()
+        ->and($definition->replacementKey)->toBe('marketing.hero')
+        ->and($definition->deprecationNote)->toBe('Use the new marketing hero block.');
+});
+
 it('builds a safe fallback block definition', function (): void {
     $definition = NullBlockDefinition::make('unknown.block');
 

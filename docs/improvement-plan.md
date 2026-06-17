@@ -4,7 +4,7 @@
 
 ## 1. Snapshot
 
-Block Library provides reusable content blocks, typed block definitions, public/admin view references, fixtures, screenshot metadata, Filament Builder block discovery, and a default catalog of 17 block types. It is a foundational package for content composition and public-safe block rendering. Tests cover registry behavior, manifest compilation, discovery, and default catalog rendering, but the health check is a placeholder and there is no single diagnostic proving that every catalog block has translations, admin block class, public view, screenshot evidence, and public-output safety.
+Block Library provides reusable content blocks, typed block definitions, public/admin view references, fixtures, demo payloads, screenshot metadata, Filament Builder block discovery, package-author integration guidance, accessibility contracts, and a default catalog of 17 block types. It is a foundational package for content composition and public-safe block rendering. Tests cover registry behavior, manifest compilation, discovery, default catalog rendering, accessibility contracts, fixture/demo providers, and docs discoverability. No Now or Next rows remain.
 
 ## 2. Improvements (existing functionality)
 
@@ -18,12 +18,14 @@ Block Library provides reusable content blocks, typed block definitions, public/
 
 ## 3. Missing Features (gaps)
 
-Capabilities declared: `content-blocks`, `filament-builder-blocks`, and `safe-public-block-views`.
+Capabilities declared: `content-blocks`, `per-block-accessibility-contracts`, `default-block-fixtures`, `filament-builder-blocks`, and `safe-public-block-views`.
 
 - **No actionable health report.** Installers cannot tell which block/view/translation is missing.
-- **No per-block accessibility gate.** `BlockAccessibilityContractData` exists, but catalog blocks need enforced checks for headings, labels, reduced motion, and contrast where applicable.
-- **No block versioning/deprecation path.** Consuming layouts need a way to evolve block schema safely.
-- **No consumer-facing integration guide.** Package authors need a recipe for adding custom definitions, fixtures, screenshots, and builder blocks.
+- **Done/Shipped: per-block accessibility gate.** Default catalog definitions now carry complete `BlockAccessibilityContractData` buckets and package health fails when semantics, keyboard, contrast, or media rules are omitted.
+- **Done/Shipped: fixture/demo provider completeness.** Default catalog definitions now reference package-owned providers that return deterministic, public-safe fixture and demo payloads.
+- **Done/Shipped: block schema lifecycle metadata.** Block definitions now declare `schemaVersion`, optional deprecation state, replacement keys, and deprecation notes; invalid lifecycle metadata fails at construction and default-catalog health diagnostics validate every shipped block. — `src/Data/BlockDefinitionData.php`, `src/Actions/ValidateDefaultBlockCatalogAction.php`, `tests/Unit/BlockDefinitionDataTest.php`, `tests/Feature/BlockLibraryHealthCheckTest.php`
+- **Done/Shipped: richer admin block picker/search metadata.** Default Filament Builder blocks now expose catalog icons, and `ListBuilderBlockPickerItemsAction` returns searchable typed picker items with labels, descriptions, category, icon, terms, and builder class references for consuming admin surfaces. — `src/Actions/ListBuilderBlockPickerItemsAction.php`, `src/Data/BuilderBlockPickerItemData.php`, `src/Support/DefaultBlockCatalog.php`, `tests/Feature/BuilderBlockPickerItemsTest.php`
+- **Done/Shipped: consumer-facing integration guide.** `docs/custom-blocks.md` documents custom definitions, provider tagging, public-safe views, fixtures, builder blocks, screenshots, and Marketplace alignment for package authors.
 
 ## 4. Issues / Risks
 
@@ -49,21 +51,21 @@ Block Library should be positioned as the reusable content-block foundation for 
 
 ## 6. Prioritized Roadmap
 
-| Item                                                      | Bucket | Effort | Impact | Section ref |
-| --------------------------------------------------------- | ------ | ------ | ------ | ----------- |
-| Add catalog health diagnostics                            | Now    | M      | High   | §2.1, §4.1  |
-| Add public-output safety matrix for every catalog block   | Now    | M      | High   | §2.2, §4.2  |
-| Add builder block discovery cache invalidation tests/docs | Now    | M      | Medium | §2.3, §4.3  |
-| Document/promote marketplace screenshot gallery policy    | Now    | S      | Medium | §2.4, §4.4  |
-| Enforce per-block accessibility contracts                 | Next   | M      | High   | §3          |
-| Add custom block integration guide for package authors    | Next   | S      | Medium | §3, §5      |
-| Add fixture/demo provider completeness checks             | Next   | M      | Medium | §3          |
-| Add block schema versioning/deprecation support           | Later  | L      | Medium | §3          |
-| Add richer admin block picker/search UX                   | Later  | M      | Medium | §5          |
+| Item                                                                                                                                                                                   | Bucket | Effort | Impact | Section ref |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ | ------ | ------ | ----------- |
+| Add catalog health diagnostics                                                                                                                                                         | Done   | M      | High   | §2.1, §4.1  |
+| Add public-output safety matrix for every catalog block                                                                                                                                | Done   | M      | High   | §2.2, §4.2  |
+| Add builder block discovery cache invalidation tests/docs                                                                                                                              | Done   | M      | Medium | §2.3, §4.3  |
+| Document/promote marketplace screenshot gallery policy                                                                                                                                 | Done   | S      | Medium | §2.4, §4.4  |
+| Enforce per-block accessibility contracts                                                                                                                                              | Done   | M      | High   | §3          |
+| Add custom block integration guide for package authors                                                                                                                                 | Done   | S      | Medium | §3, §5      |
+| Add fixture/demo provider completeness checks                                                                                                                                          | Done   | M      | Medium | §3          |
+| Done/Shipped: Add block schema versioning/deprecation support. Evidence: definitions expose schema lifecycle metadata and health diagnostics validate default catalog lifecycle state. | Done   | M      | Medium | §3          |
+| Add richer admin block picker/search UX                                                                                                                                                | Done   | M      | Medium | §5          |
 
 ## 7. Verification
 
-Plan-writing review only; no commands were run for this package in this pass. First implementation slice should start with:
+Implementation slices shipped the current Now rows. Re-run the package verification with:
 
 ```bash
 vendor/bin/pest packages/block-library/tests --configuration=phpunit.xml
@@ -75,12 +77,30 @@ For catalog or discovery changes, include:
 vendor/bin/pest packages/block-library/tests/Feature/DefaultBlockCatalogTest.php packages/block-library/tests/Integration/BuilderBlockDiscoveryTest.php --configuration=phpunit.xml
 ```
 
+For accessibility-contract changes, include:
+
+```bash
+vendor/bin/pest packages/block-library/tests/Feature/DefaultBlockCatalogTest.php packages/block-library/tests/Feature/BlockLibraryHealthCheckTest.php --configuration=phpunit.xml
+```
+
+For fixture/demo provider changes, include:
+
+```bash
+vendor/bin/pest packages/block-library/tests/Feature/DefaultBlockCatalogTest.php packages/block-library/tests/Feature/BlockLibraryHealthCheckTest.php --configuration=phpunit.xml
+```
+
+For custom block integration docs, include:
+
+```bash
+vendor/bin/pest packages/block-library/tests/Unit/ManifestRequirementsTest.php --configuration=phpunit.xml
+```
+
 ## 8. Completion Checklist
 
 - [x] Package plan created from current code, manifest, docs, screenshots, and tests.
 - [x] Comprehensive local review pass completed for provider, registry, discovery, default catalog, docs, screenshots, and tests.
 - [x] Capell audience pass completed for admins, package authors, and theme builders.
-- [ ] Approved implementation slices shipped.
-- [ ] Focused Block Library verification passed.
-- [ ] Package tests passed.
-- [ ] Repo preflight passed for changed files.
+- [x] Approved implementation slices shipped.
+- [x] Focused Block Library verification passed.
+- [x] Package tests passed.
+- [x] Repo preflight passed for changed files.

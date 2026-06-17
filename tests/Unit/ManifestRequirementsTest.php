@@ -28,4 +28,22 @@ describe('block-library capell.json manifest', function (): void {
             ->and($manifest['surfaces'])->toContain('shared')
             ->and($manifest['providers']['runtime'])->toContain(BlockLibraryServiceProvider::class);
     });
+
+    it('documents the custom block integration contract for package authors', function (): void {
+        $packagePath = dirname(__DIR__, 2);
+        $docsIndex = File::get($packagePath . '/docs/README.md');
+        $readme = File::get($packagePath . '/README.md');
+        $guide = File::get($packagePath . '/docs/custom-blocks.md');
+
+        expect($docsIndex)->toContain('custom-blocks.md')
+            ->and($readme)->toContain('docs/custom-blocks.md')
+            ->and($guide)->toContain(
+                'BlockDefinitionProvider',
+                'BlockDefinitionData',
+                'BlockFixtureProvider',
+                'FilamentBuilderBlock',
+                'docs/screenshots.json',
+                'BuilderBlockDiscovery',
+            );
+    });
 });

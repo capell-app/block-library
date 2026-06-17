@@ -58,6 +58,10 @@ final class BlockDefinitionData
         public ?string $demoContentProvider = null,
         public array $screenshots = [],
         ?BlockCompatibilityData $compatibility = null,
+        public int $schemaVersion = 1,
+        public bool $deprecated = false,
+        public ?string $replacementKey = null,
+        public ?string $deprecationNote = null,
     ) {
         $this->variants = $variants === []
             ? [new BlockVariantData(BlockVariantKey::from('default'), 'capell-block-library::blocks.variants.default')]
@@ -82,6 +86,7 @@ final class BlockDefinitionData
 
         $this->validateVariantDefaults();
         $this->validateProviderContracts();
+        $this->validateLifecycleMetadata();
     }
 
     public function publicViewName(): string
@@ -129,6 +134,25 @@ final class BlockDefinitionData
 
         if ($this->demoContentProvider !== null && ! is_a($this->demoContentProvider, BlockDemoContentProvider::class, true)) {
             throw new InvalidArgumentException(sprintf('Block demo content provider [%s] must implement %s.', $this->demoContentProvider, BlockDemoContentProvider::class));
+        }
+    }
+
+    private function validateLifecycleMetadata(): void
+    {
+        if ($this->schemaVersion < 1) {
+            throw new InvalidArgumentException(sprintf('Block definition [%s] schema version must be at least 1.', $this->key));
+        }
+
+        if ($this->replacementKey !== null && trim($this->replacementKey) === '') {
+            throw new InvalidArgumentException(sprintf('Block definition [%s] replacement key cannot be empty.', $this->key));
+        }
+
+        if ($this->replacementKey === $this->key) {
+            throw new InvalidArgumentException(sprintf('Block definition [%s] cannot replace itself.', $this->key));
+        }
+
+        if ($this->deprecated && ($this->deprecationNote === null || trim($this->deprecationNote) === '')) {
+            throw new InvalidArgumentException(sprintf('Deprecated block definition [%s] must include a deprecation note.', $this->key));
         }
     }
 }
