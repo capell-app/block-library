@@ -38,6 +38,58 @@ Screenshot contract: `screenshots.json`.
 
 Marketplace screenshot policy: keep the gallery curated. `screenshots.json` may track broader admin/frontend runner evidence for the full catalog, but `capell.json marketplace.screenshots` should only promote captures that are route-backed, visually reviewed, and useful to buyers. Promote additional catalog blocks only when the capture proves a distinct block family or workflow that the current gallery does not already communicate.
 
+## Screenshot Evidence
+
+These captures are the package-owned visual contract for the admin pages, public pages, actions, workflows, and feature surfaces described above. Keep this section aligned with `docs/screenshots.json` whenever the package surface changes.
+
+### Content block registry list
+
+![Content block registry list](screenshots/block-library-admin-index.png)
+
+- Surface: admin · Target: content-block-registry.
+- Documents: An editor or package developer reviews the available reusable content blocks before creating block content.
+- Capture notes: Capell runner capture proving the installed block catalog is visible from the admin registry surface.
+
+### Content block editor form
+
+![Content block editor form](screenshots/block-library-admin-create.png)
+
+- Surface: admin · Target: content-block-editor.
+- Documents: An editor creates reusable block content with block-specific settings and preview data.
+- Capture notes: Capell runner capture proving a reusable block can expose editable fields in the admin surface.
+
+### Content block asset settings
+
+![Content block asset settings](screenshots/block-library-admin-assets.png)
+
+- Surface: admin · Target: content-block-assets.
+- Documents: An editor configures media-backed block content before publishing it through a consuming package.
+- Capture notes: Capell runner capture proving reusable block assets can be represented in the admin flow.
+
+### Frontend hero block
+
+![Frontend hero block](screenshots/block-library-frontend-hero.png)
+
+- Surface: frontend · Target: capell-block-library::blocks.catalog.hero.
+- Documents: A buyer verifies the package ships ready-to-render frontend block views.
+- Capture notes: Capell runner capture proving the hero catalog block renders as ordinary public HTML.
+
+### Frontend features block
+
+![Frontend features block](screenshots/block-library-frontend-features.png)
+
+- Surface: frontend · Target: capell-block-library::blocks.catalog.features.
+- Documents: A buyer verifies reusable feature sections can be rendered by consuming packages.
+- Capture notes: Capell runner capture proving a multi-card catalog block renders safely on the frontend.
+
+### Frontend pricing block
+
+![Frontend pricing block](screenshots/block-library-frontend-pricing.png)
+
+- Surface: frontend · Target: capell-block-library::blocks.catalog.pricing.
+- Documents: A buyer verifies reusable pricing sections can be rendered without custom theme work.
+- Capture notes: Capell runner capture proving commercial block layouts render through the frontend catalog views.
+
 ## Technical Shape
 
 - Service providers: `Capell\BlockLibrary\Providers\BlockLibraryServiceProvider`.
