@@ -43,7 +43,7 @@ it('provides fixture and demo payloads for every default catalog block', functio
         expect($definition->fixtureProvider)->toBe(DefaultBlockContentProvider::class)
             ->and($definition->demoContentProvider)->toBe(DefaultBlockContentProvider::class);
 
-        $provider = resolve($definition->fixtureProvider);
+        $provider = resolve(DefaultBlockContentProvider::class);
         expect($provider)->toBeInstanceOf(DefaultBlockContentProvider::class);
 
         $fixtures = iterator_to_array($provider->fixtures($definition));
