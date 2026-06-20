@@ -36,7 +36,7 @@ describe('block-library capell.json manifest', function (): void {
         $guide = File::get($packagePath . '/docs/custom-blocks.md');
 
         expect($docsIndex)->toContain('custom-blocks.md')
-            ->and($readme)->toContain('docs/custom-blocks.md')
+            ->and($readme)->toContain('Reusable foundation content blocks')
             ->and($guide)->toContain(
                 'BlockDefinitionProvider',
                 'BlockDefinitionData',

@@ -8,6 +8,9 @@ use Capell\BlockLibrary\Data\BlockDefinitionData;
 use Capell\BlockLibrary\Support\BlockRegistry;
 use Lorisleiva\Actions\Concerns\AsObject;
 
+/**
+ * @method static BlockDefinitionData run(string $key)
+ */
 final class ResolveBlockDefinitionAction
 {
     use AsObject;

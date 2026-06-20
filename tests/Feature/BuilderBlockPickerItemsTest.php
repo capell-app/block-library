@@ -15,8 +15,13 @@ it('lists searchable picker metadata for every default builder block', function 
     foreach (DefaultBlockCatalog::keys() as $key) {
         $item = $itemsByKey->get($key);
 
-        expect($item)->not->toBeNull()
-            ->and($item->label)->toBe(DefaultBlockCatalog::label($key))
+        expect($item)->not->toBeNull();
+
+        if ($item === null) {
+            continue;
+        }
+
+        expect($item->label)->toBe(DefaultBlockCatalog::label($key))
             ->and($item->description)->toBe(DefaultBlockCatalog::description($key))
             ->and($item->category)->toBe('foundation')
             ->and($item->icon)->toBe(DefaultBlockCatalog::icon($key)->value)
