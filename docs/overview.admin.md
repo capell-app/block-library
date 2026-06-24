@@ -1,7 +1,3 @@
-# Block Library
-
-<!-- prettier-ignore-start -->
-
 ## What it does
 
 Block Library supplies the building blocks that Layout Builder offers when you build a page, such as common content and layout blocks.
@@ -18,9 +14,3 @@ In **Layout Builder's** widget panel, as the blocks you can drag onto a page.
 
 - There is nothing to switch on; the blocks simply appear in Layout Builder.
 - If a block you expect is missing, this package (or Layout Builder) is what provides it.
-
----
-
-For developers: see the [README](../README.md).
-
-<!-- prettier-ignore-end -->
