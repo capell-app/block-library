@@ -27,7 +27,7 @@
     },
     "suggest": {
         "capell-app/content-sections": "Registers reusable section blocks against typed block definitions.",
-        "capell-app/theme-foundation": "Renders package block views through the default frontend theme."
+        "capell-app/foundation-theme": "Renders package block views through the default frontend theme."
     },
     "autoload": {
         "psr-4": {

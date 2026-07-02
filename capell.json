@@ -18,7 +18,7 @@
         "requires": ["capell-app/admin", "capell-app/core"],
         "supports": [
             "capell-app/content-sections",
-            "capell-app/theme-foundation"
+            "capell-app/foundation-theme"
         ],
         "conflicts": []
     },

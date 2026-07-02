@@ -90,7 +90,7 @@ Docs gap: document extension points here if the package delegates persistence to
 - [Capell content language plan](../../docs/CONTENT_LANGUAGE_PLAN.md)
 - [Capell documentation design system](../../docs/DESIGN_SYSTEM.md)
 - [Capell and package ERD notes](../../docs/erd/capell-and-package-erds.md)
-- Related packages: [Content Sections](../content-sections/README.md), [Foundation Theme](../theme-foundation/README.md).
+- Related packages: [Content Sections](../content-sections/README.md), [Foundation Theme](../foundation-theme/README.md).
 - Focused tests: `vendor/bin/pest packages/block-library/tests --configuration=phpunit.xml`.
 
 <!-- prettier-ignore-end -->
