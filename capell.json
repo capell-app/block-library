@@ -18,7 +18,7 @@
         "requires": ["capell-app/admin", "capell-app/core"],
         "supports": [
             "capell-app/content-sections",
-            "capell-app/foundation-theme"
+            "capell-app/theme-foundation"
         ],
         "conflicts": []
     },
@@ -49,15 +49,7 @@
     },
     "settings": [],
     "permissions": [],
-    "capabilities": [
-        "content-blocks",
-        "block-schema-lifecycle",
-        "admin-block-picker-search",
-        "per-block-accessibility-contracts",
-        "default-block-fixtures",
-        "filament-builder-blocks",
-        "safe-public-block-views"
-    ],
+    "capabilities": [],
     "security": {
         "riskTier": "low",
         "publicSurface": {
