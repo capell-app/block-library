@@ -59,7 +59,7 @@ it('serializes public presentation and accessibility contracts', function (): vo
 
 it('normalizes compatibility and validates variant defaults', function (): void {
     $compatibility = new BlockCompatibilityData(
-        themeKeys: ['theme-dark-product-system'],
+        themeKeys: ['theme-night-shift'],
         unsupportedThemeKeys: ['theme-legacy'],
         requiredPackages: ['capell-app/media-library'],
         requiresAccessibleTokenPairs: false,
@@ -67,7 +67,7 @@ it('normalizes compatibility and validates variant defaults', function (): void 
 
     expect($compatibility->supportsTheme(null))->toBeTrue()
         ->and($compatibility->supportsTheme(''))->toBeTrue()
-        ->and($compatibility->supportsTheme('theme-dark-product-system'))->toBeTrue()
+        ->and($compatibility->supportsTheme('theme-night-shift'))->toBeTrue()
         ->and($compatibility->supportsTheme('theme-liquid-glass'))->toBeFalse()
         ->and($compatibility->supportsTheme('theme-legacy'))->toBeFalse()
         ->and($compatibility->requiredPackages)->toBe(['capell-app/media-library'])
