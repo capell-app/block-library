@@ -1,13 +1,11 @@
-@props(['asset', 'meta' => [], 'summary' => null, 'title' => null])
+@props (['asset', 'meta' => [], 'summary' => null, 'title' => null])
 
 @php
     $headers = is_array($meta['headers'] ?? null) ? $meta['headers'] : [];
     $rows = is_array($meta['rows'] ?? null) ? $meta['rows'] : [];
 @endphp
 
-<section
-    {{ $attributes->merge(['class' => 'section section-table']) }}
->
+<section {{ $attributes->merge(['class' => 'section section-table']) }}>
     @if ($title)
         <h2 class="mb-6 text-3xl font-bold">{{ $title }}</h2>
     @endif

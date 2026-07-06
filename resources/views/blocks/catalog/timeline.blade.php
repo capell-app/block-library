@@ -1,12 +1,10 @@
-@props(['asset', 'meta' => [], 'summary' => null, 'title' => null])
+@props (['asset', 'meta' => [], 'summary' => null, 'title' => null])
 
 @php
     $milestones = is_array($meta['milestones'] ?? null) ? $meta['milestones'] : [];
 @endphp
 
-<section
-    {{ $attributes->merge(['class' => 'section section-timeline']) }}
->
+<section {{ $attributes->merge(['class' => 'section section-timeline']) }}>
     @if ($title || $summary)
         <header class="mb-8">
             @if ($title)

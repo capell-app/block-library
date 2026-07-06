@@ -1,13 +1,11 @@
-@props(['asset', 'meta' => [], 'summary' => null, 'title' => null])
+@props (['asset', 'meta' => [], 'summary' => null, 'title' => null])
 
 @php
     $features = is_array($meta['features'] ?? null) ? $meta['features'] : [];
     $columns = (string) ($meta['columns'] ?? '3');
 @endphp
 
-<section
-    {{ $attributes->merge(['class' => 'section section-features']) }}
->
+<section {{ $attributes->merge(['class' => 'section section-features']) }}>
     @if ($title || $summary)
         <header class="mb-8">
             @if ($title)
@@ -21,7 +19,7 @@
     @endif
 
     <div
-        @class(['grid gap-5', 'md:grid-cols-2' => $columns === '2', 'md:grid-cols-3' => $columns === '3', 'md:grid-cols-4' => $columns === '4'])
+        @class (['grid gap-5', 'md:grid-cols-2' => $columns === '2', 'md:grid-cols-3' => $columns === '3', 'md:grid-cols-4' => $columns === '4'])
     >
         @foreach ($features as $feature)
             <article class="rounded-lg border border-slate-200 bg-white p-6">
