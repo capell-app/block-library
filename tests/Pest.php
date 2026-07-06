@@ -6,4 +6,4 @@ use Capell\BlockLibrary\Tests\BlockLibraryTestCase;
 
 require_once __DIR__ . '/BlockLibraryTestCase.php';
 
-pest()->extend(BlockLibraryTestCase::class)->group('block-library')->in(__DIR__);
+pest()->extend(BlockLibraryTestCase::class)->group('block-library')->in('.');
