@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Capell\BlockLibrary\Filament\BuilderBlocks;
 
 use Capell\BlockLibrary\Contracts\FilamentBuilderBlock;
+use Capell\BlockLibrary\Enums\BlockAlignment;
+use Capell\BlockLibrary\Enums\BlockColumnCount;
+use Capell\BlockLibrary\Enums\BlockDividerStyle;
 use Capell\BlockLibrary\Support\DefaultBlockCatalog;
 use Filament\Forms\Components\Builder\Block;
 use Filament\Forms\Components\Repeater;
@@ -62,8 +65,8 @@ abstract class AbstractCatalogBuilderBlock implements FilamentBuilderBlock
             'call_to_action' => [
                 Select::make('alignment')
                     ->label(__('capell-block-library::blocks.fields.alignment'))
-                    ->options(static::alignmentOptions())
-                    ->default('center'),
+                    ->options(BlockAlignment::class)
+                    ->default(BlockAlignment::Center->value),
                 static::actionsRepeater(),
             ],
             'comparison' => [
@@ -90,11 +93,8 @@ abstract class AbstractCatalogBuilderBlock implements FilamentBuilderBlock
             'divider' => [
                 Select::make('style')
                     ->label(__('capell-block-library::blocks.fields.style'))
-                    ->options([
-                        'line' => __('capell-block-library::blocks.fields.style_line'),
-                        'dots' => __('capell-block-library::blocks.fields.style_dots'),
-                    ])
-                    ->default('line'),
+                    ->options(BlockDividerStyle::class)
+                    ->default(BlockDividerStyle::Line->value),
             ],
             'faq' => [
                 static::itemsRepeater('questions', [
@@ -114,8 +114,8 @@ abstract class AbstractCatalogBuilderBlock implements FilamentBuilderBlock
             'hero' => [
                 Select::make('alignment')
                     ->label(__('capell-block-library::blocks.fields.alignment'))
-                    ->options(static::alignmentOptions())
-                    ->default('center'),
+                    ->options(BlockAlignment::class)
+                    ->default(BlockAlignment::Center->value),
                 TextInput::make('url')->label(__('capell-block-library::blocks.fields.url')),
             ],
             'logos' => [
@@ -197,28 +197,12 @@ abstract class AbstractCatalogBuilderBlock implements FilamentBuilderBlock
             ->collapsible();
     }
 
-    protected static function columnsSelect(string $default = '3'): Select
+    protected static function columnsSelect(string $default = BlockColumnCount::Three->value): Select
     {
         return Select::make('columns')
             ->label(__('capell-block-library::blocks.fields.columns'))
-            ->options([
-                '2' => __('capell-block-library::blocks.fields.columns_2'),
-                '3' => __('capell-block-library::blocks.fields.columns_3'),
-                '4' => __('capell-block-library::blocks.fields.columns_4'),
-            ])
+            ->options(BlockColumnCount::class)
             ->default($default);
-    }
-
-    /**
-     * @return array<string, string>
-     */
-    protected static function alignmentOptions(): array
-    {
-        return [
-            'start' => __('capell-block-library::blocks.fields.align_start'),
-            'center' => __('capell-block-library::blocks.fields.align_center'),
-            'end' => __('capell-block-library::blocks.fields.align_end'),
-        ];
     }
 
     protected static function actionsRepeater(): Repeater

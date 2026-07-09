@@ -371,30 +371,49 @@ final class ValidateDefaultBlockCatalogAction
 
     private function checkScreenshots(): DoctorCheckResultData
     {
-        $missing = [];
-
-        foreach (DefaultBlockCatalog::keys() as $key) {
-            foreach (DefaultBlockCatalog::screenshots($key) as $screenshot) {
-                if (! File::exists($this->packagePath($screenshot->path))) {
-                    $missing[] = $screenshot->path;
-                }
-            }
-        }
+        $requiredScreenshots = $this->requiredScreenshotPaths();
+        $missing = array_values(array_filter(
+            $requiredScreenshots,
+            fn (string $path): bool => ! File::exists($this->packagePath($path)),
+        ));
 
         if ($missing !== []) {
             return new DoctorCheckResultData(
                 label: 'Block Library catalog screenshots',
                 passed: false,
-                message: 'Missing screenshot files: ' . implode(', ', $missing) . '.',
-                remediation: 'Capture and commit the missing admin/frontend catalog screenshots under docs/screenshots.',
+                message: 'Missing required screenshot files: ' . implode(', ', $missing) . '.',
+                remediation: 'Capture and commit the required screenshots declared in docs/screenshots.json.',
             );
         }
 
         return new DoctorCheckResultData(
             label: 'Block Library catalog screenshots',
             passed: true,
-            message: sprintf('All %d default catalog screenshot file(s) exist.', count(DefaultBlockCatalog::keys()) * 2),
+            message: sprintf('All %d required screenshot file(s) declared in docs/screenshots.json exist.', count($requiredScreenshots)),
         );
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function requiredScreenshotPaths(): array
+    {
+        $contractPath = $this->packagePath('docs/screenshots.json');
+
+        if (! File::exists($contractPath)) {
+            return ['docs/screenshots.json'];
+        }
+
+        /** @var array<string, mixed> $contract */
+        $contract = json_decode(File::get($contractPath), associative: true, flags: JSON_THROW_ON_ERROR);
+        $entries = is_array($contract['entries'] ?? null) ? $contract['entries'] : [];
+
+        return array_values(collect($entries)
+            ->filter(static fn (mixed $entry): bool => is_array($entry) && ($entry['required'] ?? false) === true)
+            ->map(static fn (array $entry): string => (string) ($entry['screenshotPath'] ?? ''))
+            ->filter(static fn (string $path): bool => $path !== '')
+            ->map(static fn (string $path): string => str_replace('packages/block-library/', '', $path))
+            ->all());
     }
 
     private function checkManifest(): DoctorCheckResultData
