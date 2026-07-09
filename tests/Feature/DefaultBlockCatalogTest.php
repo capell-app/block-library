@@ -3,6 +3,9 @@
 declare(strict_types=1);
 
 use Capell\BlockLibrary\Actions\ResolveBlockDefinitionAction;
+use Capell\BlockLibrary\Enums\BlockAlignment;
+use Capell\BlockLibrary\Enums\BlockColumnCount;
+use Capell\BlockLibrary\Enums\BlockDividerStyle;
 use Capell\BlockLibrary\Support\BuilderBlockDiscovery;
 use Capell\BlockLibrary\Support\DefaultBlockCatalog;
 use Capell\BlockLibrary\Support\DefaultBlockContentProvider;
@@ -63,6 +66,17 @@ it('discovers the default filament builder blocks', function (): void {
     );
 
     expect($names)->toContain(...DefaultBlockCatalog::keys());
+});
+
+it('labels persisted builder block options from enums', function (): void {
+    expect(BlockAlignment::Start->getLabel())->toBe(__('capell-block-library::blocks.fields.align_start'))
+        ->and(BlockAlignment::Center->getLabel())->toBe(__('capell-block-library::blocks.fields.align_center'))
+        ->and(BlockAlignment::End->getLabel())->toBe(__('capell-block-library::blocks.fields.align_end'))
+        ->and(BlockColumnCount::Two->getLabel())->toBe(__('capell-block-library::blocks.fields.columns_2'))
+        ->and(BlockColumnCount::Three->getLabel())->toBe(__('capell-block-library::blocks.fields.columns_3'))
+        ->and(BlockColumnCount::Four->getLabel())->toBe(__('capell-block-library::blocks.fields.columns_4'))
+        ->and(BlockDividerStyle::Line->getLabel())->toBe(__('capell-block-library::blocks.fields.style_line'))
+        ->and(BlockDividerStyle::Dots->getLabel())->toBe(__('capell-block-library::blocks.fields.style_dots'));
 });
 
 it('renders interactive public blocks without authoring surface', function (): void {
