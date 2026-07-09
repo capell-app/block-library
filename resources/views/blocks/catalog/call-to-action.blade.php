@@ -1,4 +1,4 @@
-@props(['asset', 'linkText' => null, 'meta' => [], 'summary' => null, 'title' => null, 'url' => null])
+@props (['asset', 'linkText' => null, 'meta' => [], 'summary' => null, 'title' => null, 'url' => null])
 
 @php
     $actions = is_array($meta['actions'] ?? null) ? $meta['actions'] : [];
@@ -6,7 +6,7 @@
 @endphp
 
 <section
-    @class([
+    @class ([
         'capell-section-call-to-action',
         'section section-call-to-action',
         'text-left' => $alignment === 'start',

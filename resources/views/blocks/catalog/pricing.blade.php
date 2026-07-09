@@ -1,12 +1,10 @@
-@props(['asset', 'meta' => [], 'summary' => null, 'title' => null])
+@props (['asset', 'meta' => [], 'summary' => null, 'title' => null])
 
 @php
     $plans = is_array($meta['plans'] ?? null) ? $meta['plans'] : [];
 @endphp
 
-<section
-    {{ $attributes->merge(['class' => 'section section-pricing']) }}
->
+<section {{ $attributes->merge(['class' => 'section section-pricing']) }}>
     @if ($title || $summary)
         <header class="mb-8 text-center">
             @if ($title)
@@ -24,11 +22,9 @@
     <div class="grid gap-5 md:grid-cols-3">
         @foreach ($plans as $plan)
             <article
-                @class(['rounded-lg border bg-white p-6', 'border-slate-950 shadow-lg' => (bool) ($plan['highlighted'] ?? false), 'border-slate-200' => ! (bool) ($plan['highlighted'] ?? false)])
+                @class (['rounded-lg border bg-white p-6', 'border-slate-950 shadow-lg' => (bool) ($plan['highlighted'] ?? false), 'border-slate-200' => ! (bool) ($plan['highlighted'] ?? false)])
             >
-                <h3 class="text-xl font-semibold">
-                    {{ $plan['name'] ?? '' }}
-                </h3>
+                <h3 class="text-xl font-semibold">{{ $plan['name'] ?? '' }}</h3>
                 <p class="mt-4 text-4xl font-bold">
                     {{ $plan['price'] ?? '' }}
                     @if (filled($plan['period'] ?? null))

@@ -1,8 +1,6 @@
-@props(['asset', 'meta' => []])
+@props (['asset', 'meta' => []])
 
-<div
-    {{ $attributes->merge(['class' => 'section section-divider py-8']) }}
->
+<div {{ $attributes->merge(['class' => 'section section-divider py-8']) }}>
     @if (($meta['style'] ?? 'line') === 'dots')
         <div class="text-center tracking-widest">...</div>
     @elseif (($meta['style'] ?? 'line') === 'line')

@@ -1,11 +1,11 @@
-@props(['asset', 'meta' => [], 'summary' => null, 'title' => null, 'url' => null])
+@props (['asset', 'meta' => [], 'summary' => null, 'title' => null, 'url' => null])
 
 @php
     $alignment = $meta['alignment'] ?? 'center';
 @endphp
 
 <section
-    @class([
+    @class ([
         'capell-section-hero',
         'section section-hero rounded-lg bg-slate-950 p-10 text-white',
         'text-left' => $alignment === 'start',

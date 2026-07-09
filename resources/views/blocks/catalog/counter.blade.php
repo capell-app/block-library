@@ -1,12 +1,10 @@
-@props(['asset', 'meta' => [], 'summary' => null, 'title' => null])
+@props (['asset', 'meta' => [], 'summary' => null, 'title' => null])
 
 @php
     $counters = is_array($meta['counters'] ?? null) ? $meta['counters'] : [];
 @endphp
 
-<section
-    {{ $attributes->merge(['class' => 'section section-counter']) }}
->
+<section {{ $attributes->merge(['class' => 'section section-counter']) }}>
     @if ($title || $summary)
         <header class="mb-8 text-center">
             @if ($title)

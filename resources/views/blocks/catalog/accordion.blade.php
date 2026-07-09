@@ -1,4 +1,4 @@
-@props(['asset', 'meta' => [], 'summary' => null, 'title' => null])
+@props (['asset', 'meta' => [], 'summary' => null, 'title' => null])
 
 @php
     $items = is_array($meta['items'] ?? null) ? $meta['items'] : [];
