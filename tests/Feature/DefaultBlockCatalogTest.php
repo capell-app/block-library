@@ -13,7 +13,7 @@ use Filament\Forms\Components\Builder\Block;
 use Illuminate\Http\Response;
 use Illuminate\Testing\TestResponse;
 
-it('registers every default catalog block with public views and screenshots', function (): void {
+it('registers every default catalog block with public views and screenshot contracts', function (): void {
     foreach (DefaultBlockCatalog::keys() as $key) {
         $definition = ResolveBlockDefinitionAction::run($key);
 
@@ -22,7 +22,10 @@ it('registers every default catalog block with public views and screenshots', fu
             ->and($definition->screenshots)->toHaveCount(2);
 
         foreach ($definition->screenshots as $screenshot) {
-            expect(file_exists(__DIR__ . '/../../' . $screenshot->path))->toBeTrue($screenshot->path);
+            expect($screenshot->path)->toStartWith('docs/screenshots/block-library-')
+                ->and($screenshot->path)->toEndWith('.png')
+                ->and($screenshot->alt)->not->toBeEmpty()
+                ->and($screenshot->caption)->not->toBeEmpty();
         }
     }
 });
