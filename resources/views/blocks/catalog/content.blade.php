@@ -6,6 +6,6 @@
     @endif
 
     @if ($summary)
-        <div class="prose max-w-none text-lg">{!! $summary !!}</div>
+        <div class="prose max-w-none text-lg">@safeBlockHtml ($summary)</div>
     @endif
 </section>

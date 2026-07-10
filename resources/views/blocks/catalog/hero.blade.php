@@ -20,7 +20,7 @@
 
     @if ($summary)
         <div class="mx-auto mt-5 max-w-3xl text-xl text-slate-200">
-            {!! $summary !!}
+            @safeBlockHtml ($summary)
         </div>
     @endif
 

@@ -13,7 +13,7 @@
 
             @if ($summary)
                 <div class="mx-auto mt-3 max-w-3xl text-lg opacity-80">
-                    {!! $summary !!}
+                    @safeBlockHtml ($summary)
                 </div>
             @endif
         </header>

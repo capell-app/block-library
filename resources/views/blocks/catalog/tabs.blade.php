@@ -16,7 +16,9 @@
             @endif
 
             @if ($summary)
-                <div class="mt-3 text-lg opacity-80">{!! $summary !!}</div>
+                <div class="mt-3 text-lg opacity-80">
+                    @safeBlockHtml ($summary)
+                </div>
             @endif
         </header>
     @endif
@@ -56,7 +58,7 @@
                         {{ $tab['label'] ?? '' }}
                     </h3>
                     <div class="prose max-w-none">
-                        {!! $tab['content'] ?? '' !!}
+                        @safeBlockHtml ($tab['content'] ?? '')
                     </div>
                 </article>
             @endforeach

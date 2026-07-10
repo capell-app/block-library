@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Capell\BlockLibrary\Providers;
 
 use Capell\BlockLibrary\Actions\RegisterBlockDefinitionProviderAction;
+use Capell\BlockLibrary\Actions\SanitizeBlockHtmlAction;
 use Capell\BlockLibrary\Contracts\BlockDefinitionProvider;
 use Capell\BlockLibrary\Support\BlockRegistry;
 use Capell\BlockLibrary\Support\BuilderBlockDiscovery;
@@ -56,6 +57,11 @@ final class BlockLibraryServiceProvider extends AbstractPackageServiceProvider
 
     public function packageBooted(): void
     {
+        Blade::directive(
+            'safeBlockHtml',
+            static fn (string $expression): string => sprintf('<?php echo \\%s::run(%s); ?>', SanitizeBlockHtmlAction::class, $expression),
+        );
+
         Blade::anonymousComponentPath(__DIR__ . '/../../resources/views', 'capell-block-library');
     }
 }

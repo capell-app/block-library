@@ -16,7 +16,9 @@
             @endif
 
             @if ($summary)
-                <div class="mt-3 text-lg opacity-80">{!! $summary !!}</div>
+                <div class="mt-3 text-lg opacity-80">
+                    @safeBlockHtml ($summary)
+                </div>
             @endif
         </header>
     @endif
@@ -41,7 +43,7 @@
                         x-show="openQuestion === {{ $loop->index }}"
                         x-cloak
                     >
-                        {!! $question['answer'] !!}
+                        @safeBlockHtml ($question['answer'])
                     </div>
                 @endif
             </article>

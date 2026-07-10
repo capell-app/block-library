@@ -113,6 +113,23 @@ it('renders every default public block view', function (): void {
     }
 });
 
+it('sanitizes hostile rich text inside block catalog views', function (): void {
+    $html = view('capell-block-library::blocks.catalog.accordion', [
+        'asset' => null,
+        'title' => 'Safe title',
+        'summary' => '<script>alert(1)</script><p onclick="alert(2)">Safe summary</p>',
+        'meta' => [
+            'items' => [[
+                'heading' => 'Safe heading',
+                'content' => '<iframe src="https://attacker.test"></iframe><a href="javascript:alert(3)">Safe link</a>',
+            ]],
+        ],
+    ])->render();
+
+    expect($html)->toContain('Safe summary', 'Safe link')
+        ->not->toContain('<script', '<iframe', 'onclick=', 'javascript:');
+});
+
 it('keeps every default public block view free of authoring and package internals', function (): void {
     $forbiddenNeedles = [
         'capell-app/block-library',

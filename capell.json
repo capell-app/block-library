@@ -47,9 +47,12 @@
         "demo": null,
         "doctor": null
     },
+    "actions": {
+        "sanitizeBlockHtml": "Capell\\BlockLibrary\\Actions\\SanitizeBlockHtmlAction"
+    },
     "settings": [],
     "permissions": [],
-    "capabilities": [],
+    "capabilities": ["block-rich-text-render-sanitization"],
     "security": {
         "riskTier": "low",
         "publicSurface": {
