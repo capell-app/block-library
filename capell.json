@@ -4,7 +4,7 @@
     "slug": "block-library",
     "displayName": "Block Library",
     "kind": "package",
-    "capellApiVersion": "^4.0",
+    "capellApiVersion": "^0.0",
     "version": "0.0.x-dev",
     "description": "Block Library provides reusable content blocks, typed definitions, screenshots, and Filament Builder blocks for Capell content packages.",
     "product": {
@@ -130,11 +130,6 @@
                 "path": "docs/screenshots/block-library-admin-create.png",
                 "alt": "Capell admin content block create form",
                 "caption": "Content block editor form"
-            },
-            {
-                "path": "docs/screenshots/block-library-admin-assets.png",
-                "alt": "Capell admin content block asset settings",
-                "caption": "Content block asset settings"
             },
             {
                 "path": "docs/screenshots/block-library-frontend-hero.png",
