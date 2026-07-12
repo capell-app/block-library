@@ -186,7 +186,7 @@ it('builds a safe fallback block definition', function (): void {
 it('registers package metadata and health compatibility', function (): void {
     expect(BlockLibraryServiceProvider::$name)->toBe('capell-block-library')
         ->and(BlockLibraryServiceProvider::$packageName)->toBe('capell-app/block-library')
-        ->and(BlockLibraryHealthCheck::compatibleCapellApiVersion())->toBe('^0.0');
+        ->and(BlockLibraryHealthCheck::compatibleCapellApiVersion())->toBe('^4.0');
 });
 
 it('accepts valid custom providers', function (): void {
