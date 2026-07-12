@@ -4,7 +4,7 @@
     "slug": "block-library",
     "displayName": "Block Library",
     "kind": "package",
-    "capellApiVersion": "^0.0.1",
+    "capellApiVersion": "^0.0",
     "version": "0.0.x-dev",
     "description": "Block Library provides reusable content blocks, typed definitions, screenshots, and Filament Builder blocks for Capell content packages.",
     "product": {

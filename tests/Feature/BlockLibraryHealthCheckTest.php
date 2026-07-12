@@ -6,7 +6,7 @@ use Capell\BlockLibrary\Health\BlockLibraryHealthCheck;
 use Capell\Core\Data\Diagnostics\DoctorCheckResultData;
 
 it('returns a compatible capell api version', function (): void {
-    expect(BlockLibraryHealthCheck::compatibleCapellApiVersion())->toBe('^4.0');
+    expect(BlockLibraryHealthCheck::compatibleCapellApiVersion())->toBe('^0.0');
 });
 
 it('runs actionable catalog diagnostics', function (): void {
