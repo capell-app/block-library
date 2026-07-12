@@ -1,0 +1,87 @@
+{
+    "package": "block-library",
+    "composerName": "capell-app/block-library",
+    "generatedFor": "deployment-screenshot-runner",
+    "requiresInstalledPackage": true,
+    "outputDirectory": "packages/block-library/docs/screenshots",
+    "entries": [
+        {
+            "id": "content-block-registry-list",
+            "title": "Content block registry list.",
+            "package": "block-library",
+            "surface": "admin",
+            "targetType": "admin-surface",
+            "target": "content-block-registry",
+            "required": true,
+            "notes": "Capell runner capture proving the installed block catalog is visible from the admin registry surface.",
+            "useCase": "An editor or package developer reviews the available reusable content blocks before creating block content.",
+            "screenshotPath": "packages/block-library/docs/screenshots/block-library-admin-index.png"
+        },
+        {
+            "id": "content-block-editor-form",
+            "title": "Content block editor form.",
+            "package": "block-library",
+            "surface": "admin",
+            "targetType": "admin-surface",
+            "target": "content-block-editor",
+            "required": true,
+            "notes": "Capell runner capture proving a reusable block can expose editable fields in the admin surface.",
+            "useCase": "An editor creates reusable block content with block-specific settings and preview data.",
+            "screenshotPath": "packages/block-library/docs/screenshots/block-library-admin-create.png"
+        },
+        {
+            "id": "content-block-assets",
+            "title": "Content block asset settings.",
+            "package": "block-library",
+            "surface": "admin",
+            "targetType": "admin-surface",
+            "target": "content-block-assets",
+            "required": false,
+            "notes": "Optional Beta evidence target. The current file duplicates the registry capture; replace it with an independently captured asset workflow before using it as release or Marketplace evidence.",
+            "useCase": "An editor configures media-backed block content before publishing it through a consuming package.",
+            "screenshotPath": "packages/block-library/docs/screenshots/block-library-admin-assets.png"
+        },
+        {
+            "id": "frontend-hero-block",
+            "title": "Frontend hero block.",
+            "package": "block-library",
+            "surface": "frontend",
+            "targetType": "frontend-view",
+            "target": "capell-block-library::blocks.catalog.hero",
+            "url": "/screenshot-fixtures/block-library/frontend-hero-block",
+            "waitFor": ".block-library-hero",
+            "required": true,
+            "notes": "Capell runner capture proving the hero catalog block renders as ordinary public HTML.",
+            "useCase": "A buyer verifies the package ships ready-to-render frontend block views.",
+            "screenshotPath": "packages/block-library/docs/screenshots/block-library-frontend-hero.png"
+        },
+        {
+            "id": "frontend-features-block",
+            "title": "Frontend features block.",
+            "package": "block-library",
+            "surface": "frontend",
+            "targetType": "frontend-view",
+            "target": "capell-block-library::blocks.catalog.features",
+            "url": "/screenshot-fixtures/block-library/frontend-features-block",
+            "waitFor": ".block-library-features",
+            "required": true,
+            "notes": "Capell runner capture proving a multi-card catalog block renders safely on the frontend.",
+            "useCase": "A buyer verifies reusable feature sections can be rendered by consuming packages.",
+            "screenshotPath": "packages/block-library/docs/screenshots/block-library-frontend-features.png"
+        },
+        {
+            "id": "frontend-pricing-block",
+            "title": "Frontend pricing block.",
+            "package": "block-library",
+            "surface": "frontend",
+            "targetType": "frontend-view",
+            "target": "capell-block-library::blocks.catalog.pricing",
+            "url": "/screenshot-fixtures/block-library/frontend-pricing-block",
+            "waitFor": ".block-library-pricing",
+            "required": true,
+            "notes": "Capell runner capture proving commercial block layouts render through the frontend catalog views.",
+            "useCase": "A buyer verifies reusable pricing sections can be rendered without custom theme work.",
+            "screenshotPath": "packages/block-library/docs/screenshots/block-library-frontend-pricing.png"
+        }
+    ]
+}

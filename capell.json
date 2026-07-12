@@ -1,0 +1,152 @@
+{
+    "manifest-version": 3,
+    "name": "capell-app/block-library",
+    "slug": "block-library",
+    "displayName": "Block Library",
+    "kind": "package",
+    "capellApiVersion": "^0.0.1",
+    "version": "0.0.x-dev",
+    "description": "Block Library provides reusable content blocks, typed definitions, screenshots, and Filament Builder blocks for Capell content packages.",
+    "product": {
+        "group": "Capell Foundation",
+        "tier": "free",
+        "bundle": "foundation"
+    },
+    "namespace": "Capell\\BlockLibrary",
+    "surfaces": ["admin", "frontend", "shared"],
+    "dependencies": {
+        "requires": ["capell-app/admin", "capell-app/core"],
+        "supports": [
+            "capell-app/content-sections",
+            "capell-app/theme-foundation"
+        ],
+        "conflicts": []
+    },
+    "providers": {
+        "metadata": [],
+        "install": [],
+        "runtime": [
+            "Capell\\BlockLibrary\\Providers\\BlockLibraryServiceProvider"
+        ],
+        "admin": [
+            "Capell\\BlockLibrary\\Providers\\BlockLibraryServiceProvider"
+        ],
+        "frontend": [
+            "Capell\\BlockLibrary\\Providers\\BlockLibraryServiceProvider"
+        ]
+    },
+    "contributes": [],
+    "database": {
+        "migrations": false,
+        "settings": false,
+        "requiredTables": []
+    },
+    "commands": {
+        "install": null,
+        "setup": null,
+        "demo": null,
+        "doctor": null
+    },
+    "actions": {
+        "sanitizeBlockHtml": "Capell\\BlockLibrary\\Actions\\SanitizeBlockHtmlAction"
+    },
+    "settings": [],
+    "permissions": [],
+    "capabilities": ["block-rich-text-render-sanitization"],
+    "security": {
+        "riskTier": "low",
+        "publicSurface": {
+            "routeNames": [],
+            "auth": "none",
+            "csrfExemptRoutes": [],
+            "signedRoutes": [],
+            "tokenizedRoutes": [],
+            "webhookRoutes": [],
+            "throttledRoutes": []
+        },
+        "sensitiveData": {
+            "encryptedFields": [],
+            "hashedTokenFields": [],
+            "redactedOutputClasses": [],
+            "plaintextJustifications": []
+        },
+        "publicOutput": {
+            "cacheSafe": true,
+            "forbidAuthoringSurface": true,
+            "forbidSecrets": true,
+            "forbidPublicBladeQueries": true
+        },
+        "externalHttpClients": {
+            "requiresTimeouts": false,
+            "requiresSecretRedaction": false,
+            "clients": []
+        },
+        "adminSurface": {
+            "authorization": "panel-auth",
+            "permissions": []
+        }
+    },
+    "performance": {
+        "frontendRenderBudgetMs": 0,
+        "adminQueryBudget": 0,
+        "cacheTags": ["block-library"],
+        "cacheSafety": {
+            "cacheable": false,
+            "variesBy": [],
+            "sensitiveOutput": false,
+            "invalidationSources": [],
+            "queueInvalidation": false
+        }
+    },
+    "healthChecks": [
+        {
+            "key": "block-library.package-health",
+            "label": "Block Library package surfaces, providers, and install health are discoverable by Diagnostics.",
+            "class": "Capell\\BlockLibrary\\Health\\BlockLibraryHealthCheck",
+            "severity": "critical",
+            "surface": "shared"
+        }
+    ],
+    "commercial": {
+        "proposedLicense": "free",
+        "requestedCertification": "first-party",
+        "supportPolicy": "capell-first-party",
+        "privateDocsRequested": false
+    },
+    "marketplace": {
+        "summary": "Reusable foundation content blocks with typed definitions, screenshots, and Filament Builder blocks for Capell packages.",
+        "screenshots": [
+            {
+                "path": "docs/assets/marketplace/extension-card.jpg",
+                "alt": "Block Library extension preview image",
+                "caption": "Block Library extension preview"
+            },
+            {
+                "path": "docs/screenshots/block-library-admin-index.png",
+                "alt": "Capell admin content block registry list",
+                "caption": "Content block registry list"
+            },
+            {
+                "path": "docs/screenshots/block-library-admin-create.png",
+                "alt": "Capell admin content block create form",
+                "caption": "Content block editor form"
+            },
+            {
+                "path": "docs/screenshots/block-library-frontend-hero.png",
+                "alt": "Frontend hero block rendered from Block Library",
+                "caption": "Frontend hero block"
+            },
+            {
+                "path": "docs/screenshots/block-library-frontend-features.png",
+                "alt": "Frontend feature block rendered from Block Library",
+                "caption": "Frontend feature block"
+            },
+            {
+                "path": "docs/screenshots/block-library-frontend-pricing.png",
+                "alt": "Frontend pricing block rendered from Block Library",
+                "caption": "Frontend pricing block"
+            }
+        ],
+        "categories": ["foundation", "shared"]
+    }
+}

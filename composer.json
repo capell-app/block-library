@@ -1,0 +1,61 @@
+{
+    "name": "capell-app/block-library",
+    "description": "Shared typed content block primitives for Capell packages.",
+    "keywords": [
+        "capell",
+        "block-library",
+        "laravel",
+        "filamentphp",
+        "cms"
+    ],
+    "homepage": "https://github.com/capell-app/block-library",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Howdu",
+            "email": "capell.app26@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.4",
+        "capell-app/admin": "^0.0.4 || 0.0.x-dev",
+        "capell-app/core": "^0.0.4 || 0.0.x-dev",
+        "filament/forms": "^5.6.8 <5.7.0-beta",
+        "lorisleiva/laravel-actions": "*",
+        "spatie/laravel-package-tools": "*"
+    },
+    "suggest": {
+        "capell-app/content-sections": "Registers reusable section blocks against typed block definitions.",
+        "capell-app/theme-foundation": "Renders package block views through the default frontend theme."
+    },
+    "autoload": {
+        "psr-4": {
+            "Capell\\BlockLibrary\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Capell\\BlockLibrary\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Capell\\BlockLibrary\\Providers\\BlockLibraryServiceProvider"
+            ]
+        },
+        "branch-alias": {
+            "dev-main": "0.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "prefer-stable": true,
+    "type": "library",
+    "support": {
+        "source": "https://github.com/capell-app/capell-packages",
+        "docs": "https://docs.capell.app/packages/block-library"
+    }
+}
