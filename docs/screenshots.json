@@ -36,8 +36,8 @@
             "surface": "admin",
             "targetType": "admin-surface",
             "target": "content-block-assets",
-            "required": true,
-            "notes": "Capell runner capture proving reusable block assets can be represented in the admin flow.",
+            "required": false,
+            "notes": "Optional Beta evidence target. The current file duplicates the registry capture; replace it with an independently captured asset workflow before using it as release or Marketplace evidence.",
             "useCase": "An editor configures media-backed block content before publishing it through a consuming package.",
             "screenshotPath": "packages/block-library/docs/screenshots/block-library-admin-assets.png"
         },

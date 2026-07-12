@@ -132,11 +132,6 @@
                 "caption": "Content block editor form"
             },
             {
-                "path": "docs/screenshots/block-library-admin-assets.png",
-                "alt": "Capell admin content block asset settings",
-                "caption": "Content block asset settings"
-            },
-            {
                 "path": "docs/screenshots/block-library-frontend-hero.png",
                 "alt": "Frontend hero block rendered from Block Library",
                 "caption": "Frontend hero block"
