@@ -18,7 +18,7 @@ describe('block-library capell.json manifest', function (): void {
                 'name' => 'capell-app/block-library',
                 'slug' => 'block-library',
                 'kind' => 'package',
-                'capellApiVersion' => '^4.0',
+                'capellApiVersion' => '^1.0',
                 'product' => [
                     'group' => 'Capell Foundation',
                     'tier' => 'free',
