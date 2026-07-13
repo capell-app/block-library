@@ -2,7 +2,7 @@
 
 <!-- prettier-ignore-start -->
 
-## What This Extension Adds
+## What This Plugin Adds
 
 Block Library is an **Available**, **No schema impact** Capell package in the **Capell Foundation** product group. It ships as `capell-app/block-library` and extends these surfaces: admin, frontend, shared.
 
@@ -65,7 +65,6 @@ Docs gap: document extension points here if the package delegates persistence to
 
 ## Common Pitfalls
 
-- Catalog rich text is sanitized again at render time. Consumers may still sanitize earlier, but must not bypass the package views' `@safeBlockHtml` boundary for editor-authored HTML.
 - Keep public Blade and cached HTML free of authoring markers, model IDs, permissions, signed editor URLs, and lazy database queries.
 - Keep `composer.json`, `composer.local.json`, `capell.json`, docs, screenshots, and tests aligned when the package surface changes.
 
@@ -91,7 +90,7 @@ Docs gap: document extension points here if the package delegates persistence to
 - [Capell content language plan](../../docs/CONTENT_LANGUAGE_PLAN.md)
 - [Capell documentation design system](../../docs/DESIGN_SYSTEM.md)
 - [Capell and package ERD notes](../../docs/erd/capell-and-package-erds.md)
-- Related packages: [Content Sections](../content-sections/README.md), [Foundation Theme](../theme-foundation/README.md).
+- Related packages: [Content Sections](../content-sections/README.md), [Theme Foundation](../theme-foundation/README.md).
 - Focused tests: `vendor/bin/pest packages/block-library/tests --configuration=phpunit.xml`.
 
 <!-- prettier-ignore-end -->
