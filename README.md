@@ -6,9 +6,11 @@
 
 Block Library is an **Available**, **No schema impact** Capell package in the **Capell Foundation** product group. It ships as `capell-app/block-library` and extends these surfaces: admin, frontend, shared.
 
-Block Library provides reusable content blocks, typed definitions, screenshots, and Filament Builder blocks for Capell content packages.
+Block Library supplies typed, reusable content-block definitions and matching Filament Builder blocks for Capell content packages.
 
-After install, admins get package-owned management surfaces and public users may see package-owned frontend output or routes.
+The package has no standalone admin resource. Editors see its registered block choices inside Builder surfaces provided by consuming packages and can render their matching frontend views.
+
+Evidence: [`capell.json`](capell.json), [`src/Support/DefaultBlockCatalog.php`](src/Support/DefaultBlockCatalog.php), [`src/Providers/BlockLibraryServiceProvider.php`](src/Providers/BlockLibraryServiceProvider.php), [`docs/overview.admin.md`](docs/overview.admin.md), [`docs/screenshots.json`](docs/screenshots.json), [`tests/Feature/BuilderBlockPickerItemsTest.php`](tests/Feature/BuilderBlockPickerItemsTest.php), [`tests/Integration/BuilderBlockDiscoveryTest.php`](tests/Integration/BuilderBlockDiscoveryTest.php).
 
 Status details:
 
@@ -21,9 +23,11 @@ Status details:
 
 ## Why It Matters
 
-**For developers:** The package gives developers package-owned service providers, Actions, Data objects, Filament classes, and Blade views instead of pushing this behaviour into core or application code.
+**For developers:** BlockDefinitionProvider and FilamentBuilderBlock define the extension boundary, while the block and builder registries resolve definitions without hard-coding them into a consuming package.
 
-**For teams:** Reusable foundation content blocks with typed definitions, screenshots, and Filament Builder blocks for Capell packages.
+**For teams:** Editors can use the same supported block types across package-owned content forms instead of rebuilding common sections for each workflow.
+
+Evidence: [`src/Contracts/BlockDefinitionProvider.php`](src/Contracts/BlockDefinitionProvider.php), [`src/Contracts/FilamentBuilderBlock.php`](src/Contracts/FilamentBuilderBlock.php), [`src/Support/BlockRegistry.php`](src/Support/BlockRegistry.php), [`src/Support/BuilderBlockRegistry.php`](src/Support/BuilderBlockRegistry.php), [`docs/overview.admin.md`](docs/overview.admin.md), [`docs/screenshots.json`](docs/screenshots.json), [`tests/Feature/DefaultBlockCatalogTest.php`](tests/Feature/DefaultBlockCatalogTest.php).
 
 ## Screens And Workflow
 
@@ -44,33 +48,37 @@ Screenshot contract: `docs/screenshots.json`.
 
 - Service providers: `Capell\BlockLibrary\Providers\BlockLibraryServiceProvider`.
 - Filament classes: `AbstractCatalogBuilderBlock`, `AccordionBlock`, `CallToActionBlock`, `ComparisonBlock`, `ContentBlock`, `CounterBlock`, `DividerBlock`, `FaqBlock`, `FeaturesBlock`, `HeroBlock`, `LogosBlock`, `PricingBlock`, `and 6 more`.
+- Extension contracts: `BlockDefinitionProvider`, `BlockDemoContentProvider`, `BlockFixtureProvider`, `BlockRenderer`, `FilamentBuilderBlock`.
 - Actions: `ListBlockDefinitionsAction`, `ListBuilderBlockPickerItemsAction`, `RegisterBlockDefinitionProviderAction`, `ResolveBlockDefinitionAction`, `SanitizeBlockHtmlAction`, `ValidateDefaultBlockCatalogAction`.
 - Data objects: `AdminPreviewBlockViewReference`, `BlockAccessibilityContractData`, `BlockCompatibilityData`, `BlockContentContractData`, `BlockDefinitionData`, `BlockFixtureData`, `BlockScreenshotData`, `BlockSettingDefinitionData`, `BlockVariantData`, `BlockVariantKey`, `BuilderBlockPickerItemData`, `PublicBlockPresentationData`, `and 1 more`.
+- Manifest action API: `sanitizeBlockHtml: Capell\BlockLibrary\Actions\SanitizeBlockHtmlAction`.
 - Health checks: `Capell\BlockLibrary\Health\BlockLibraryHealthCheck`.
 - Blade views: `packages/block-library/resources/views/blocks/catalog/accordion.blade.php`, `packages/block-library/resources/views/blocks/catalog/call-to-action.blade.php`, `packages/block-library/resources/views/blocks/catalog/comparison.blade.php`, `packages/block-library/resources/views/blocks/catalog/content.blade.php`, `packages/block-library/resources/views/blocks/catalog/counter.blade.php`, `packages/block-library/resources/views/blocks/catalog/divider.blade.php`, `packages/block-library/resources/views/blocks/catalog/faq.blade.php`, `packages/block-library/resources/views/blocks/catalog/features.blade.php`, `packages/block-library/resources/views/blocks/catalog/hero.blade.php`, `packages/block-library/resources/views/blocks/catalog/logos.blade.php`, `packages/block-library/resources/views/blocks/catalog/pricing.blade.php`, `packages/block-library/resources/views/blocks/catalog/stats.blade.php`, `and 7 more`.
 - Cache tags: `block-library`.
 
 ## Data Model
 
-This package has no schema impact. It does not declare package-owned migrations or required tables.
-
-Docs gap: document extension points here if the package delegates persistence to a host package.
+This package has no schema impact. It registers runtime behaviour through `Capell\BlockLibrary\Providers\BlockLibraryServiceProvider` while persistence remains with Capell core or required packages.
 
 ## Install Impact
 
-- Admin navigation: adds package-owned Filament classes when registered.
+- Required packages: `capell-app/admin`, `capell-app/core`.
+- Admin navigation: no admin page or resource contribution is declared.
+- Admin/editor extensions: none declared.
 - Permissions: none declared in `capell.json`.
-- Public routes: none detected in package route files.
+- Public routes: none declared.
 - Database changes: no package migrations declared.
+- Config: no package config files.
 - Settings: no package settings declared.
-- Queues or schedules: none detected in standard package paths.
+- Queues or schedules: none declared.
 - Cache tags: `block-library`.
 - Commands: none declared.
 
 ## Common Pitfalls
 
+- Keep required Capell packages on compatible v4 releases: `capell-app/admin`, `capell-app/core`.
 - Keep public Blade and cached HTML free of authoring markers, model IDs, permissions, signed editor URLs, and lazy database queries.
-- Keep `composer.json`, `composer.local.json`, `capell.json`, docs, screenshots, and tests aligned when the package surface changes.
+- Custom write integrations must preserve invalidation for `block-library` cache tags.
 
 ## Troubleshooting
 
@@ -82,13 +90,14 @@ Docs gap: document extension points here if the package delegates persistence to
 ## Quick Start
 
 1. Install the package: `composer require capell-app/block-library`.
-2. Run the required setup: no package migrations are declared; clear cached config and routes if the host app uses caches.
-3. Open the related Capell admin surface and verify Block Library appears.
+2. No package-specific setup command or migrations are declared.
+3. Open the Content block registry list and confirm the admin workflow loads.
 
 ## Next Steps
 
 - [Package docs](docs/README.md)
 - [Overview](docs/overview.md)
+- [Troubleshooting](#troubleshooting)
 - [Screenshot contract](docs/screenshots.json)
 - [Marketplace assets](docs/assets/marketplace/)
 - [Capell content language plan](../../docs/CONTENT_LANGUAGE_PLAN.md)

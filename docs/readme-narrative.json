@@ -1,0 +1,38 @@
+{
+    "whatThisPluginAdds": {
+        "text": "Block Library supplies typed, reusable content-block definitions and matching Filament Builder blocks for Capell content packages.",
+        "evidence": [
+            "capell.json",
+            "src/Support/DefaultBlockCatalog.php",
+            "src/Providers/BlockLibraryServiceProvider.php"
+        ]
+    },
+    "surfaceOutcome": {
+        "text": "The package has no standalone admin resource. Editors see its registered block choices inside Builder surfaces provided by consuming packages and can render their matching frontend views.",
+        "evidence": [
+            "docs/overview.admin.md",
+            "docs/screenshots.json",
+            "tests/Feature/BuilderBlockPickerItemsTest.php",
+            "tests/Integration/BuilderBlockDiscoveryTest.php"
+        ]
+    },
+    "whyItMatters": {
+        "developers": {
+            "text": "BlockDefinitionProvider and FilamentBuilderBlock define the extension boundary, while the block and builder registries resolve definitions without hard-coding them into a consuming package.",
+            "evidence": [
+                "src/Contracts/BlockDefinitionProvider.php",
+                "src/Contracts/FilamentBuilderBlock.php",
+                "src/Support/BlockRegistry.php",
+                "src/Support/BuilderBlockRegistry.php"
+            ]
+        },
+        "teams": {
+            "text": "Editors can use the same supported block types across package-owned content forms instead of rebuilding common sections for each workflow.",
+            "evidence": [
+                "docs/overview.admin.md",
+                "docs/screenshots.json",
+                "tests/Feature/DefaultBlockCatalogTest.php"
+            ]
+        }
+    }
+}
