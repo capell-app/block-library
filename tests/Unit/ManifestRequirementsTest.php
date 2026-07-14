@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\File;
 
 describe('block-library capell.json manifest', function (): void {
     it('supports the Filament version required by the Capell platform', function (): void {
+        /** @var array{require: array<string, string>} $composer */
         $composer = json_decode(
             File::get(__DIR__ . '/../../composer.json'),
             associative: true,
