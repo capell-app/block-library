@@ -9,6 +9,7 @@ use Capell\BlockLibrary\Enums\BuilderBlockTarget;
 use Capell\BlockLibrary\Support\BuilderBlockDiscovery;
 use Capell\BlockLibrary\Support\BuilderBlockRegistry;
 use Capell\BlockLibrary\Support\DefaultBlockCatalog;
+use Lorisleiva\Actions\Concerns\AsFake;
 use Lorisleiva\Actions\Concerns\AsObject;
 
 /**
@@ -16,6 +17,7 @@ use Lorisleiva\Actions\Concerns\AsObject;
  */
 final class ListBuilderBlockPickerItemsAction
 {
+    use AsFake;
     use AsObject;
 
     public function __construct(

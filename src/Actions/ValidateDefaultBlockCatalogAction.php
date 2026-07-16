@@ -17,11 +17,13 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\View;
+use Lorisleiva\Actions\Concerns\AsFake;
 use Lorisleiva\Actions\Concerns\AsObject;
 use Throwable;
 
 final class ValidateDefaultBlockCatalogAction
 {
+    use AsFake;
     use AsObject;
 
     private const string PACKAGE_NAME = 'capell-app/block-library';

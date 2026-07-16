@@ -6,10 +6,12 @@ namespace Capell\BlockLibrary\Actions;
 
 use Capell\Core\Support\Security\PublicHtmlSanitizer;
 use Illuminate\Contracts\Support\Htmlable;
+use Lorisleiva\Actions\Concerns\AsFake;
 use Lorisleiva\Actions\Concerns\AsObject;
 
 final class SanitizeBlockHtmlAction
 {
+    use AsFake;
     use AsObject;
 
     public function handle(mixed $html): string

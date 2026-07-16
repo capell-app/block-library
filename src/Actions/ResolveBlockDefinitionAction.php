@@ -6,6 +6,7 @@ namespace Capell\BlockLibrary\Actions;
 
 use Capell\BlockLibrary\Data\BlockDefinitionData;
 use Capell\BlockLibrary\Support\BlockRegistry;
+use Lorisleiva\Actions\Concerns\AsFake;
 use Lorisleiva\Actions\Concerns\AsObject;
 
 /**
@@ -13,6 +14,7 @@ use Lorisleiva\Actions\Concerns\AsObject;
  */
 final class ResolveBlockDefinitionAction
 {
+    use AsFake;
     use AsObject;
 
     public function handle(string $key): BlockDefinitionData
