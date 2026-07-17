@@ -469,7 +469,7 @@ final class ValidateDefaultBlockCatalogAction
         try {
             $definition = ResolveBlockDefinitionAction::run($key);
 
-            return $definition instanceof BlockDefinitionData ? $definition : null;
+            return $definition;
         } catch (Throwable) {
             return null;
         }
