@@ -7,15 +7,18 @@
     "entries": [
         {
             "id": "content-block-registry-list",
-            "title": "Content block registry list.",
+            "title": "Illustrative content block registry list preview.",
             "package": "block-library",
-            "surface": "admin",
-            "targetType": "admin-surface",
-            "target": "content-block-registry",
+            "surface": "frontend",
+            "targetType": "frontend-url",
+            "target": "/screenshot-fixtures/catalogue/block-library/content-block-registry-list",
             "required": true,
-            "notes": "Capell runner capture proving the installed block catalog is visible from the admin registry surface.",
+            "notes": "Illustrative deterministic catalogue fixture, not a live package UI capture. Capell runner capture proving the installed block catalog is visible from the admin registry surface.",
             "useCase": "An editor or package developer reviews the available reusable content blocks before creating block content.",
-            "screenshotPath": "packages/block-library/docs/screenshots/block-library-admin-index.png"
+            "screenshotPath": "packages/block-library/docs/screenshots/block-library-admin-index.png",
+            "url": "/screenshot-fixtures/catalogue/block-library/content-block-registry-list",
+            "colorSchemes": ["light", "dark"],
+            "fixtureKind": "illustrative-catalogue"
         },
         {
             "id": "content-block-editor-form",
