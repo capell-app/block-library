@@ -35,10 +35,7 @@ Screenshot contract: `docs/screenshots.json`.
 
 ![Content block registry list](docs/screenshots/block-library-admin-index.png)
 
-![Content block editor form](docs/screenshots/block-library-admin-create.png)
-
 - Content block registry list (admin, required).
-- Content block editor form (admin, required).
 - Content block asset settings (admin, optional).
 - Frontend hero block (frontend, required).
 - Frontend features block (frontend, required).

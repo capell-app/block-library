@@ -21,18 +21,6 @@
             "fixtureKind": "illustrative-catalogue"
         },
         {
-            "id": "content-block-editor-form",
-            "title": "Content block editor form.",
-            "package": "block-library",
-            "surface": "admin",
-            "targetType": "admin-surface",
-            "target": "content-block-editor",
-            "required": true,
-            "notes": "Capell runner capture proving a reusable block can expose editable fields in the admin surface.",
-            "useCase": "An editor creates reusable block content with block-specific settings and preview data.",
-            "screenshotPath": "packages/block-library/docs/screenshots/block-library-admin-create.png"
-        },
-        {
             "id": "content-block-assets",
             "title": "Content block asset settings.",
             "package": "block-library",
