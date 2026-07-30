@@ -1,4 +1,4 @@
-@props (['asset', 'meta' => [], 'summary' => null, 'title' => null])
+@props(['asset', 'meta' => [], 'summary' => null, 'title' => null])
 
 @php
     $tabs = is_array($meta['tabs'] ?? null) ? array_values($meta['tabs']) : [];
@@ -17,7 +17,7 @@
 
             @if ($summary)
                 <div class="mt-3 text-lg opacity-80">
-                    @safeBlockHtml ($summary)
+                    @safeBlockHtml($summary)
                 </div>
             @endif
         </header>
@@ -58,7 +58,7 @@
                         {{ $tab['label'] ?? '' }}
                     </h3>
                     <div class="prose max-w-none">
-                        @safeBlockHtml ($tab['content'] ?? '')
+                        @safeBlockHtml($tab['content'] ?? '')
                     </div>
                 </article>
             @endforeach

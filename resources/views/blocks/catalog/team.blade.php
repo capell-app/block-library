@@ -1,4 +1,4 @@
-@props (['asset', 'meta' => [], 'summary' => null, 'title' => null])
+@props(['asset', 'meta' => [], 'summary' => null, 'title' => null])
 
 @php
     $members = is_array($meta['members'] ?? null) ? $meta['members'] : [];
@@ -14,14 +14,14 @@
 
             @if ($summary)
                 <div class="mt-3 text-lg opacity-80">
-                    @safeBlockHtml ($summary)
+                    @safeBlockHtml($summary)
                 </div>
             @endif
         </header>
     @endif
 
     <div
-        @class (['grid gap-5', 'md:grid-cols-2' => $columns === '2', 'md:grid-cols-3' => $columns === '3', 'md:grid-cols-4' => $columns === '4'])
+        @class(['grid gap-5', 'md:grid-cols-2' => $columns === '2', 'md:grid-cols-3' => $columns === '3', 'md:grid-cols-4' => $columns === '4'])
     >
         @foreach ($members as $member)
             <article class="rounded-lg border border-slate-200 bg-white p-6">
@@ -35,9 +35,7 @@
                 </h3>
 
                 @if (filled($member['role'] ?? null))
-                    <p class="text-sm font-medium text-slate-500">
-                        {{ $member['role'] }}
-                    </p>
+                    <p class="text-sm font-medium text-slate-500">{{ $member['role'] }}</p>
                 @endif
 
                 @if (filled($member['bio'] ?? null))

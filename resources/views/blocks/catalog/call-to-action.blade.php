@@ -1,4 +1,4 @@
-@props (['asset', 'linkText' => null, 'meta' => [], 'summary' => null, 'title' => null, 'url' => null])
+@props(['asset', 'linkText' => null, 'meta' => [], 'summary' => null, 'title' => null, 'url' => null])
 
 @php
     $actions = is_array($meta['actions'] ?? null) ? $meta['actions'] : [];
@@ -6,14 +6,14 @@
 @endphp
 
 <section
-    @class ([
-        'capell-section-call-to-action',
-        'section section-call-to-action',
-        'text-left' => $alignment === 'start',
-        'text-center' => $alignment === 'center',
-        'text-right' => $alignment === 'end',
-        $attributes->get('class'),
-    ])
+    @class([
+    'capell-section-call-to-action',
+    'section section-call-to-action',
+    'text-left' => $alignment === 'start',
+    'text-center' => $alignment === 'center',
+    'text-right' => $alignment === 'end',
+    $attributes->get('class'),
+])
 >
     @if ($title)
         <h2 class="text-3xl font-bold">{{ $title }}</h2>
@@ -21,7 +21,7 @@
 
     @if ($summary)
         <div class="mx-auto mt-4 max-w-3xl text-lg opacity-80">
-            @safeBlockHtml ($summary)
+            @safeBlockHtml($summary)
         </div>
     @endif
 

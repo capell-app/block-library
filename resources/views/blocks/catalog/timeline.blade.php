@@ -1,4 +1,4 @@
-@props (['asset', 'meta' => [], 'summary' => null, 'title' => null])
+@props(['asset', 'meta' => [], 'summary' => null, 'title' => null])
 
 @php
     $milestones = is_array($meta['milestones'] ?? null) ? $meta['milestones'] : [];
@@ -13,7 +13,7 @@
 
             @if ($summary)
                 <div class="mt-3 text-lg opacity-80">
-                    @safeBlockHtml ($summary)
+                    @safeBlockHtml($summary)
                 </div>
             @endif
         </header>
@@ -25,9 +25,7 @@
                 <span
                     class="absolute -left-2 mt-2 h-4 w-4 rounded-full bg-slate-950"
                 ></span>
-                <p
-                    class="text-sm font-semibold tracking-wide text-slate-500 uppercase"
-                >
+                <p class="text-sm font-semibold tracking-wide text-slate-500 uppercase">
                     {{ $milestone['date'] ?? '' }}
                 </p>
                 <h3 class="mt-1 text-lg font-semibold">
@@ -35,9 +33,7 @@
                 </h3>
 
                 @if (filled($milestone['description'] ?? null))
-                    <p class="mt-2 text-slate-600">
-                        {{ $milestone['description'] }}
-                    </p>
+                    <p class="mt-2 text-slate-600">{{ $milestone['description'] }}</p>
                 @endif
             </li>
         @endforeach

@@ -1,4 +1,4 @@
-@props (['asset', 'meta' => [], 'summary' => null, 'title' => null])
+@props(['asset', 'meta' => [], 'summary' => null, 'title' => null])
 
 @php
     $columns = is_array($meta['columns'] ?? null) ? $meta['columns'] : [];
@@ -17,7 +17,7 @@
                     <th class="border p-3 text-left"></th>
                     @foreach ($columns as $column)
                         <th
-                            @class (['border p-3 text-left', 'bg-slate-950 text-white' => (bool) ($column['highlighted'] ?? false)])
+                            @class(['border p-3 text-left', 'bg-slate-950 text-white' => (bool) ($column['highlighted'] ?? false)])
                         >
                             {{ $column['heading'] ?? '' }}
                             @if (filled($column['description'] ?? null))

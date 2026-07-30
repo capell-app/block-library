@@ -1,4 +1,4 @@
-@props (['asset', 'meta' => [], 'summary' => null, 'title' => null])
+@props(['asset', 'meta' => [], 'summary' => null, 'title' => null])
 
 @php
     $items = is_array($meta['items'] ?? null) ? $meta['items'] : [];
@@ -17,7 +17,7 @@
 
             @if ($summary)
                 <div class="mt-3 text-lg opacity-80">
-                    @safeBlockHtml ($summary)
+                    @safeBlockHtml($summary)
                 </div>
             @endif
         </header>
@@ -52,7 +52,7 @@
                         x-show="openPanel === {{ $loop->index }}"
                         x-cloak
                     >
-                        @safeBlockHtml ($item['content'])
+                        @safeBlockHtml($item['content'])
                     </div>
                 @endif
             </article>

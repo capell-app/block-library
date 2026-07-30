@@ -1,4 +1,4 @@
-@props (['asset', 'meta' => [], 'summary' => null, 'title' => null])
+@props(['asset', 'meta' => [], 'summary' => null, 'title' => null])
 
 <section {{ $attributes->merge(['class' => 'section section-content']) }}>
     @if ($title)
@@ -6,6 +6,6 @@
     @endif
 
     @if ($summary)
-        <div class="prose max-w-none text-lg">@safeBlockHtml ($summary)</div>
+        <div class="prose max-w-none text-lg">@safeBlockHtml($summary)</div>
     @endif
 </section>

@@ -1,4 +1,4 @@
-@props (['asset', 'meta' => [], 'summary' => null, 'title' => null])
+@props(['asset', 'meta' => [], 'summary' => null, 'title' => null])
 
 @php
     $plans = is_array($meta['plans'] ?? null) ? $meta['plans'] : [];
@@ -13,7 +13,7 @@
 
             @if ($summary)
                 <div class="mx-auto mt-3 max-w-3xl text-lg opacity-80">
-                    @safeBlockHtml ($summary)
+                    @safeBlockHtml($summary)
                 </div>
             @endif
         </header>
@@ -22,7 +22,7 @@
     <div class="grid gap-5 md:grid-cols-3">
         @foreach ($plans as $plan)
             <article
-                @class (['rounded-lg border bg-white p-6', 'border-slate-950 shadow-lg' => (bool) ($plan['highlighted'] ?? false), 'border-slate-200' => ! (bool) ($plan['highlighted'] ?? false)])
+                @class(['rounded-lg border bg-white p-6', 'border-slate-950 shadow-lg' => (bool) ($plan['highlighted'] ?? false), 'border-slate-200' => ! (bool) ($plan['highlighted'] ?? false)])
             >
                 <h3 class="text-xl font-semibold">{{ $plan['name'] ?? '' }}</h3>
                 <p class="mt-4 text-4xl font-bold">
@@ -35,9 +35,7 @@
                 </p>
 
                 @if (filled($plan['description'] ?? null))
-                    <p class="mt-3 text-slate-600">
-                        {{ $plan['description'] }}
-                    </p>
+                    <p class="mt-3 text-slate-600">{{ $plan['description'] }}</p>
                 @endif
 
                 @if (filled($plan['features'] ?? null))

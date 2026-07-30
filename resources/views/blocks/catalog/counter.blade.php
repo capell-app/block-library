@@ -1,4 +1,4 @@
-@props (['asset', 'meta' => [], 'summary' => null, 'title' => null])
+@props(['asset', 'meta' => [], 'summary' => null, 'title' => null])
 
 @php
     $counters = is_array($meta['counters'] ?? null) ? $meta['counters'] : [];
@@ -13,7 +13,7 @@
 
             @if ($summary)
                 <div class="mx-auto mt-3 max-w-3xl text-lg opacity-80">
-                    @safeBlockHtml ($summary)
+                    @safeBlockHtml($summary)
                 </div>
             @endif
         </header>
@@ -36,9 +36,7 @@
                 </h3>
 
                 @if (filled($counter['description'] ?? null))
-                    <p class="mt-2 text-sm text-slate-600">
-                        {{ $counter['description'] }}
-                    </p>
+                    <p class="mt-2 text-sm text-slate-600">{{ $counter['description'] }}</p>
                 @endif
             </article>
         @endforeach

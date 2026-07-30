@@ -1,18 +1,18 @@
-@props (['asset', 'meta' => [], 'summary' => null, 'title' => null, 'url' => null])
+@props(['asset', 'meta' => [], 'summary' => null, 'title' => null, 'url' => null])
 
 @php
     $alignment = $meta['alignment'] ?? 'center';
 @endphp
 
 <section
-    @class ([
-        'capell-section-hero',
-        'section section-hero rounded-lg bg-slate-950 p-10 text-white',
-        'text-left' => $alignment === 'start',
-        'text-center' => $alignment === 'center',
-        'text-right' => $alignment === 'end',
-        $attributes->get('class'),
-    ])
+    @class([
+    'capell-section-hero',
+    'section section-hero rounded-lg bg-slate-950 p-10 text-white',
+    'text-left' => $alignment === 'start',
+    'text-center' => $alignment === 'center',
+    'text-right' => $alignment === 'end',
+    $attributes->get('class'),
+])
 >
     @if ($title)
         <h1 class="text-5xl font-bold tracking-tight">{{ $title }}</h1>
@@ -20,7 +20,7 @@
 
     @if ($summary)
         <div class="mx-auto mt-5 max-w-3xl text-xl text-slate-200">
-            @safeBlockHtml ($summary)
+            @safeBlockHtml($summary)
         </div>
     @endif
 
