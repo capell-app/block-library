@@ -33,13 +33,15 @@ Evidence: [`src/Contracts/BlockDefinitionProvider.php`](src/Contracts/BlockDefin
 
 Screenshot contract: `docs/screenshots.json`.
 
-![Content block registry list](docs/screenshots/block-library-admin-index.png)
+![Illustrative content block registry list preview](docs/screenshots/block-library-admin-index.png)
 
-- Content block registry list (admin, required).
-- Content block asset settings (admin, optional).
-- Frontend hero block (frontend, required).
-- Frontend features block (frontend, required).
-- Frontend pricing block (frontend, required).
+![Frontend hero block](docs/screenshots/block-library-frontend-hero.png)
+
+- Illustrative content block registry list preview (frontend, required evidence).
+- Content block asset settings (admin, supplementary evidence).
+- Frontend hero block (frontend, required evidence).
+- Frontend features block (frontend, required evidence).
+- Frontend pricing block (frontend, required evidence).
 
 ## Technical Shape
 
@@ -88,7 +90,7 @@ This package has no schema impact. It registers runtime behaviour through `Capel
 
 1. Install the package: `composer require capell-app/block-library`.
 2. No package-specific setup command or migrations are declared.
-3. Open the Content block registry list and confirm the admin workflow loads.
+3. Open `/screenshot-fixtures/catalogue/block-library/content-block-registry-list` and confirm the public output renders without admin state.
 
 ## Next Steps
 
