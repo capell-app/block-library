@@ -73,6 +73,24 @@
             "notes": "Capell runner capture proving commercial block layouts render through the frontend catalog views.",
             "useCase": "A buyer verifies reusable pricing sections can be rendered without custom theme work.",
             "screenshotPath": "packages/block-library/docs/screenshots/block-library-frontend-pricing.png"
+        },
+        {
+            "id": "block-library-admin-sidebar-menu-open",
+            "title": "Content block asset settings with admin sidebar menu open.",
+            "package": "block-library",
+            "surface": "admin",
+            "targetType": "admin-surface",
+            "target": "content-block-assets",
+            "required": false,
+            "notes": "Optional Beta evidence target. The current file duplicates the registry capture; replace it with an independently captured asset workflow before using it as release or Marketplace evidence. Capture this same admin surface with the fully collapsible sidebar opened.",
+            "useCase": "An editor configures media-backed block content before publishing it through a consuming package.",
+            "screenshotPath": "packages/block-library/docs/screenshots/block-library-admin-sidebar-menu-open.png",
+            "interactions": [
+                {
+                    "type": "click",
+                    "selector": ".fi-topbar-open-collapse-sidebar-btn"
+                }
+            ]
         }
     ]
 }

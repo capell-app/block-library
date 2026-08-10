@@ -14,7 +14,7 @@ describe('block-library capell.json manifest', function (): void {
             flags: JSON_THROW_ON_ERROR,
         );
 
-        expect($composer['require']['filament/forms'] ?? null)->toBe('~5.6.8');
+        expect($composer['require']['filament/forms'] ?? null)->toBe('~5.7.6');
     });
 
     it('declares the foundation package metadata and provider', function (): void {
