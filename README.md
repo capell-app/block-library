@@ -33,15 +33,17 @@ Evidence: [`src/Contracts/BlockDefinitionProvider.php`](src/Contracts/BlockDefin
 
 Screenshot contract: `docs/screenshots.json`.
 
+![Block Library blocks in the installed page editor picker](docs/screenshots/block-library-editor-picker.png)
+
 ![Illustrative content block registry list preview](docs/screenshots/block-library-admin-index.png)
 
-![Frontend hero block](docs/screenshots/block-library-frontend-hero.png)
-
+- Block Library blocks in the installed page editor picker (admin, required authentic evidence).
 - Illustrative content block registry list preview (frontend, required evidence).
 - Content block asset settings (admin, supplementary evidence).
 - Frontend hero block (frontend, required evidence).
 - Frontend features block (frontend, required evidence).
 - Frontend pricing block (frontend, required evidence).
+- Content block asset settings with admin sidebar menu open (admin, supplementary evidence).
 
 ## Technical Shape
 
@@ -90,7 +92,7 @@ This package has no schema impact. It registers runtime behaviour through `Capel
 
 1. Install the package: `composer require capell-app/block-library`.
 2. No package-specific setup command or migrations are declared.
-3. Open `/screenshot-fixtures/catalogue/block-library/content-block-registry-list` and confirm the public output renders without admin state.
+3. Open the package admin surface at `/pages/{first-record}/edit` and confirm Block Library is available.
 
 ## Next Steps
 

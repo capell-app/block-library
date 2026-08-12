@@ -127,6 +127,11 @@
                 "caption": "Content block registry list"
             },
             {
+                "path": "docs/screenshots/block-library-editor-picker.png",
+                "alt": "Block Library blocks in the installed Layout Builder picker",
+                "caption": "Choose registered Block Library blocks from the real installed layout editor"
+            },
+            {
                 "path": "docs/screenshots/block-library-frontend-hero.png",
                 "alt": "Frontend hero block rendered from Block Library",
                 "caption": "Frontend hero block"

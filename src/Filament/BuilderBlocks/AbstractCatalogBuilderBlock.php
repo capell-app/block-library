@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Capell\BlockLibrary\Filament\BuilderBlocks;
 
+use Capell\Admin\Contracts\Widgets\FilamentWidget;
 use Capell\BlockLibrary\Contracts\FilamentBuilderBlock;
 use Capell\BlockLibrary\Enums\BlockAlignment;
 use Capell\BlockLibrary\Enums\BlockColumnCount;
@@ -16,11 +17,16 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 
-abstract class AbstractCatalogBuilderBlock implements FilamentBuilderBlock
+abstract class AbstractCatalogBuilderBlock implements FilamentBuilderBlock, FilamentWidget
 {
     protected const string KEY = '';
 
     public static function getBuilderBlockName(): string
+    {
+        return static::KEY;
+    }
+
+    public static function getWidgetName(): string
     {
         return static::KEY;
     }

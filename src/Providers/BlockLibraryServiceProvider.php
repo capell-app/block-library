@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Capell\BlockLibrary\Providers;
 
+use Capell\Admin\Contracts\Widgets\FilamentWidget;
+use Capell\Admin\Facades\CapellAdmin;
 use Capell\BlockLibrary\Actions\RegisterBlockDefinitionProviderAction;
 use Capell\BlockLibrary\Actions\SanitizeBlockHtmlAction;
 use Capell\BlockLibrary\Contracts\BlockDefinitionProvider;
+use Capell\BlockLibrary\Enums\BuilderBlockTarget;
 use Capell\BlockLibrary\Support\BlockRegistry;
 use Capell\BlockLibrary\Support\BuilderBlockDiscovery;
 use Capell\BlockLibrary\Support\BuilderBlockRegistry;
@@ -57,6 +60,15 @@ final class BlockLibraryServiceProvider extends AbstractPackageServiceProvider
 
     public function packageBooted(): void
     {
+        $blockDiscovery = resolve(BuilderBlockDiscovery::class);
+        $blockDiscovery->filamentBlocks();
+
+        foreach (resolve(BuilderBlockRegistry::class)->allForTarget(BuilderBlockTarget::AdminFilament) as $blockClass) {
+            if (is_a($blockClass, FilamentWidget::class, true)) {
+                CapellAdmin::registerWidget($blockClass);
+            }
+        }
+
         Blade::directive(
             'safeBlockHtml',
             static fn (string $expression): string => sprintf('<?php echo \\%s::run(%s); ?>', SanitizeBlockHtmlAction::class, $expression),

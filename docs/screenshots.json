@@ -3,8 +3,34 @@
     "composerName": "capell-app/block-library",
     "generatedFor": "deployment-screenshot-runner",
     "requiresInstalledPackage": true,
+    "auditStatus": "authentic-installed-app-captured",
+    "auditReason": "Required Marketplace evidence is captured from the installed Page content editor with Block Library's registered blocks visible in the real block picker.",
     "outputDirectory": "packages/block-library/docs/screenshots",
     "entries": [
+        {
+            "id": "block-library-editor-picker",
+            "title": "Block Library blocks in the installed page editor picker.",
+            "package": "block-library",
+            "surface": "admin",
+            "targetType": "admin-surface",
+            "target": "PageResource/EditPage:ContentBuilder",
+            "scenario": "admin-form",
+            "url": "/pages/{first-record}/edit",
+            "waitFor": ".fi-fo-builder-block-picker .fi-dropdown-panel",
+            "user": "admin",
+            "required": true,
+            "evidenceKind": "installed-app-filament-capture",
+            "notes": "Captured from the real installed Page content editor after opening its native block picker. Block Library registers its Filament builder blocks through the package provider; no screenshot-only route is used.",
+            "useCase": "An editor chooses a Block Library block while composing page content.",
+            "screenshotPath": "packages/block-library/docs/screenshots/block-library-editor-picker.png",
+            "darkScreenshotPath": "packages/block-library/docs/screenshots/block-library-editor-picker-dark.png",
+            "beforeWait": [
+                {
+                    "type": "click",
+                    "selector": ".fi-fo-builder button[aria-haspopup=\"true\"]"
+                }
+            ]
+        },
         {
             "id": "content-block-registry-list",
             "title": "Illustrative content block registry list preview.",

@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Capell\Admin\Contracts\Widgets\FilamentWidget;
 use Capell\BlockLibrary\Contracts\FilamentBuilderBlock;
 use Capell\BlockLibrary\Enums\BuilderBlockTarget;
 use Capell\BlockLibrary\Support\BlockRegistry;
@@ -86,6 +87,18 @@ it('adds catalog icons to discovered default Filament builder blocks', function 
     foreach (DefaultBlockCatalog::keys() as $key) {
         expect($blocksByName->has($key))->toBeTrue()
             ->and($blocksByName->get($key)?->getIcon())->toBe(DefaultBlockCatalog::icon($key));
+    }
+});
+
+it('registers default catalog blocks with the installed admin content builder', function (): void {
+    resolve(BuilderBlockDiscovery::class)->filamentBlocks();
+
+    $registeredWidgetNames = collect(resolve(BuilderBlockRegistry::class)->allForTarget(BuilderBlockTarget::AdminFilament))
+        ->filter(static fn (string $widgetClass): bool => is_a($widgetClass, FilamentWidget::class, true))
+        ->mapWithKeys(static fn (string $widgetClass): array => [$widgetClass::getWidgetName() => $widgetClass]);
+
+    foreach (DefaultBlockCatalog::keys() as $key) {
+        expect($registeredWidgetNames->has($key))->toBeTrue();
     }
 });
 
