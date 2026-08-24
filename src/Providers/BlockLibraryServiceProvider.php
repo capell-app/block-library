@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace Capell\BlockLibrary\Providers;
 
+use Capell\Admin\Contracts\Widgets\BlockPickerMetadataProvider;
 use Capell\Admin\Contracts\Widgets\FilamentWidget;
 use Capell\Admin\Facades\CapellAdmin;
 use Capell\BlockLibrary\Actions\RegisterBlockDefinitionProviderAction;
 use Capell\BlockLibrary\Actions\SanitizeBlockHtmlAction;
 use Capell\BlockLibrary\Contracts\BlockDefinitionProvider;
 use Capell\BlockLibrary\Enums\BuilderBlockTarget;
+use Capell\BlockLibrary\Support\BlockPickerMetadataAdapter;
 use Capell\BlockLibrary\Support\BlockRegistry;
 use Capell\BlockLibrary\Support\BuilderBlockDiscovery;
 use Capell\BlockLibrary\Support\BuilderBlockRegistry;
@@ -39,6 +41,7 @@ final class BlockLibraryServiceProvider extends AbstractPackageServiceProvider
         $this->app->singleton(BuilderBlockDiscovery::class);
 
         $this->app->tag([DefaultBlockDefinitionProvider::class], BlockDefinitionProvider::TAG);
+        $this->app->tag([BlockPickerMetadataAdapter::class], BlockPickerMetadataProvider::TAG);
 
         $this->callAfterResolving(BlockRegistry::class, function (BlockRegistry $registry): void {
             foreach ($this->app->tagged(BlockDefinitionProvider::TAG) as $provider) {
