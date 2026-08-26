@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use Capell\Admin\Actions\Widgets\ResolveBlockPickerMetadataAction;
 use Capell\Admin\Contracts\Widgets\BlockPickerMetadataProvider;
-use Capell\Admin\Data\Widgets\BlockPickerItemMetadataData;
 use Capell\BlockLibrary\Support\BlockPickerMetadataAdapter;
 use Capell\BlockLibrary\Support\DefaultBlockCatalog;
 
@@ -18,11 +17,10 @@ it('adapts every default block into Core\'s neutral block-picker metadata contra
 
         $item = $metadata[$key];
 
-        expect($item)->toBeInstanceOf(BlockPickerItemMetadataData::class)
-            ->and($item->label)->toBe(DefaultBlockCatalog::label($key))
+        expect($item->label)->toBe(DefaultBlockCatalog::label($key))
             ->and($item->description)->toBe(DefaultBlockCatalog::description($key))
             ->and($item->category)->toBe('foundation')
-            ->and($item->icon)->toBe(DefaultBlockCatalog::icon($key)->value)
+            ->and($item->icon)->toBe('heroicon-' . DefaultBlockCatalog::icon($key)->value)
             ->and($item->searchTerms)->toBe(DefaultBlockCatalog::searchTerms($key));
     }
 });

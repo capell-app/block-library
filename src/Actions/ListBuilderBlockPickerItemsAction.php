@@ -49,7 +49,7 @@ final class ListBuilderBlockPickerItemsAction
                 label: DefaultBlockCatalog::label($key),
                 description: DefaultBlockCatalog::description($key),
                 category: 'foundation',
-                icon: DefaultBlockCatalog::icon($key)->value,
+                icon: 'heroicon-' . DefaultBlockCatalog::icon($key)->value,
                 searchTerms: DefaultBlockCatalog::searchTerms($key),
                 builderBlockClass: $builderBlockClass,
             );

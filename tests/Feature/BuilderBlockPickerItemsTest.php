@@ -24,7 +24,8 @@ it('lists searchable picker metadata for every default builder block', function 
         expect($item->label)->toBe(DefaultBlockCatalog::label($key))
             ->and($item->description)->toBe(DefaultBlockCatalog::description($key))
             ->and($item->category)->toBe('foundation')
-            ->and($item->icon)->toBe(DefaultBlockCatalog::icon($key)->value)
+            ->and($item->icon)->toBe('heroicon-' . DefaultBlockCatalog::icon($key)->value)
+            ->and(svg($item->icon)->toHtml())->toContain('<svg')
             ->and($item->searchTerms)->toContain($key)
             ->and($item->searchTerms)->toContain('content block')
             ->and(class_exists($item->builderBlockClass))->toBeTrue();
