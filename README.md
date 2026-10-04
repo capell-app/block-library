@@ -10,8 +10,6 @@ Block Library supplies typed, reusable content-block definitions and matching Fi
 
 The package has no standalone admin resource. Editors see its registered block choices inside Builder surfaces provided by consuming packages and can render their matching frontend views.
 
-Evidence: [`capell.json`](capell.json), [`src/Support/DefaultBlockCatalog.php`](src/Support/DefaultBlockCatalog.php), [`src/Providers/BlockLibraryServiceProvider.php`](src/Providers/BlockLibraryServiceProvider.php), [`docs/overview.admin.md`](docs/overview.admin.md), [`docs/screenshots.json`](docs/screenshots.json), [`tests/Feature/BuilderBlockPickerItemsTest.php`](tests/Feature/BuilderBlockPickerItemsTest.php), [`tests/Integration/BuilderBlockDiscoveryTest.php`](tests/Integration/BuilderBlockDiscoveryTest.php).
-
 Status details:
 
 - Status: Available
@@ -26,8 +24,6 @@ Status details:
 **For developers:** BlockDefinitionProvider and FilamentBuilderBlock define the extension boundary, while the block and builder registries resolve definitions without hard-coding them into a consuming package.
 
 **For teams:** Editors can use the same supported block types across package-owned content forms instead of rebuilding common sections for each workflow.
-
-Evidence: [`src/Contracts/BlockDefinitionProvider.php`](src/Contracts/BlockDefinitionProvider.php), [`src/Contracts/FilamentBuilderBlock.php`](src/Contracts/FilamentBuilderBlock.php), [`src/Support/BlockRegistry.php`](src/Support/BlockRegistry.php), [`src/Support/BuilderBlockRegistry.php`](src/Support/BuilderBlockRegistry.php), [`docs/overview.admin.md`](docs/overview.admin.md), [`docs/screenshots.json`](docs/screenshots.json), [`tests/Feature/DefaultBlockCatalogTest.php`](tests/Feature/DefaultBlockCatalogTest.php).
 
 ## Screens And Workflow
 
@@ -174,7 +170,7 @@ This package has no schema impact. It registers runtime behaviour through `Capel
 ## Quick Start
 
 1. Install the package: `composer require capell-app/block-library`.
-2. Open the package admin surface at `/pages/{first-record}/edit` and confirm Block Library is available.
+2. Open the package admin surface at `/admin/pages/{first-record}/edit` and confirm Block Library is available.
 
 ## Next Steps
 
@@ -188,6 +184,5 @@ This package has no schema impact. It registers runtime behaviour through `Capel
 - [Capell documentation design system](../../docs/DESIGN_SYSTEM.md)
 - [Capell and package ERD notes](../../docs/erd/capell-and-package-erds.md)
 - Related packages: [Content Sections](../content-sections/README.md), [Theme Foundation](../theme-foundation/README.md).
-- Focused tests: `vendor/bin/pest packages/block-library/tests --configuration=phpunit.xml`.
 
 <!-- prettier-ignore-end -->

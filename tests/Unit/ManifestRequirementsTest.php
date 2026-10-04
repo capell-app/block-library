@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use Capell\BlockLibrary\Providers\BlockLibraryServiceProvider;
+use Composer\Semver\Intervals;
+use Composer\Semver\VersionParser;
 use Illuminate\Support\Facades\File;
 
 describe('block-library capell.json manifest', function (): void {
@@ -14,7 +16,20 @@ describe('block-library capell.json manifest', function (): void {
             flags: JSON_THROW_ON_ERROR,
         );
 
-        expect($composer['require']['filament/forms'] ?? null)->toBe('~5.7.6');
+        /** @var array{require: array<string, string>} $platformComposer */
+        $platformComposer = json_decode(
+            File::get(dirname(__DIR__, 4) . '/composer.json'),
+            associative: true,
+            flags: JSON_THROW_ON_ERROR,
+        );
+        expect($composer['require']['filament/forms'] ?? null)->toBe('~5.7.6 || ~5.9.0');
+        $versionParser = new VersionParser;
+
+        // Cover the whole platform range even when this package also supports another line.
+        expect(Intervals::isSubsetOf(
+            $versionParser->parseConstraints($platformComposer['require']['filament/filament']),
+            $versionParser->parseConstraints($composer['require']['filament/forms'] ?? '0.0.0'),
+        ))->toBeTrue();
     });
 
     it('declares the foundation package metadata and provider', function (): void {
