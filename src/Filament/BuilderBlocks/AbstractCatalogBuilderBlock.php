@@ -10,12 +10,16 @@ use Capell\BlockLibrary\Enums\BlockAlignment;
 use Capell\BlockLibrary\Enums\BlockColumnCount;
 use Capell\BlockLibrary\Enums\BlockDividerStyle;
 use Capell\BlockLibrary\Support\DefaultBlockCatalog;
+use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Filament\Forms\Components\Builder\Block;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Components\Component;
+use Illuminate\Contracts\Support\Htmlable;
 
 abstract class AbstractCatalogBuilderBlock implements FilamentBuilderBlock, FilamentWidget
 {
@@ -40,7 +44,7 @@ abstract class AbstractCatalogBuilderBlock implements FilamentBuilderBlock, Fila
     }
 
     /**
-     * @return array<int, mixed>
+     * @return array<int, Component | Action | ActionGroup | string | Htmlable>
      */
     protected static function schema(): array
     {
@@ -56,7 +60,7 @@ abstract class AbstractCatalogBuilderBlock implements FilamentBuilderBlock, Fila
     }
 
     /**
-     * @return array<int, mixed>
+     * @return array<int, Component | Action | ActionGroup | string | Htmlable>
      */
     protected static function metaSchema(): array
     {
@@ -192,7 +196,7 @@ abstract class AbstractCatalogBuilderBlock implements FilamentBuilderBlock, Fila
     }
 
     /**
-     * @param  array<int, mixed>  $schema
+     * @param  array<int, Component | Action | ActionGroup | string | Htmlable>  $schema
      */
     protected static function itemsRepeater(string $name, array $schema): Repeater
     {

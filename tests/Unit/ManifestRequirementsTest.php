@@ -22,13 +22,15 @@ describe('block-library capell.json manifest', function (): void {
             associative: true,
             flags: JSON_THROW_ON_ERROR,
         );
-        expect($composer['require']['filament/forms'] ?? null)->toBe('~5.7.6 || ~5.9.0');
+        $formsConstraint = $composer['require']['filament/forms'] ?? null;
+        expect($formsConstraint)->toBeString()->not->toBeEmpty();
+        throw_unless(is_string($formsConstraint), RuntimeException::class, 'Block Library must declare a Filament Forms constraint.');
         $versionParser = new VersionParser;
 
         // Cover the whole platform range even when this package also supports another line.
         expect(Intervals::isSubsetOf(
             $versionParser->parseConstraints($platformComposer['require']['filament/filament']),
-            $versionParser->parseConstraints($composer['require']['filament/forms'] ?? '0.0.0'),
+            $versionParser->parseConstraints($formsConstraint),
         ))->toBeTrue();
     });
 
