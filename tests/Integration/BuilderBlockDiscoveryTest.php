@@ -22,13 +22,18 @@ function forceBuilderBlockDiscoveryCacheHit(BuilderBlockDiscovery $discovery): v
 
 function temporaryBuilderBlockCachePath(string $suffix): string
 {
-    return sys_get_temp_dir() . '/capell-block-library-builder-blocks-' . $suffix . '.php';
+    return sys_get_temp_dir() . '/capell-block-library-builder-blocks-' . $suffix . '-' . bin2hex(random_bytes(8)) . '.php';
 }
 
 function temporaryBuilderBlockDirectory(string $suffix): string
 {
-    return sys_get_temp_dir() . '/capell-block-library-builder-blocks-' . $suffix;
+    return sys_get_temp_dir() . '/capell-block-library-builder-blocks-' . $suffix . '-' . bin2hex(random_bytes(8));
 }
+
+it('allocates distinct temporary paths even when fixture names are reused', function (): void {
+    expect(temporaryBuilderBlockCachePath('reused'))->not->toBe(temporaryBuilderBlockCachePath('reused'))
+        ->and(temporaryBuilderBlockDirectory('reused'))->not->toBe(temporaryBuilderBlockDirectory('reused'));
+});
 
 it('binds the builder block registry and discovery separately from typed content blocks', function (): void {
     expect(resolve(BuilderBlockRegistry::class))->toBeInstanceOf(BuilderBlockRegistry::class)

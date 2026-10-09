@@ -90,33 +90,37 @@ it('filters stale manifest entries for inactive packages and missing views', fun
 
 it('writes registry manifests atomically and removes temporary files', function (): void {
     $filesystem = new Filesystem;
-    $path = sys_get_temp_dir() . '/capell-block-library-manifest.php';
+    $path = sys_get_temp_dir() . '/capell-block-library-manifest-' . bin2hex(random_bytes(8)) . '.php';
     $store = new BlockRegistryManifestStore($filesystem, $path);
 
-    $store->forget();
-    $store->replaceAtomically([
-        'blocks' => ['marketing.hero' => ['key' => 'marketing.hero']],
-    ]);
+    try {
+        $store->replaceAtomically([
+            'blocks' => ['marketing.hero' => ['key' => 'marketing.hero']],
+        ]);
 
-    $temporaryFiles = $filesystem->glob($path . '.*.tmp');
+        $temporaryFiles = $filesystem->glob($path . '.*.tmp');
 
-    $manifest = $store->read();
+        $manifest = $store->read();
 
-    expect($manifest['blocks'] ?? [])->toHaveKey('marketing.hero')
-        ->and($temporaryFiles === false ? [] : $temporaryFiles)->toBe([]);
+        expect($manifest['blocks'] ?? [])->toHaveKey('marketing.hero')
+            ->and($temporaryFiles === false ? [] : $temporaryFiles)->toBe([]);
 
-    $store->forget();
+    } finally {
+        $store->forget();
+        $filesystem->delete($path . '.lock');
+    }
 });
 
 it('fails manifest writes when the lock cannot be acquired', function (): void {
     $filesystem = new class extends Filesystem
     {
-        public function put($path, $contents, $lock = false): bool|int
+        #[Override]
+        public function put(mixed $path, mixed $contents, mixed $lock = false): bool|int
         {
             throw new RuntimeException('Manifest should not be written without a lock.');
         }
     };
-    $path = sys_get_temp_dir() . '/capell-block-library-lock-failure-manifest.php';
+    $path = sys_get_temp_dir() . '/capell-block-library-lock-failure-manifest-' . bin2hex(random_bytes(8)) . '.php';
     $store = new BlockRegistryManifestStore(
         filesystem: $filesystem,
         path: $path,
@@ -135,16 +139,18 @@ it('fails manifest writes when the lock cannot be acquired', function (): void {
 
 it('returns null for missing or corrupt manifests so callers can use safe cold-start fallback', function (): void {
     $filesystem = new Filesystem;
-    $path = sys_get_temp_dir() . '/capell-block-library-corrupt-manifest.php';
+    $path = sys_get_temp_dir() . '/capell-block-library-corrupt-manifest-' . bin2hex(random_bytes(8)) . '.php';
     $store = new BlockRegistryManifestStore($filesystem, $path);
 
-    $store->forget();
+    try {
+        expect($store->read())->toBeNull();
 
-    expect($store->read())->toBeNull();
+        $filesystem->put($path, '<?php throw new RuntimeException("corrupt");');
 
-    $filesystem->put($path, '<?php throw new RuntimeException("corrupt");');
+        expect($store->read())->toBeNull();
 
-    expect($store->read())->toBeNull();
-
-    $store->forget();
+    } finally {
+        $store->forget();
+        $filesystem->delete($path . '.lock');
+    }
 });
