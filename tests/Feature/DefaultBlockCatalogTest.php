@@ -11,6 +11,7 @@ use Capell\BlockLibrary\Support\DefaultBlockCatalog;
 use Capell\BlockLibrary\Support\DefaultBlockContentProvider;
 use Filament\Forms\Components\Builder\Block;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Testing\TestResponse;
 
 it('registers every default catalog block with public views and screenshot contracts', function (): void {
@@ -151,18 +152,21 @@ it('keeps every default public block view free of authoring and package internal
         'x-filament',
     ];
 
-    $forbiddenBladeSourceNeedles = [
-        '::query(',
-        'DB::',
-        'loadMissing(',
-        '->load(',
-    ];
-
     foreach (DefaultBlockCatalog::keys() as $key) {
         /** @var view-string $viewName */
         $viewName = DefaultBlockCatalog::viewName($key);
         $payload = DefaultBlockCatalog::fixturePayload($key);
-        $html = view($viewName, $payload)->render();
+        $connection = DB::connection();
+        $connection->flushQueryLog();
+        $connection->enableQueryLog();
+
+        try {
+            $html = view($viewName, $payload)->render();
+            expect($connection->getQueryLog())->toBeEmpty($key . ' must render without database reads');
+        } finally {
+            $connection->disableQueryLog();
+            $connection->flushQueryLog();
+        }
 
         $response = TestResponse::fromBaseResponse(new Response('<!DOCTYPE html><html><body>' . $html . '</body></html>'));
 
@@ -170,12 +174,5 @@ it('keeps every default public block view free of authoring and package internal
             $response->assertDontSee($needle, false);
         }
 
-        $source = file_get_contents(__DIR__ . '/../../resources/views/blocks/catalog/' . DefaultBlockCatalog::viewSlug($key) . '.blade.php');
-
-        expect($source)->toBeString();
-
-        foreach ($forbiddenBladeSourceNeedles as $needle) {
-            expect($source)->not->toContain($needle);
-        }
     }
 });

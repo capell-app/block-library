@@ -31,15 +31,15 @@ Screenshot contract: `docs/screenshots.json`.
 
 ![Block Library blocks in the installed page editor picker](docs/screenshots/block-library-editor-picker.png)
 
-![Illustrative content block registry list preview](docs/screenshots/block-library-admin-index.png)
+![Content block registry list](docs/screenshots/block-library-admin-index.png)
 
 - Block Library blocks in the installed page editor picker (admin, required authentic evidence).
-- Illustrative content block registry list preview (frontend, required evidence).
+- Content block registry list (frontend, required evidence).
 - Content block asset settings (admin, supplementary evidence).
 - Frontend hero block (frontend, required evidence).
 - Frontend features block (frontend, required evidence).
 - Frontend pricing block (frontend, required evidence).
-- Content block asset settings with admin sidebar menu open (admin, supplementary evidence).
+- Reusable block templates with the admin sidebar open (admin, supplementary evidence).
 
 ## Technical Shape
 
@@ -130,6 +130,7 @@ Screenshot contract: `docs/screenshots.json`.
 - `packages/block-library/resources/views/blocks/catalog/timeline.blade.php`
 - `packages/block-library/resources/views/blocks/fallback.blade.php`
 - `packages/block-library/resources/views/blocks/variants/default.blade.php`
+- `packages/block-library/resources/views/registry.blade.php`
 
 ### Cache tags
 
@@ -170,7 +171,7 @@ This package has no schema impact. It registers runtime behaviour through `Capel
 ## Quick Start
 
 1. Install the package: `composer require capell-app/block-library`.
-2. Open the package admin surface at `/admin/pages/{first-record}/edit` and confirm Block Library is available.
+2. Verify the package provider and manifest contributions are registered in the host app.
 
 ## Next Steps
 

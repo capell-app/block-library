@@ -150,6 +150,104 @@ it('lists and resolves definitions from the container registry', function (): vo
         ->and(ResolveBlockDefinitionAction::run('shared.media')->label)->toBe('Shared media');
 });
 
+it('keeps equivalent provider definitions idempotent after direct registration', function (): void {
+    $registry = new BlockRegistry;
+    $provider = new class implements BlockDefinitionProvider
+    {
+        #[Override]
+        public function definitions(): iterable
+        {
+            yield new BlockDefinitionData(
+                key: 'section.content',
+                label: 'Content',
+                description: 'A content section.',
+                category: 'content',
+                view: 'vendor-package::sections.content',
+                sourcePackage: 'content-sections',
+            );
+        }
+    };
+    foreach ($provider->definitions() as $definition) {
+        $registry->register($definition);
+    }
+
+    $definitions = $registry->all();
+    RegisterBlockDefinitionProviderAction::run($registry, $provider);
+    RegisterBlockDefinitionProviderAction::run($registry, clone $provider);
+
+    expect($registry->all())->toBe($definitions)
+        ->and($registry->getOrFail('section.content')->label)->toBe('Content');
+});
+
+it('still rejects conflicting provider definitions for an existing block key', function (): void {
+    $registry = new BlockRegistry;
+    $registry->register(new BlockDefinitionData(
+        key: 'section.content',
+        label: 'Original content',
+        description: 'The original section.',
+        category: 'content',
+        view: 'vendor-package::sections.original',
+    ));
+    $provider = new class implements BlockDefinitionProvider
+    {
+        #[Override]
+        public function definitions(): iterable
+        {
+            yield new BlockDefinitionData(
+                key: 'section.content',
+                label: 'Different content',
+                description: 'A conflicting section.',
+                category: 'content',
+                view: 'vendor-package::sections.different',
+            );
+        }
+    };
+
+    expect(static function () use ($registry, $provider): void {
+        RegisterBlockDefinitionProviderAction::run($registry, $provider);
+    })
+        ->toThrow(InvalidArgumentException::class, 'Content block [section.content] is already registered.')
+        ->and($registry->getOrFail('section.content')->view)->toBe('vendor-package::sections.original');
+});
+
+it('rejects provider definitions whose numeric text differs without replacing the original', function (string $field): void {
+    $registry = new BlockRegistry;
+    $original = new BlockDefinitionData(
+        key: 'section.content',
+        label: '01',
+        description: 'A content section.',
+        category: 'content',
+        view: 'vendor-package::sections.content',
+        defaults: ['text' => '01'],
+    );
+    $registry->register($original);
+    $conflicting = clone $original;
+    if ($field === 'label') {
+        $conflicting->label = '1';
+    } else {
+        $conflicting->defaults = ['text' => '1'];
+    }
+
+    $provider = new class($conflicting) implements BlockDefinitionProvider
+    {
+        public function __construct(private readonly BlockDefinitionData $definition) {}
+
+        #[Override]
+        public function definitions(): iterable
+        {
+            yield $this->definition;
+        }
+    };
+
+    expect(static function () use ($registry, $provider): void {
+        RegisterBlockDefinitionProviderAction::run($registry, $provider);
+    })
+        ->toThrow(InvalidArgumentException::class, 'Content block [section.content] is already registered.')
+        ->and($registry->getOrFail('section.content'))->toBe($original)
+        ->and($original->label)->toBe('01')
+        ->and($original->defaults)->toBe(['text' => '01']);
+})->with(['label', 'default text']);
+
 it('registers tagged providers when the registry is resolved', function (): void {
     app()->bind('test.content-block-provider', static fn (): BlockDefinitionProvider => new class implements BlockDefinitionProvider
     {

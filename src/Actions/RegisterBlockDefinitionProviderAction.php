@@ -17,6 +17,13 @@ final class RegisterBlockDefinitionProviderAction
     public function handle(BlockRegistry $registry, BlockDefinitionProvider $provider): void
     {
         foreach ($provider->definitions() as $definition) {
+            // A package callback may contribute these definitions before the booted tag consumer.
+            // Preserve that registration, while letting the registry reject conflicting definitions.
+            // Serialisation preserves nested value types and numeric-string spelling.
+            if (serialize($registry->get($definition->key)) === serialize($definition)) {
+                continue;
+            }
+
             $registry->register($definition);
         }
     }

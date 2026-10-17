@@ -7,6 +7,8 @@ namespace Capell\BlockLibrary\Providers;
 use Capell\Admin\Contracts\Widgets\BlockPickerMetadataProvider;
 use Capell\Admin\Contracts\Widgets\FilamentWidget;
 use Capell\Admin\Facades\CapellAdmin;
+use Capell\Admin\Filament\Widgets\ContentFilamentWidget;
+use Capell\Admin\Support\Widgets\WidgetDiscovery;
 use Capell\BlockLibrary\Actions\RegisterBlockDefinitionProviderAction;
 use Capell\BlockLibrary\Actions\SanitizeBlockHtmlAction;
 use Capell\BlockLibrary\Contracts\BlockDefinitionProvider;
@@ -16,8 +18,10 @@ use Capell\BlockLibrary\Support\BlockRegistry;
 use Capell\BlockLibrary\Support\BuilderBlockDiscovery;
 use Capell\BlockLibrary\Support\BuilderBlockRegistry;
 use Capell\BlockLibrary\Support\DefaultBlockDefinitionProvider;
+use Capell\Core\Support\Extensions\ExtensionContributionReceiptRegistry;
 use Capell\Core\Support\Packages\AbstractPackageServiceProvider;
 use Illuminate\Support\Facades\Blade;
+use Override;
 use Spatie\LaravelPackageTools\Package;
 
 final class BlockLibraryServiceProvider extends AbstractPackageServiceProvider
@@ -26,6 +30,7 @@ final class BlockLibraryServiceProvider extends AbstractPackageServiceProvider
 
     public static string $packageName = 'capell-app/block-library';
 
+    #[Override]
     public function configurePackage(Package $package): void
     {
         $package
@@ -34,49 +39,62 @@ final class BlockLibraryServiceProvider extends AbstractPackageServiceProvider
             ->hasViews(self::$name);
     }
 
+    #[Override]
     public function packageRegistered(): void
     {
         $this->app->singleton(BlockRegistry::class);
         $this->app->singleton(BuilderBlockRegistry::class);
         $this->app->singleton(BuilderBlockDiscovery::class);
-
-        $this->app->tag([DefaultBlockDefinitionProvider::class], BlockDefinitionProvider::TAG);
-        $this->app->tag([BlockPickerMetadataAdapter::class], BlockPickerMetadataProvider::TAG);
-
-        $this->callAfterResolving(BlockRegistry::class, function (BlockRegistry $registry): void {
-            foreach ($this->app->tagged(BlockDefinitionProvider::TAG) as $provider) {
-                if (! $provider instanceof BlockDefinitionProvider) {
-                    continue;
-                }
-
-                RegisterBlockDefinitionProviderAction::run($registry, $provider);
-            }
-        });
-
-        $this->callAfterResolving(BuilderBlockDiscovery::class, function (BuilderBlockDiscovery $discovery): void {
-            $discovery->registerDiscoverableBlocks(
-                __DIR__ . '/../Filament/BuilderBlocks',
-                'Capell\\BlockLibrary\\Filament\\BuilderBlocks',
-            );
-        });
     }
 
-    public function packageBooted(): void
+    #[Override]
+    protected function bootInstalledRuntime(): void
     {
-        $blockDiscovery = resolve(BuilderBlockDiscovery::class);
-        $blockDiscovery->filamentBlocks();
+        $receipts = $this->app->make(ExtensionContributionReceiptRegistry::class);
+        $contexts = $receipts->activeContexts();
 
-        foreach (resolve(BuilderBlockRegistry::class)->allForTarget(BuilderBlockTarget::AdminFilament) as $blockClass) {
-            if (is_a($blockClass, FilamentWidget::class, true)) {
-                CapellAdmin::registerWidget($blockClass);
-            }
-        }
+        // Catalog definitions need booted translation namespaces in both installation paths.
+        $this->app->booted(function () use ($receipts, $contexts): void {
+            $receipts->withContexts($contexts, function (): void {
+                $this->app->tag([DefaultBlockDefinitionProvider::class], BlockDefinitionProvider::TAG);
+                $this->app->tag([BlockPickerMetadataAdapter::class], BlockPickerMetadataProvider::TAG);
 
-        Blade::directive(
-            'safeBlockHtml',
-            static fn (string $expression): string => sprintf('<?php echo \\%s::run(%s); ?>', SanitizeBlockHtmlAction::class, $expression),
-        );
+                $this->callAfterResolving(BlockRegistry::class, function (BlockRegistry $registry): void {
+                    foreach ($this->app->tagged(BlockDefinitionProvider::TAG) as $provider) {
+                        if (! $provider instanceof BlockDefinitionProvider) {
+                            continue;
+                        }
 
-        Blade::anonymousComponentPath(__DIR__ . '/../../resources/views', 'capell-block-library');
+                        RegisterBlockDefinitionProviderAction::run($registry, $provider);
+                    }
+                });
+
+                $this->callAfterResolving(BuilderBlockDiscovery::class, function (BuilderBlockDiscovery $discovery): void {
+                    $discovery->registerDiscoverableBlocks(
+                        __DIR__ . '/../Filament/BuilderBlocks',
+                        'Capell\\BlockLibrary\\Filament\\BuilderBlocks',
+                    );
+                });
+
+                $blockDiscovery = resolve(BuilderBlockDiscovery::class);
+                $blockDiscovery->filamentBlocks();
+
+                // Admin owns the content alias; retain the catalog block registration receipt below.
+                resolve(WidgetDiscovery::class)->registerAuthoritative(ContentFilamentWidget::class);
+
+                foreach (resolve(BuilderBlockRegistry::class)->allForTarget(BuilderBlockTarget::AdminFilament) as $blockClass) {
+                    if (is_a($blockClass, FilamentWidget::class, true)) {
+                        CapellAdmin::registerWidget($blockClass);
+                    }
+                }
+
+                Blade::directive(
+                    'safeBlockHtml',
+                    static fn (string $expression): string => sprintf('<?php echo \\%s::run(%s); ?>', SanitizeBlockHtmlAction::class, $expression),
+                );
+
+                Blade::anonymousComponentPath(__DIR__ . '/../../resources/views', 'capell-block-library');
+            });
+        });
     }
 }

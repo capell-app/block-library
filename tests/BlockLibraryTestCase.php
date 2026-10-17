@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Capell\BlockLibrary\Tests;
 
 use Capell\BlockLibrary\Providers\BlockLibraryServiceProvider;
+use Capell\Core\Facades\CapellCore;
 use Capell\Tests\AbstractTestCase;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Blade;
@@ -13,16 +14,25 @@ use Override;
 
 abstract class BlockLibraryTestCase extends AbstractTestCase
 {
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
 
-        Blade::anonymousComponentPath(dirname(__DIR__) . '/resources/views', 'capell-block-library');
+        Blade::anonymousComponentPath(__DIR__ . '/../resources/views', 'capell-block-library');
     }
 
     protected function getPackageServiceName(): string
     {
         return 'capell-block-library';
+    }
+
+    #[Override]
+    protected function getEnvironmentSetUp(mixed $app): void
+    {
+        parent::getEnvironmentSetUp($app);
+
+        CapellCore::forcePackageInstalled(BlockLibraryServiceProvider::$packageName);
     }
 
     /**
