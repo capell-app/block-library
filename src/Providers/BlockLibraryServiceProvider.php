@@ -7,10 +7,12 @@ namespace Capell\BlockLibrary\Providers;
 use Capell\Admin\Contracts\Widgets\BlockPickerMetadataProvider;
 use Capell\Admin\Contracts\Widgets\FilamentWidget;
 use Capell\Admin\Facades\CapellAdmin;
+use Capell\Admin\Filament\Components\Forms\Editor\ContentBuilder;
 use Capell\Admin\Filament\Widgets\ContentFilamentWidget;
 use Capell\Admin\Support\Widgets\WidgetDiscovery;
 use Capell\BlockLibrary\Actions\RegisterBlockDefinitionProviderAction;
 use Capell\BlockLibrary\Actions\SanitizeBlockHtmlAction;
+use Capell\BlockLibrary\Actions\SeparateClonedBuilderBlockMediaAction;
 use Capell\BlockLibrary\Contracts\BlockDefinitionProvider;
 use Capell\BlockLibrary\Enums\BuilderBlockTarget;
 use Capell\BlockLibrary\Support\BlockPickerMetadataAdapter;
@@ -18,6 +20,7 @@ use Capell\BlockLibrary\Support\BlockRegistry;
 use Capell\BlockLibrary\Support\BuilderBlockDiscovery;
 use Capell\BlockLibrary\Support\BuilderBlockRegistry;
 use Capell\BlockLibrary\Support\DefaultBlockDefinitionProvider;
+use Capell\BlockLibrary\View\Components\BuilderBlock;
 use Capell\Core\Support\Extensions\ExtensionContributionReceiptRegistry;
 use Capell\Core\Support\Packages\AbstractPackageServiceProvider;
 use Illuminate\Support\Facades\Blade;
@@ -50,6 +53,11 @@ final class BlockLibraryServiceProvider extends AbstractPackageServiceProvider
     #[Override]
     protected function bootInstalledRuntime(): void
     {
+        ContentBuilder::configureUsing(static function (ContentBuilder $component): void {
+            $component->afterStateUpdated(static function (ContentBuilder $component): void {
+                SeparateClonedBuilderBlockMediaAction::run($component);
+            });
+        });
         $receipts = $this->app->make(ExtensionContributionReceiptRegistry::class);
         $contexts = $receipts->activeContexts();
 
@@ -92,6 +100,8 @@ final class BlockLibraryServiceProvider extends AbstractPackageServiceProvider
                     'safeBlockHtml',
                     static fn (string $expression): string => sprintf('<?php echo \\%s::run(%s); ?>', SanitizeBlockHtmlAction::class, $expression),
                 );
+
+                Blade::component(BuilderBlock::class, 'capell-block-library::builder-block');
 
                 Blade::anonymousComponentPath(__DIR__ . '/../../resources/views', 'capell-block-library');
             });

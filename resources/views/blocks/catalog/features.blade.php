@@ -24,7 +24,9 @@
         @class(['grid gap-5', 'md:grid-cols-2' => $columns === '2', 'md:grid-cols-3' => $columns === '3', 'md:grid-cols-4' => $columns === '4'])
     >
         @foreach ($features as $feature)
-            <article class="rounded-lg border border-slate-200 bg-white p-6">
+            <article
+                class="rounded-lg border border-slate-200 bg-white p-6 text-slate-900"
+            >
                 @if (filled($feature['icon'] ?? null))
                     {!! svg($feature['icon'], 'mb-4 h-7 w-7 text-slate-500')->toHtml() !!}
                 @endif

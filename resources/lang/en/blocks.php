@@ -77,6 +77,9 @@ return [
         ],
     ],
     'fields' => [
+        'block_images' => 'Block images',
+        'block_images_helper' => 'Upload and save images, then choose an image for each item.',
+        'image' => 'Image',
         'action_label' => 'Action label',
         'action_url' => 'Action URL',
         'actions' => 'Actions',

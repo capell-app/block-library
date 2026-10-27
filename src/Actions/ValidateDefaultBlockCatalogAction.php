@@ -53,17 +53,19 @@ final class ValidateDefaultBlockCatalogAction
             $registry = resolve(BlockRegistry::class);
         } catch (Throwable $throwable) {
             return new DoctorCheckResultData(
-                label: 'Block Library registry binding',
+                label: 'Block Library: block catalogue available',
                 passed: false,
                 message: 'Unable to resolve the content block registry.',
                 remediation: $throwable->getMessage(),
+                id: 'legacy.block.library.registry.binding',
             );
         }
 
         return new DoctorCheckResultData(
-            label: 'Block Library registry binding',
+            label: 'Block Library: block catalogue available',
             passed: true,
             message: sprintf('Content block registry is resolvable with %d registered block definition(s).', count($registry->all())),
+            id: 'legacy.block.library.registry.binding',
         );
     }
 
@@ -99,17 +101,19 @@ final class ValidateDefaultBlockCatalogAction
 
         if ($issues !== []) {
             return new DoctorCheckResultData(
-                label: 'Block Library default catalog definitions',
+                label: 'Block Library: default block types available',
                 passed: false,
                 message: 'Catalog definition issues: ' . implode('; ', $issues) . '.',
                 remediation: 'Ensure DefaultBlockDefinitionProvider registers every DefaultBlockCatalog key as a public-safe block from capell-app/block-library.',
+                id: 'legacy.block.library.default.catalog.definitions',
             );
         }
 
         return new DoctorCheckResultData(
-            label: 'Block Library default catalog definitions',
+            label: 'Block Library: default block types available',
             passed: true,
             message: sprintf('All %d default catalog block definition(s) are registered and public-safe.', count(DefaultBlockCatalog::keys())),
+            id: 'legacy.block.library.default.catalog.definitions',
         );
     }
 
@@ -146,17 +150,19 @@ final class ValidateDefaultBlockCatalogAction
 
         if ($issues !== []) {
             return new DoctorCheckResultData(
-                label: 'Block Library accessibility contracts',
+                label: 'Block Library: accessibility rules declared',
                 passed: false,
                 message: 'Accessibility contract issues: ' . implode('; ', $issues) . '.',
                 remediation: 'Declare semantic, keyboard, contrast, and media accessibility rules for every default block definition.',
+                id: 'legacy.block.library.accessibility.contracts',
             );
         }
 
         return new DoctorCheckResultData(
-            label: 'Block Library accessibility contracts',
+            label: 'Block Library: accessibility rules declared',
             passed: true,
             message: sprintf('All %d default catalog block definition(s) declare complete accessibility contracts.', count(DefaultBlockCatalog::keys())),
+            id: 'legacy.block.library.accessibility.contracts',
         );
     }
 
@@ -198,17 +204,19 @@ final class ValidateDefaultBlockCatalogAction
 
         if ($issues !== []) {
             return new DoctorCheckResultData(
-                label: 'Block Library schema lifecycle metadata',
+                label: 'Block Library: block data versions declared',
                 passed: false,
                 message: 'Schema lifecycle issues: ' . implode('; ', $issues) . '.',
                 remediation: 'Declare schemaVersion >= 1 for every block and include deprecation notes plus a distinct replacement key for deprecated blocks.',
+                id: 'legacy.block.library.schema.lifecycle.metadata',
             );
         }
 
         return new DoctorCheckResultData(
-            label: 'Block Library schema lifecycle metadata',
+            label: 'Block Library: block data versions declared',
             passed: true,
             message: sprintf('All %d default catalog block definition(s) declare valid schema lifecycle metadata.', count(DefaultBlockCatalog::keys())),
+            id: 'legacy.block.library.schema.lifecycle.metadata',
         );
     }
 
@@ -248,17 +256,19 @@ final class ValidateDefaultBlockCatalogAction
 
         if ($issues !== []) {
             return new DoctorCheckResultData(
-                label: 'Block Library fixture and demo providers',
+                label: 'Block Library: preview and demo data available',
                 passed: false,
                 message: 'Fixture or demo provider issues: ' . implode('; ', $issues) . '.',
                 remediation: 'Attach package-owned fixture and demo content providers that return deterministic public-safe payloads for every default block.',
+                id: 'legacy.block.library.fixture.and.demo.providers',
             );
         }
 
         return new DoctorCheckResultData(
-            label: 'Block Library fixture and demo providers',
+            label: 'Block Library: preview and demo data available',
             passed: true,
             message: sprintf('All %d default catalog block definition(s) provide fixture and demo payloads.', count(DefaultBlockCatalog::keys())),
+            id: 'legacy.block.library.fixture.and.demo.providers',
         );
     }
 
@@ -278,17 +288,19 @@ final class ValidateDefaultBlockCatalogAction
 
         if ($missing !== []) {
             return new DoctorCheckResultData(
-                label: 'Block Library catalog translations',
+                label: 'Block Library: block translations present',
                 passed: false,
                 message: 'Missing translation keys: ' . implode(', ', $missing) . '.',
                 remediation: 'Add the missing catalog label and description keys to resources/lang/en/blocks.php.',
+                id: 'legacy.block.library.catalog.translations',
             );
         }
 
         return new DoctorCheckResultData(
-            label: 'Block Library catalog translations',
+            label: 'Block Library: block translations present',
             passed: true,
             message: 'Every default catalog block has label and description translations.',
+            id: 'legacy.block.library.catalog.translations',
         );
     }
 
@@ -320,17 +332,19 @@ final class ValidateDefaultBlockCatalogAction
 
         if ($issues !== []) {
             return new DoctorCheckResultData(
-                label: 'Block Library catalog views',
+                label: 'Block Library: block templates available',
                 passed: false,
                 message: 'Catalog view issues: ' . implode('; ', $issues) . '.',
                 remediation: 'Add the missing public or preview Blade views under resources/views/blocks/catalog.',
+                id: 'legacy.block.library.catalog.views',
             );
         }
 
         return new DoctorCheckResultData(
-            label: 'Block Library catalog views',
+            label: 'Block Library: block templates available',
             passed: true,
             message: 'Every default catalog block has resolvable public and preview views.',
+            id: 'legacy.block.library.catalog.views',
         );
     }
 
@@ -340,10 +354,11 @@ final class ValidateDefaultBlockCatalogAction
             $blocks = resolve(BuilderBlockDiscovery::class)->filamentBlocks();
         } catch (Throwable $throwable) {
             return new DoctorCheckResultData(
-                label: 'Block Library Filament builder blocks',
+                label: 'Block Library: editor blocks available',
                 passed: false,
                 message: 'Unable to discover Filament builder blocks.',
                 remediation: $throwable->getMessage(),
+                id: 'legacy.block.library.filament.builder.blocks',
             );
         }
 
@@ -357,17 +372,19 @@ final class ValidateDefaultBlockCatalogAction
 
         if ($missing !== []) {
             return new DoctorCheckResultData(
-                label: 'Block Library Filament builder blocks',
+                label: 'Block Library: editor blocks available',
                 passed: false,
                 message: 'Missing builder blocks: ' . implode(', ', $missing) . '.',
                 remediation: 'Add or register matching Filament Builder block classes for every DefaultBlockCatalog key.',
+                id: 'legacy.block.library.filament.builder.blocks',
             );
         }
 
         return new DoctorCheckResultData(
-            label: 'Block Library Filament builder blocks',
+            label: 'Block Library: editor blocks available',
             passed: true,
             message: sprintf('All %d default catalog block(s) have discoverable Filament Builder blocks.', count(DefaultBlockCatalog::keys())),
+            id: 'legacy.block.library.filament.builder.blocks',
         );
     }
 
@@ -381,17 +398,19 @@ final class ValidateDefaultBlockCatalogAction
 
         if ($missing !== []) {
             return new DoctorCheckResultData(
-                label: 'Block Library catalog screenshots',
+                label: 'Block Library: block screenshots present',
                 passed: false,
                 message: 'Missing required screenshot files: ' . implode(', ', $missing) . '.',
                 remediation: 'Capture and commit the required screenshots declared in docs/screenshots.json.',
+                id: 'legacy.block.library.catalog.screenshots',
             );
         }
 
         return new DoctorCheckResultData(
-            label: 'Block Library catalog screenshots',
+            label: 'Block Library: block screenshots present',
             passed: true,
             message: sprintf('All %d required screenshot file(s) declared in docs/screenshots.json exist.', count($requiredScreenshots)),
+            id: 'legacy.block.library.catalog.screenshots',
         );
     }
 
@@ -424,10 +443,11 @@ final class ValidateDefaultBlockCatalogAction
 
         if (! File::exists($manifestPath)) {
             return new DoctorCheckResultData(
-                label: 'Block Library manifest health declaration',
+                label: 'Block Library: health checks declared',
                 passed: false,
                 message: 'capell.json is missing.',
                 remediation: 'Restore the package manifest with BlockLibraryHealthCheck declared under healthChecks.',
+                id: 'legacy.block.library.manifest.health.declaration',
             );
         }
 
@@ -441,35 +461,36 @@ final class ValidateDefaultBlockCatalogAction
 
         if (! is_array($healthCheck)) {
             return new DoctorCheckResultData(
-                label: 'Block Library manifest health declaration',
+                label: 'Block Library: health checks declared',
                 passed: false,
                 message: 'BlockLibraryHealthCheck is not declared in capell.json healthChecks.',
                 remediation: 'Add Capell\\BlockLibrary\\Health\\BlockLibraryHealthCheck to capell.json healthChecks.',
+                id: 'legacy.block.library.manifest.health.declaration',
             );
         }
 
         if (($healthCheck['severity'] ?? null) !== 'critical') {
             return new DoctorCheckResultData(
-                label: 'Block Library manifest health declaration',
+                label: 'Block Library: health checks declared',
                 passed: false,
                 message: 'BlockLibraryHealthCheck is declared without critical severity.',
                 remediation: 'Keep the Block Library catalog health check critical because it protects shared public block output.',
+                id: 'legacy.block.library.manifest.health.declaration',
             );
         }
 
         return new DoctorCheckResultData(
-            label: 'Block Library manifest health declaration',
+            label: 'Block Library: health checks declared',
             passed: true,
             message: 'The manifest declares BlockLibraryHealthCheck as a critical shared health check.',
+            id: 'legacy.block.library.manifest.health.declaration',
         );
     }
 
     private function definitionFor(string $key): ?BlockDefinitionData
     {
         try {
-            $definition = ResolveBlockDefinitionAction::run($key);
-
-            return $definition;
+            return ResolveBlockDefinitionAction::run($key);
         } catch (Throwable) {
             return null;
         }

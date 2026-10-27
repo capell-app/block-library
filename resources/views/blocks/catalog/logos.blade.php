@@ -24,11 +24,27 @@
         @class(['grid gap-4', 'grid-cols-2' => true, 'md:grid-cols-3' => $columns === '3', 'md:grid-cols-4' => $columns === '4'])
     >
         @foreach ($logos as $logo)
+            @php
+                $image = is_array($logo['image'] ?? null) && filled($logo['image']['url'] ?? null) ? $logo['image'] : null;
+            @endphp
+
             <a
                 href="{{ $logo['url'] ?? '#' }}"
+                @if ($image && ($image['alt'] ?? null) === '' && filled($logo['name'] ?? null))
+                    aria-label="{{ $logo['name'] }}"
+                @endif
                 class="flex min-h-24 items-center justify-center rounded-lg border border-slate-200 bg-white px-6 text-center text-lg font-semibold text-slate-600"
             >
-                {{ $logo['name'] ?? '' }}
+                @if ($image)
+                    <img
+                        src="{{ $image['url'] }}"
+                        alt="{{ $image['alt'] ?? ($logo['name'] ?? '') }}"
+                        class="max-h-14 w-auto max-w-full object-contain"
+                        loading="lazy"
+                    />
+                @else
+                    {{ $logo['name'] ?? '' }}
+                @endif
             </a>
         @endforeach
     </div>

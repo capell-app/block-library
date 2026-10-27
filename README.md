@@ -51,6 +51,7 @@ Screenshot contract: `docs/screenshots.json`.
 
 - `AbstractCatalogBuilderBlock`
 - `AccordionBlock`
+- `BuilderBlockMediaFields`
 - `CallToActionBlock`
 - `ComparisonBlock`
 - `ContentBlock`
@@ -78,11 +79,15 @@ Screenshot contract: `docs/screenshots.json`.
 
 ### Actions
 
+- `BuildBuilderBlockRenderDataAction`
 - `ListBlockDefinitionsAction`
 - `ListBuilderBlockPickerItemsAction`
 - `RegisterBlockDefinitionProviderAction`
 - `ResolveBlockDefinitionAction`
+- `ResolveBuilderBlockMediaAction`
 - `SanitizeBlockHtmlAction`
+- `SanitizeBuilderBlockHtmlAction`
+- `SeparateClonedBuilderBlockMediaAction`
 - `ValidateDefaultBlockCatalogAction`
 
 ### Data objects
@@ -98,6 +103,7 @@ Screenshot contract: `docs/screenshots.json`.
 - `BlockVariantData`
 - `BlockVariantKey`
 - `BuilderBlockPickerItemData`
+- `BuilderBlockRenderData`
 - `PublicBlockPresentationData`
 - `PublicBlockViewReference`
 
@@ -130,6 +136,22 @@ Screenshot contract: `docs/screenshots.json`.
 - `packages/block-library/resources/views/blocks/catalog/timeline.blade.php`
 - `packages/block-library/resources/views/blocks/fallback.blade.php`
 - `packages/block-library/resources/views/blocks/variants/default.blade.php`
+- `packages/block-library/resources/views/builder/accordion.blade.php`
+- `packages/block-library/resources/views/builder/call-to-action.blade.php`
+- `packages/block-library/resources/views/builder/comparison.blade.php`
+- `packages/block-library/resources/views/builder/counter.blade.php`
+- `packages/block-library/resources/views/builder/divider.blade.php`
+- `packages/block-library/resources/views/builder/faq.blade.php`
+- `packages/block-library/resources/views/builder/features.blade.php`
+- `packages/block-library/resources/views/builder/hero.blade.php`
+- `packages/block-library/resources/views/builder/logos.blade.php`
+- `packages/block-library/resources/views/builder/pricing.blade.php`
+- `packages/block-library/resources/views/builder/stats.blade.php`
+- `packages/block-library/resources/views/builder/table.blade.php`
+- `packages/block-library/resources/views/builder/tabs.blade.php`
+- `packages/block-library/resources/views/builder/team.blade.php`
+- `packages/block-library/resources/views/builder/testimonial.blade.php`
+- `packages/block-library/resources/views/builder/timeline.blade.php`
 - `packages/block-library/resources/views/registry.blade.php`
 
 ### Cache tags
@@ -173,11 +195,18 @@ This package has no schema impact. It registers runtime behaviour through `Capel
 1. Install the package: `composer require capell-app/block-library`.
 2. Verify the package provider and manifest contributions are registered in the host app.
 
+## Upgrading
+
+No manual steps between minor versions.
+
+Read [CHANGELOG.md](CHANGELOG.md) before upgrading.
+
 ## Next Steps
 
 - [Package docs](docs/README.md)
 - [Overview](docs/overview.md)
 - [Worked extension examples](docs/extension-contracts.md)
+- [Admin guide](docs/admin-guide.md)
 - [Troubleshooting](#troubleshooting)
 - [Screenshot contract](docs/screenshots.json)
 - [Marketplace assets](docs/assets/marketplace/)

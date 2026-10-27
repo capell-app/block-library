@@ -32,8 +32,8 @@
         >
             @foreach ($definitions as $definition)
                 <article class="block-registry-item">
-                    <h2>{{ $definition->label }}</h2>
-                    <p>{{ $definition->description }}</p>
+                    <h2>{{ __($definition->label) }}</h2>
+                    <p>{{ __($definition->description) }}</p>
                 </article>
             @endforeach
         </section>

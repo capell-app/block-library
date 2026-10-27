@@ -25,11 +25,24 @@
     >
         @foreach ($members as $member)
             <article class="rounded-lg border border-slate-200 bg-white p-6">
-                <div
-                    class="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-100 text-xl font-bold"
-                >
-                    {{ str($member['name'] ?? '')->substr(0, 1)->upper() }}
-                </div>
+                @php
+                    $image = is_array($member['image'] ?? null) && filled($member['image']['url'] ?? null) ? $member['image'] : null;
+                @endphp
+
+                @if ($image)
+                    <img
+                        src="{{ $image['url'] }}"
+                        alt="{{ $image['alt'] ?? '' }}"
+                        class="mb-4 h-16 w-16 rounded-full object-cover"
+                        loading="lazy"
+                    />
+                @else
+                    <div
+                        class="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-100 text-xl font-bold"
+                    >
+                        {{ str($member['name'] ?? '')->substr(0, 1)->upper() }}
+                    </div>
+                @endif
                 <h3 class="text-lg font-semibold">
                     {{ $member['name'] ?? '' }}
                 </h3>

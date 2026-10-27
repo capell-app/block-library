@@ -19,6 +19,14 @@ There is no separate Block Library admin screen, permission, or settings page. O
 - Reorder or remove it through the host page editor.
 - Preview the page to check the theme's public treatment of the block.
 
+## Logo and team images
+
+Use **Block images** to upload and save images, then choose an image for each logo or team member. Images belong to the content translation, matching existing content-widget uploads, so translated content keeps its own media. Each block has a separate collection. Cloning a logo or team block copies its saved images and image selections into a new collection; removing a clone image leaves the original intact. Missing or unavailable images use the name or initial fallback.
+
+Discarded clones and removed blocks retain their media rows, metadata and files until a retention-aware cleanup exists. Cleanup must never delete media still referenced by saved content, page revisions or another editor's in-flight changes. Failed clone operations remove only the media they created themselves.
+
+Saved builder blocks render through Layout Builder's public Blade registry. The render action allowlists fields, normalises repeater ordering and hydrates public image URLs and alt text before the catalogue view renders. Page, Article, Event and other Pageable layouts prepare block media together before Blade renders. Credential-bearing and signed image or link URLs are excluded, including inside rich text. Inertia builder-block rendering is not included.
+
 ## Good to know
 
 - Blocks added by other packages appear alongside the Foundation catalog only when those packages are installed and registered.
@@ -28,6 +36,7 @@ There is no separate Block Library admin screen, permission, or settings page. O
 
 ---
 
+For how to use Block Library, see the [admin guide](admin-guide.md).
 For developers: see the [README](../README.md).
 
 <!-- prettier-ignore-end -->

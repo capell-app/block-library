@@ -44,7 +44,7 @@
             "screenshotPath": "packages/block-library/docs/screenshots/block-library-admin-index.png",
             "url": "/screenshot-fixtures/catalogue/block-library/content-block-registry-list",
             "colorSchemes": ["light", "dark"],
-            "waitFor": "text=Content block registry"
+            "waitFor": ".block-registry-item"
         },
         {
             "id": "content-block-assets",
@@ -63,42 +63,87 @@
             "title": "Frontend hero block.",
             "package": "block-library",
             "surface": "frontend",
-            "targetType": "frontend-view",
-            "target": "capell-block-library::blocks.catalog.hero",
-            "url": "/screenshot-fixtures/block-library/frontend-hero-block",
-            "waitFor": ".block-library-hero",
+            "targetType": "frontend-url",
+            "target": "/studio-sections/hero",
+            "url": "/studio-sections/hero",
+            "waitFor": ".section-hero",
             "required": true,
-            "notes": "Capell runner capture proving the hero catalog block renders as ordinary public HTML.",
+            "notes": "Anonymous native page consumes a persisted Content Sections asset through the public layout graph and the actual Block Library catalogue view. Require populated section output; never accept the old illustrative route.",
             "useCase": "A buyer verifies the package ships ready-to-render frontend block views.",
-            "screenshotPath": "packages/block-library/docs/screenshots/block-library-frontend-hero.png"
+            "screenshotPath": "packages/block-library/docs/screenshots/block-library-frontend-hero.png",
+            "scenario": "frontend-page",
+            "user": false,
+            "fullPage": false,
+            "viewport": "desktop",
+            "requiredViewport": {
+                "width": 1440,
+                "height": 600
+            },
+            "beforeWait": [
+                {
+                    "type": "scrollIntoView",
+                    "selector": ".section-hero",
+                    "block": "center"
+                }
+            ]
         },
         {
             "id": "frontend-features-block",
             "title": "Frontend features block.",
             "package": "block-library",
             "surface": "frontend",
-            "targetType": "frontend-view",
-            "target": "capell-block-library::blocks.catalog.features",
-            "url": "/screenshot-fixtures/block-library/frontend-features-block",
-            "waitFor": ".block-library-features",
+            "targetType": "frontend-url",
+            "target": "/studio-sections/features",
+            "url": "/studio-sections/features",
+            "waitFor": ".section-features",
             "required": true,
-            "notes": "Capell runner capture proving a multi-card catalog block renders safely on the frontend.",
+            "notes": "Anonymous native page consumes a persisted Content Sections asset through the public layout graph and the actual Block Library catalogue view. Require populated section output; never accept the old illustrative route.",
             "useCase": "A buyer verifies reusable feature sections can be rendered by consuming packages.",
-            "screenshotPath": "packages/block-library/docs/screenshots/block-library-frontend-features.png"
+            "screenshotPath": "packages/block-library/docs/screenshots/block-library-frontend-features.png",
+            "scenario": "frontend-page",
+            "user": false,
+            "fullPage": false,
+            "viewport": "desktop",
+            "requiredViewport": {
+                "width": 1440,
+                "height": 600
+            },
+            "beforeWait": [
+                {
+                    "type": "scrollIntoView",
+                    "selector": ".section-features",
+                    "block": "center"
+                }
+            ]
         },
         {
             "id": "frontend-pricing-block",
             "title": "Frontend pricing block.",
             "package": "block-library",
             "surface": "frontend",
-            "targetType": "frontend-view",
-            "target": "capell-block-library::blocks.catalog.pricing",
-            "url": "/screenshot-fixtures/block-library/frontend-pricing-block",
-            "waitFor": ".block-library-pricing",
+            "targetType": "frontend-url",
+            "target": "/studio-sections/pricing",
+            "url": "/studio-sections/pricing",
+            "waitFor": ".section-pricing",
             "required": true,
-            "notes": "Capell runner capture proving commercial block layouts render through the frontend catalog views.",
+            "notes": "Anonymous native page consumes a persisted Content Sections asset through the public layout graph and the actual Block Library catalogue view. Require populated section output; never accept the old illustrative route.",
             "useCase": "A buyer verifies reusable pricing sections can be rendered without custom theme work.",
-            "screenshotPath": "packages/block-library/docs/screenshots/block-library-frontend-pricing.png"
+            "screenshotPath": "packages/block-library/docs/screenshots/block-library-frontend-pricing.png",
+            "scenario": "frontend-page",
+            "user": false,
+            "fullPage": false,
+            "viewport": "desktop",
+            "requiredViewport": {
+                "width": 1440,
+                "height": 600
+            },
+            "beforeWait": [
+                {
+                    "type": "scrollIntoView",
+                    "selector": ".section-pricing",
+                    "block": "center"
+                }
+            ]
         },
         {
             "id": "block-library-admin-sidebar-menu-open",
@@ -127,6 +172,7 @@
         }
     ],
     "fixtureCommands": [
-        "capell:screenshot-admin-fixture --package=block-library"
+        "capell:screenshot-admin-fixture --package=block-library",
+        "capell:prepare-block-library-public-screenshots"
     ]
 }

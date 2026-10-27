@@ -6,7 +6,7 @@
     "kind": "package",
     "capellApiVersion": "^1.0",
     "version": "1.0.0",
-    "description": "Block Library provides reusable content blocks, typed definitions, screenshots, and Filament Builder blocks for Capell content packages.",
+    "description": "Reuse typed content-block definitions and matching Filament Builder blocks across Capell content packages.",
     "product": {
         "group": "Capell Foundation",
         "tier": "free",

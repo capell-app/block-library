@@ -22,7 +22,7 @@
     <div class="grid gap-5 md:grid-cols-3">
         @foreach ($plans as $plan)
             <article
-                @class(['rounded-lg border bg-white p-6', 'border-slate-950 shadow-lg' => (bool) ($plan['highlighted'] ?? false), 'border-slate-200' => ! (bool) ($plan['highlighted'] ?? false)])
+                @class(['rounded-lg border bg-white p-6 text-slate-900', 'border-slate-950 shadow-lg' => (bool) ($plan['highlighted'] ?? false), 'border-slate-200' => ! (bool) ($plan['highlighted'] ?? false)])
             >
                 <h3 class="text-xl font-semibold">{{ $plan['name'] ?? '' }}</h3>
                 <p class="mt-4 text-4xl font-bold">

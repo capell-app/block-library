@@ -70,11 +70,12 @@ abstract class AbstractCatalogBuilderBlock implements FilamentBuilderBlock, Fila
                     TextInput::make('heading')->label(__('capell-block-library::blocks.fields.heading'))->required(),
                     Textarea::make('content')->label(__('capell-block-library::blocks.fields.content'))->rows(4),
                 ]),
-                Toggle::make('first_open')->label(__('capell-block-library::blocks.fields.first_open')),
+                Toggle::make('first_open')->helperText(__('capell-block-library::helpers.AbstractCatalogBuilderBlock.first_open'))->label(__('capell-block-library::blocks.fields.first_open')),
             ],
             'call_to_action' => [
                 Select::make('alignment')
                     ->label(__('capell-block-library::blocks.fields.alignment'))
+                    ->helperText(__('capell-block-library::helpers.AbstractCatalogBuilderBlock.alignment'))
                     ->options(BlockAlignment::class)
                     ->default(BlockAlignment::Center->value),
                 static::actionsRepeater(),
@@ -83,19 +84,19 @@ abstract class AbstractCatalogBuilderBlock implements FilamentBuilderBlock, Fila
                 static::itemsRepeater('columns', [
                     TextInput::make('heading')->label(__('capell-block-library::blocks.fields.heading'))->required(),
                     Textarea::make('description')->label(__('capell-block-library::blocks.fields.description'))->rows(3),
-                    Toggle::make('highlighted')->label(__('capell-block-library::blocks.fields.highlighted')),
+                    Toggle::make('highlighted')->helperText(__('capell-block-library::helpers.AbstractCatalogBuilderBlock.highlighted'))->label(__('capell-block-library::blocks.fields.highlighted')),
                 ]),
                 static::itemsRepeater('rows', [
                     TextInput::make('label')->label(__('capell-block-library::blocks.fields.label'))->required(),
-                    TextInput::make('values')->label(__('capell-block-library::blocks.fields.values')),
+                    TextInput::make('values')->helperText(__('capell-block-library::helpers.AbstractCatalogBuilderBlock.values'))->label(__('capell-block-library::blocks.fields.values')),
                 ]),
             ],
             'content' => [],
             'counter' => [
                 static::itemsRepeater('counters', [
                     TextInput::make('value')->label(__('capell-block-library::blocks.fields.value'))->required(),
-                    TextInput::make('prefix')->label(__('capell-block-library::blocks.fields.prefix')),
-                    TextInput::make('suffix')->label(__('capell-block-library::blocks.fields.suffix')),
+                    TextInput::make('prefix')->helperText(__('capell-block-library::helpers.AbstractCatalogBuilderBlock.prefix'))->label(__('capell-block-library::blocks.fields.prefix')),
+                    TextInput::make('suffix')->helperText(__('capell-block-library::helpers.AbstractCatalogBuilderBlock.suffix'))->label(__('capell-block-library::blocks.fields.suffix')),
                     TextInput::make('label')->label(__('capell-block-library::blocks.fields.label'))->required(),
                     Textarea::make('description')->label(__('capell-block-library::blocks.fields.description'))->rows(3),
                 ]),
@@ -103,6 +104,7 @@ abstract class AbstractCatalogBuilderBlock implements FilamentBuilderBlock, Fila
             'divider' => [
                 Select::make('style')
                     ->label(__('capell-block-library::blocks.fields.style'))
+                    ->helperText(__('capell-block-library::helpers.AbstractCatalogBuilderBlock.style'))
                     ->options(BlockDividerStyle::class)
                     ->default(BlockDividerStyle::Line->value),
             ],
@@ -111,7 +113,7 @@ abstract class AbstractCatalogBuilderBlock implements FilamentBuilderBlock, Fila
                     TextInput::make('question')->label(__('capell-block-library::blocks.fields.question'))->required(),
                     Textarea::make('answer')->label(__('capell-block-library::blocks.fields.answer'))->rows(4),
                 ]),
-                Toggle::make('first_open')->label(__('capell-block-library::blocks.fields.first_open')),
+                Toggle::make('first_open')->helperText(__('capell-block-library::helpers.AbstractCatalogBuilderBlock.first_open'))->label(__('capell-block-library::blocks.fields.first_open')),
             ],
             'features' => [
                 static::columnsSelect(),
@@ -124,13 +126,16 @@ abstract class AbstractCatalogBuilderBlock implements FilamentBuilderBlock, Fila
             'hero' => [
                 Select::make('alignment')
                     ->label(__('capell-block-library::blocks.fields.alignment'))
+                    ->helperText(__('capell-block-library::helpers.AbstractCatalogBuilderBlock.alignment'))
                     ->options(BlockAlignment::class)
                     ->default(BlockAlignment::Center->value),
                 TextInput::make('url')->label(__('capell-block-library::blocks.fields.url')),
             ],
             'logos' => [
+                ...BuilderBlockMediaFields::uploads(),
                 static::columnsSelect(default: '4'),
                 static::itemsRepeater('logos', [
+                    BuilderBlockMediaFields::image(),
                     TextInput::make('name')->label(__('capell-block-library::blocks.fields.name'))->required(),
                     TextInput::make('url')->label(__('capell-block-library::blocks.fields.url')),
                 ]),
@@ -138,13 +143,13 @@ abstract class AbstractCatalogBuilderBlock implements FilamentBuilderBlock, Fila
             'pricing' => [
                 static::itemsRepeater('plans', [
                     TextInput::make('name')->label(__('capell-block-library::blocks.fields.name'))->required(),
-                    TextInput::make('price')->label(__('capell-block-library::blocks.fields.price'))->required(),
-                    TextInput::make('period')->label(__('capell-block-library::blocks.fields.period')),
+                    TextInput::make('price')->helperText(__('capell-block-library::helpers.AbstractCatalogBuilderBlock.price'))->label(__('capell-block-library::blocks.fields.price'))->required(),
+                    TextInput::make('period')->helperText(__('capell-block-library::helpers.AbstractCatalogBuilderBlock.period'))->label(__('capell-block-library::blocks.fields.period')),
                     Textarea::make('description')->label(__('capell-block-library::blocks.fields.description'))->rows(3),
-                    Textarea::make('features')->label(__('capell-block-library::blocks.fields.features'))->rows(5),
-                    Toggle::make('highlighted')->label(__('capell-block-library::blocks.fields.highlighted')),
+                    Textarea::make('features')->helperText(__('capell-block-library::helpers.AbstractCatalogBuilderBlock.features'))->label(__('capell-block-library::blocks.fields.features'))->rows(5),
+                    Toggle::make('highlighted')->helperText(__('capell-block-library::helpers.AbstractCatalogBuilderBlock.highlighted'))->label(__('capell-block-library::blocks.fields.highlighted')),
                     TextInput::make('action_label')->label(__('capell-block-library::blocks.fields.action_label')),
-                    TextInput::make('action_url')->label(__('capell-block-library::blocks.fields.action_url')),
+                    TextInput::make('action_url')->helperText(__('capell-block-library::helpers.AbstractCatalogBuilderBlock.action_url'))->label(__('capell-block-library::blocks.fields.action_url')),
                 ]),
             ],
             'stats' => [
@@ -161,7 +166,7 @@ abstract class AbstractCatalogBuilderBlock implements FilamentBuilderBlock, Fila
                     TextInput::make('label')->label(__('capell-block-library::blocks.fields.label'))->required(),
                 ]),
                 static::itemsRepeater('rows', [
-                    TextInput::make('cells')->label(__('capell-block-library::blocks.fields.cells'))->required(),
+                    TextInput::make('cells')->helperText(__('capell-block-library::helpers.AbstractCatalogBuilderBlock.cells'))->label(__('capell-block-library::blocks.fields.cells'))->required(),
                 ]),
             ],
             'tabs' => [
@@ -171,8 +176,10 @@ abstract class AbstractCatalogBuilderBlock implements FilamentBuilderBlock, Fila
                 ]),
             ],
             'team' => [
+                ...BuilderBlockMediaFields::uploads(),
                 static::columnsSelect(),
                 static::itemsRepeater('members', [
+                    BuilderBlockMediaFields::image(),
                     TextInput::make('name')->label(__('capell-block-library::blocks.fields.name'))->required(),
                     TextInput::make('role')->label(__('capell-block-library::blocks.fields.role')),
                     Textarea::make('bio')->label(__('capell-block-library::blocks.fields.bio'))->rows(3),
@@ -186,7 +193,7 @@ abstract class AbstractCatalogBuilderBlock implements FilamentBuilderBlock, Fila
             ],
             'timeline' => [
                 static::itemsRepeater('milestones', [
-                    TextInput::make('date')->label(__('capell-block-library::blocks.fields.date')),
+                    TextInput::make('date')->helperText(__('capell-block-library::helpers.AbstractCatalogBuilderBlock.date'))->label(__('capell-block-library::blocks.fields.date')),
                     TextInput::make('heading')->label(__('capell-block-library::blocks.fields.heading'))->required(),
                     Textarea::make('description')->label(__('capell-block-library::blocks.fields.description'))->rows(3),
                 ]),
@@ -211,6 +218,7 @@ abstract class AbstractCatalogBuilderBlock implements FilamentBuilderBlock, Fila
     {
         return Select::make('columns')
             ->label(__('capell-block-library::blocks.fields.columns'))
+            ->helperText(__('capell-block-library::helpers.AbstractCatalogBuilderBlock.columns'))
             ->options(BlockColumnCount::class)
             ->default($default);
     }
