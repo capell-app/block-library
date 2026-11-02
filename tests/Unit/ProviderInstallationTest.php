@@ -17,8 +17,10 @@ use Capell\Tests\Support\InstalledRuntimeState;
 use Capell\Tests\Support\InstalledRuntimeTestCase;
 use Capell\Tests\Support\PackageInstallationSurfaceSnapshot;
 use Capell\Tests\Support\PackageInstallationTestCase;
+use Illuminate\Contracts\View\Factory as ViewFactory;
 use Illuminate\Foundation\Application;
 use Illuminate\View\Compilers\BladeCompiler;
+use Illuminate\View\FileViewFinder;
 
 it('preserves installed surfaces after repeated provider registration', function (): void {
     PackageInstallationTestCase::assertInProcessInstallation('block-library', function (Application $app, Closure $refresh): void {
@@ -67,7 +69,8 @@ it('populates pre-resolved block registries and Blade directives during late ins
         $blade = $app->make(BladeCompiler::class);
         expect($registry->all())->toBe([])
             ->and($discovery->filamentBlocks())->toBe([])
-            ->and($blade->getCustomDirectives())->not->toHaveKey('safeBlockHtml');
+            // Registered views compile before install, so the directive must not wait for it.
+            ->and($blade->getCustomDirectives())->toHaveKey('safeBlockHtml');
 
         InstalledRuntimeTestCase::prepareLateInstallMigrations($app);
         InstallPackageAction::run($package);
@@ -80,5 +83,25 @@ it('populates pre-resolved block registries and Blade directives during late ins
         $registered = $registry->all();
         RefreshInstalledPackageRuntimeAction::run($package);
         expect($registry->all())->toBe($registered);
+    });
+});
+
+it('registers its anonymous component path once across repeated boots', function (): void {
+    InstalledRuntimeState::run(static function (): void {
+        $app = InstalledRuntimeTestCase::boot(InstalledRuntimeParity::manifest('block-library'), false, sourceRoot: dirname(__DIR__, 2));
+        $provider = $app->getProvider(BlockLibraryServiceProvider::class);
+        assert($provider instanceof BlockLibraryServiceProvider);
+
+        $provider->packageBooted();
+        $provider->packageBooted();
+
+        $finder = $app->make(ViewFactory::class)->getFinder();
+        assert($finder instanceof FileViewFinder);
+
+        expect(array_filter(
+            $app->make(BladeCompiler::class)->getAnonymousComponentPaths(),
+            static fn (array $path): bool => $path['prefix'] === 'capell-block-library',
+        ))->toHaveCount(1)
+            ->and($finder->getHints()[hash('xxh128', 'capell-block-library')] ?? [])->toHaveCount(1);
     });
 });

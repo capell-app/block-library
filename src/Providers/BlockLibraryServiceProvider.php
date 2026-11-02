@@ -23,7 +23,9 @@ use Capell\BlockLibrary\Support\DefaultBlockDefinitionProvider;
 use Capell\BlockLibrary\View\Components\BuilderBlock;
 use Capell\Core\Support\Extensions\ExtensionContributionReceiptRegistry;
 use Capell\Core\Support\Packages\AbstractPackageServiceProvider;
+use Illuminate\Contracts\View\Factory as ViewFactory;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\View\FileViewFinder;
 use Override;
 use Spatie\LaravelPackageTools\Package;
 
@@ -48,6 +50,21 @@ final class BlockLibraryServiceProvider extends AbstractPackageServiceProvider
         $this->app->singleton(BlockRegistry::class);
         $this->app->singleton(BuilderBlockRegistry::class);
         $this->app->singleton(BuilderBlockDiscovery::class);
+    }
+
+    /**
+     * `view:cache` compiles this package's registered views whether or not it is
+     * installed, so the Blade vocabulary they use never depends on install state.
+     */
+    #[Override]
+    public function packageBooted(): void
+    {
+        Blade::directive(
+            'safeBlockHtml',
+            static fn (string $expression): string => sprintf('<?php echo \\%s::run(%s); ?>', SanitizeBlockHtmlAction::class, $expression),
+        );
+        Blade::component(BuilderBlock::class, 'capell-block-library::builder-block');
+        $this->registerAnonymousComponentPathOnce(__DIR__ . '/../../resources/views', 'capell-block-library');
     }
 
     #[Override]
@@ -96,15 +113,31 @@ final class BlockLibraryServiceProvider extends AbstractPackageServiceProvider
                     }
                 }
 
-                Blade::directive(
-                    'safeBlockHtml',
-                    static fn (string $expression): string => sprintf('<?php echo \\%s::run(%s); ?>', SanitizeBlockHtmlAction::class, $expression),
-                );
-
-                Blade::component(BuilderBlock::class, 'capell-block-library::builder-block');
-
-                Blade::anonymousComponentPath(__DIR__ . '/../../resources/views', 'capell-block-library');
             });
         });
+    }
+
+    /**
+     * A repeated boot must not append the path again. Blade keeps the path and the
+     * view finder keeps its hashed namespace; either can be rebuilt without the other.
+     */
+    private function registerAnonymousComponentPathOnce(string $path, string $prefix): void
+    {
+        foreach (Blade::getAnonymousComponentPaths() as $registered) {
+            if ($registered['path'] !== $path || $registered['prefix'] !== $prefix) {
+                continue;
+            }
+
+            $finder = $this->app->make(ViewFactory::class)->getFinder();
+            $hints = $finder instanceof FileViewFinder ? $finder->getHints() : [];
+
+            if (! in_array($path, $hints[$registered['prefixHash']] ?? [], true)) {
+                $finder->addNamespace($registered['prefixHash'], $path);
+            }
+
+            return;
+        }
+
+        Blade::anonymousComponentPath($path, $prefix);
     }
 }
