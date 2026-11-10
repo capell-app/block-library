@@ -45,6 +45,7 @@ final class BlockRegistryManifestStore
 
         $lockPath = $this->path . '.lock';
         $temporaryPath = $this->path . '.' . bin2hex(random_bytes(8)) . '.tmp';
+        // capell-security-scan: local-stream reads a lock file beside the block registry manifest in application storage
         $lockHandle = fopen($lockPath, 'c');
 
         if ($lockHandle === false) {

@@ -83,7 +83,7 @@ return [
         'action_label' => 'Action label',
         'action_url' => 'Action URL',
         'actions' => 'Actions',
-        'align_center' => 'Center',
+        'align_center' => 'Centre',
         'align_end' => 'End',
         'align_start' => 'Start',
         'alignment' => 'Alignment',

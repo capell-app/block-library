@@ -25,7 +25,7 @@ Saved builder blocks render through Layout Builder's public Blade registry. The 
 
 ## Good to know
 
-- Blocks added by other packages appear alongside the Foundation catalog only when those packages are installed and registered.
+- Blocks added by other packages appear alongside the Foundation catalogue only when those packages are installed and registered.
 - Rich text is sanitised before public rendering. Unsupported scripts, iframes, event attributes, and unsafe links are removed rather than published.
 - Interactive blocks use public controls without exposing editor markers or admin state. Always check the public preview after changing tabs, accordions, tables, media, or calls to action.
 - If a Foundation block is missing, clear the picker search first. If it is still absent, ask an administrator to check Block Library and the host page editor installation.

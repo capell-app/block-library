@@ -8,7 +8,7 @@
     "version": "1.0.0",
     "description": "Reuse typed content-block definitions and matching Filament Builder blocks across Capell content packages.",
     "product": {
-        "group": "Capell Foundation",
+        "group": "Capell Essentials",
         "tier": "free",
         "bundle": "foundation"
     },
@@ -115,6 +115,22 @@
     },
     "marketplace": {
         "summary": "Reusable foundation content blocks with typed definitions, screenshots, and Filament Builder blocks for Capell packages.",
+        "problem": "Package authors have to rebuild content blocks when each editor needs its own definitions.",
+        "outcome": "A site has consistent block choices available to consuming content packages.",
+        "faq": [
+            {
+                "question": "Where do editors find blocks?",
+                "answer": "Block choices appear inside Builder surfaces supplied by consuming packages."
+            },
+            {
+                "question": "Does this add a separate admin resource?",
+                "answer": "No. Block Library has no standalone admin resource."
+            },
+            {
+                "question": "Which block types are available?",
+                "answer": "The library includes blocks for FAQs, pricing, testimonials and other content."
+            }
+        ],
         "screenshots": [
             {
                 "path": "docs/assets/marketplace/extension-card.jpg",
@@ -123,8 +139,8 @@
             },
             {
                 "path": "docs/screenshots/block-library-admin-index.png",
-                "alt": "Capell admin content block registry list",
-                "caption": "Content block registry list"
+                "alt": "List of content blocks available to editors",
+                "caption": "Browse every block editors can add to a layout"
             },
             {
                 "path": "docs/screenshots/block-library-editor-picker.png",

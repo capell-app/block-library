@@ -48,7 +48,7 @@ describe('block-library capell.json manifest', function (): void {
                 'kind' => 'package',
                 'capellApiVersion' => '^1.0',
                 'product' => [
-                    'group' => 'Capell Foundation',
+                    'group' => 'Capell Essentials',
                     'tier' => 'free',
                     'bundle' => 'foundation',
                 ],

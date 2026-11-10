@@ -33,7 +33,7 @@
         },
         {
             "id": "content-block-registry-list",
-            "title": "Content block registry list.",
+            "title": "List of content blocks available to editors.",
             "package": "block-library",
             "surface": "frontend",
             "targetType": "frontend-url",
