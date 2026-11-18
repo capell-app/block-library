@@ -6,6 +6,8 @@ return [
     'AbstractCatalogBuilderBlock' => [
         'first_open' => 'Open the first item when visitors first view this block.',
         'alignment' => 'Choose how the block content is aligned.',
+        'heading_level' => 'Choose the heading level that fits where this block sits in the page outline. Use Heading 1 only once per page.',
+        'button_label' => 'Text shown on the button. Leave empty to use Read more. The button only appears when a URL is set.',
         'highlighted' => 'Give this item stronger visual emphasis in the block.',
         'values' => 'Separate cell values with | in the same order as the comparison columns.',
         'prefix' => 'Show this text immediately before the counter value.',

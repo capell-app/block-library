@@ -8,6 +8,7 @@ use Capell\BlockLibrary\Data\BuilderBlockRenderData;
 use Capell\BlockLibrary\Enums\BlockAlignment;
 use Capell\BlockLibrary\Enums\BlockColumnCount;
 use Capell\BlockLibrary\Enums\BlockDividerStyle;
+use Capell\BlockLibrary\Enums\BlockHeadingLevel;
 use Capell\BlockLibrary\Support\BuilderBlockFields;
 use Lorisleiva\Actions\Concerns\AsFake;
 use Lorisleiva\Actions\Concerns\AsObject;
@@ -19,7 +20,7 @@ final class BuildBuilderBlockRenderDataAction
 
     /**
      * @param  array<string, mixed>  $state
-     * @param  array<string, array{url: string, alt: ?string}>  $images  Hydrated, owner-scoped media only.
+     * @param  array<string, array{url: string, alt: ?string, width?: int, height?: int}>  $images  Hydrated, owner-scoped media only.
      */
     public function handle(string $type, array $state, array $images = []): BuilderBlockRenderData
     {
@@ -65,7 +66,7 @@ final class BuildBuilderBlockRenderDataAction
 
         return new BuilderBlockRenderData(
             title: $this->text($state['title'] ?? null),
-            summary: SanitizeBuilderBlockHtmlAction::run($state['summary'] ?? null),
+            summary: SanitizeBuilderBlockHtmlAction::run(FormatPlainTextBlockAction::run($state['summary'] ?? null)),
             url: $this->url($state['url'] ?? null),
             linkText: '',
             meta: $meta,
@@ -177,7 +178,8 @@ final class BuildBuilderBlockRenderDataAction
             'columns' => in_array($this->text($value), array_column(BlockColumnCount::cases(), 'value'), true) ? $this->text($value) : BlockColumnCount::Three->value,
             'style' => in_array($this->text($value), array_column(BlockDividerStyle::cases(), 'value'), true) ? $this->text($value) : BlockDividerStyle::Line->value,
             'first_open', 'highlighted' => in_array($value, [true, 1, '1'], true),
-            'content', 'answer' => SanitizeBuilderBlockHtmlAction::run($value),
+            'content', 'answer' => SanitizeBuilderBlockHtmlAction::run(FormatPlainTextBlockAction::run($value)),
+            'heading_level' => (BlockHeadingLevel::tryFrom($this->text($value)) ?? BlockHeadingLevel::One)->value,
             default => $this->text($value),
         };
     }

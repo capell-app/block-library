@@ -67,12 +67,12 @@
                     @continue
                 @endif
 
-                @if (($action['type'] ?? '') === 'public_action')
+                @if (($action['type'] ?? '') === 'public_action' || blank($action['url'] ?? null))
                     @continue
                 @endif
 
                 <a
-                    href="{{ $action['url'] ?? '#' }}"
+                    href="{{ $action['url'] }}"
                     class="inline-flex rounded bg-slate-950 px-5 py-3 font-semibold text-white"
                 >
                     {{ $action['label'] ?? '' }}

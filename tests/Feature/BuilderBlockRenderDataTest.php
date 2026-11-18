@@ -110,18 +110,20 @@ it('renders hydrated catalog data without any database query', function (): void
         ->and($queries)->toBe([]);
 });
 
-it('never emits an empty href for logos and actions whose link was rejected', function (string $type, array $state): void {
+it('never emits a dead anchor for logos and actions whose link was rejected', function (string $type, array $state, ?string $visibleText): void {
     $html = new BuilderBlock($type, BuildBuilderBlockRenderDataAction::run($type, $state))->render()->render();
     $dom = new DOMDocument;
     @$dom->loadHTML('<html><body>' . $html . '</body></html>');
     foreach ($dom->getElementsByTagName('a') as $anchor) {
-        expect($anchor->getAttribute('href'))->not->toBe('')->and($anchor->getAttribute('href'))->not->toContain('javascript');
+        expect($anchor->getAttribute('href'))->not->toBe('')->not->toBe('#')->and($anchor->getAttribute('href'))->not->toContain('javascript');
     }
 
-    expect($dom->getElementsByTagName('a')->length)->toBeGreaterThan(0);
+    expect($dom->getElementsByTagName('a')->length)->toBe(0)
+        ->and($html)->not->toContain('javascript:')
+        ->and($visibleText === null || str_contains($html, $visibleText))->toBeTrue();
 })->with([
-    'logos' => ['logos', ['logos' => [['name' => 'Initech', 'url' => 'javascript:alert(1)']]]],
-    'call to action' => ['call_to_action', ['actions' => [['label' => 'Start', 'url' => 'data:text/html,x']]]],
+    'logos' => ['logos', ['logos' => [['name' => 'Initech', 'url' => 'javascript:alert(1)']]], 'Initech'],
+    'call to action' => ['call_to_action', ['actions' => [['label' => 'Start', 'url' => 'data:text/html,x']]], null],
 ]);
 
 it('rejects credential query families in structured links rich text and hydrated images', function (string $parameter): void {

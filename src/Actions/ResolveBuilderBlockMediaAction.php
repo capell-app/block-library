@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Config;
 use Lorisleiva\Actions\Concerns\AsFake;
 use Lorisleiva\Actions\Concerns\AsObject;
+use Spatie\MediaLibrary\MediaCollections\Models\Media as SpatieMedia;
 
 final class ResolveBuilderBlockMediaAction
 {
@@ -23,7 +24,7 @@ final class ResolveBuilderBlockMediaAction
         return is_string($key) && preg_match('/^[a-f0-9-]{36}$/D', $key) === 1 ? 'builder-block-' . $key : null;
     }
 
-    /** @return array<string, array{url: string, alt: ?string}> */
+    /** @return array<string, array{url: string, alt: ?string, width?: int, height?: int}> */
     public function handle(mixed $owner, mixed $key): array
     {
         $collection = self::collection($key);
@@ -40,10 +41,15 @@ final class ResolveBuilderBlockMediaAction
             return [];
         }
 
-        $media = $owner->getMedia($collection);
+        // Every language of the record shares the block's media; alt text is still read for this translation's language.
+        $media = $owner->mediaOwner()->getMedia($collection);
         new Collection($media->filter(static fn (mixed $item): bool => $item instanceof CoreMedia)->all())->loadMissing('translations.language');
         $images = [];
         foreach ($media as $image) {
+            if (! $image instanceof SpatieMedia) {
+                continue;
+            }
+
             if (! is_string($image->uuid) || ! str_starts_with((string) $image->mime_type, 'image/') || Config::get('filesystems.disks.' . $image->disk . '.visibility') !== 'public') {
                 continue;
             }
@@ -59,7 +65,9 @@ final class ResolveBuilderBlockMediaAction
             }
 
             $alt = $metadata?->decorative ? '' : ($metadata?->alt ?: null);
-            $images[$image->uuid] = ['url' => $url, 'alt' => $alt];
+            $width = $image instanceof CoreMedia ? $image->getWidth() : null;
+            $height = $image instanceof CoreMedia ? $image->getHeight() : null;
+            $images[$image->uuid] = ['url' => $url, 'alt' => $alt] + ($width !== null && $height !== null && $width > 0 && $height > 0 ? ['width' => $width, 'height' => $height] : []);
         }
 
         return $images;

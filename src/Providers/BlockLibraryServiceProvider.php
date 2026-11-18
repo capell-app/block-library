@@ -10,6 +10,7 @@ use Capell\Admin\Facades\CapellAdmin;
 use Capell\Admin\Filament\Components\Forms\Editor\ContentBuilder;
 use Capell\Admin\Filament\Widgets\ContentFilamentWidget;
 use Capell\Admin\Support\Widgets\WidgetDiscovery;
+use Capell\BlockLibrary\Actions\PruneUnreferencedBuilderBlockMediaAction;
 use Capell\BlockLibrary\Actions\RegisterBlockDefinitionProviderAction;
 use Capell\BlockLibrary\Actions\SanitizeBlockHtmlAction;
 use Capell\BlockLibrary\Actions\SeparateClonedBuilderBlockMediaAction;
@@ -21,6 +22,7 @@ use Capell\BlockLibrary\Support\BuilderBlockDiscovery;
 use Capell\BlockLibrary\Support\BuilderBlockRegistry;
 use Capell\BlockLibrary\Support\DefaultBlockDefinitionProvider;
 use Capell\BlockLibrary\View\Components\BuilderBlock;
+use Capell\Core\Models\Translation;
 use Capell\Core\Support\Extensions\ExtensionContributionReceiptRegistry;
 use Capell\Core\Support\Packages\AbstractPackageServiceProvider;
 use Illuminate\Contracts\View\Factory as ViewFactory;
@@ -74,6 +76,19 @@ final class BlockLibraryServiceProvider extends AbstractPackageServiceProvider
             $component->afterStateUpdated(static function (ContentBuilder $component): void {
                 SeparateClonedBuilderBlockMediaAction::run($component);
             });
+            // Saved content is the only safe source of truth for which media is still used. A save removes only
+            // the collections it dropped, so another editor's unsaved clone keeps its media.
+            $component->saveRelationshipsUsing(static function (ContentBuilder $component): void {
+                $owner = $component->getRecord();
+                if ($owner instanceof Translation) {
+                    PruneUnreferencedBuilderBlockMediaAction::run($owner, PruneUnreferencedBuilderBlockMediaAction::takeSavedReferences($owner));
+                }
+            });
+        });
+        Translation::updating(static function (Translation $translation): void {
+            if ($translation->isDirty('content')) {
+                PruneUnreferencedBuilderBlockMediaAction::rememberSavedReferences($translation);
+            }
         });
         $receipts = $this->app->make(ExtensionContributionReceiptRegistry::class);
         $contexts = $receipts->activeContexts();
@@ -130,8 +145,9 @@ final class BlockLibraryServiceProvider extends AbstractPackageServiceProvider
 
             $finder = $this->app->make(ViewFactory::class)->getFinder();
             $hints = $finder instanceof FileViewFinder ? $finder->getHints() : [];
+            $canonicalPath = realpath($path) ?: $path;
 
-            if (! in_array($path, $hints[$registered['prefixHash']] ?? [], true)) {
+            if (! in_array($canonicalPath, $hints[$registered['prefixHash']] ?? [], true)) {
                 $finder->addNamespace($registered['prefixHash'], $path);
             }
 

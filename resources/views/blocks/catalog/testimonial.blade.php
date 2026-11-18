@@ -1,8 +1,10 @@
 @props(['asset', 'meta' => [], 'summary' => null, 'title' => null])
 
 <figure {{ $attributes->merge(['class' => 'section section-testimonial']) }}>
-    <blockquote class="text-2xl leading-relaxed font-medium">
-        “{{ $meta['quote'] ?? strip_tags((string) $summary) }}”
+    <blockquote
+        class="text-2xl leading-relaxed font-medium whitespace-pre-line"
+    >
+        “{{ filled($meta['quote'] ?? null) ? $meta['quote'] : strip_tags((string) $summary) }}”
     </blockquote>
     <figcaption class="mt-6">
         <p class="font-semibold">{{ $meta['author'] ?? $title }}</p>

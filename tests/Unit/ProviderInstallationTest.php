@@ -86,22 +86,34 @@ it('populates pre-resolved block registries and Blade directives during late ins
     });
 });
 
-it('registers its anonymous component path once across repeated boots', function (): void {
-    InstalledRuntimeState::run(static function (): void {
+it('registers its anonymous component path once across repeated boots and namespace repairs', function (bool $repairNamespace): void {
+    InstalledRuntimeState::run(static function () use ($repairNamespace): void {
         $app = InstalledRuntimeTestCase::boot(InstalledRuntimeParity::manifest('block-library'), false, sourceRoot: dirname(__DIR__, 2));
         $provider = $app->getProvider(BlockLibraryServiceProvider::class);
         assert($provider instanceof BlockLibraryServiceProvider);
-
-        $provider->packageBooted();
-        $provider->packageBooted();
-
         $finder = $app->make(ViewFactory::class)->getFinder();
         assert($finder instanceof FileViewFinder);
+        $compiler = $app->make(BladeCompiler::class);
+        $paths = $compiler->getAnonymousComponentPaths();
+        $namespace = hash('xxh128', 'capell-block-library');
+        $views = realpath(dirname(__DIR__, 2) . '/resources/views');
+        throw_unless(is_string($views), LogicException::class);
 
         expect(array_filter(
-            $app->make(BladeCompiler::class)->getAnonymousComponentPaths(),
+            $paths,
             static fn (array $path): bool => $path['prefix'] === 'capell-block-library',
         ))->toHaveCount(1)
-            ->and($finder->getHints()[hash('xxh128', 'capell-block-library')] ?? [])->toHaveCount(1);
+            ->and($finder->getHints()[$namespace] ?? [])->toBe([$views]);
+
+        if ($repairNamespace) {
+            $finder->replaceNamespace($namespace, []);
+        }
+
+        foreach ([1, 2] as $boot) {
+            $provider->packageBooted();
+
+            expect($finder->getHints()[$namespace] ?? [])->toBe([$views], 'Boot ' . $boot)
+                ->and($compiler->getAnonymousComponentPaths())->toBe($paths);
+        }
     });
-});
+})->with(['existing namespace' => false, 'missing namespace' => true]);

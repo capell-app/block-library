@@ -2,6 +2,8 @@
 
 @php
     $alignment = $meta['alignment'] ?? 'center';
+    $headingLevel = \Capell\BlockLibrary\Enums\BlockHeadingLevel::tryFrom((string) ($meta['heading_level'] ?? ''))?->value ?? 'h1';
+    $buttonLabel = filled($meta['button_label'] ?? null) ? $meta['button_label'] : __('capell-block-library::blocks.buttons.read_more');
 @endphp
 
 <section
@@ -15,7 +17,10 @@
 ])
 >
     @if ($title)
-        <h1 class="text-5xl font-bold tracking-tight">{{ $title }}</h1>
+        <{{ $headingLevel }}
+            class="text-5xl font-bold tracking-tight"
+            >{{ $title }}</{{ $headingLevel }}
+        >
     @endif
 
     @if ($summary)
@@ -29,7 +34,7 @@
             href="{{ $url }}"
             class="mt-8 inline-flex rounded bg-white px-5 py-3 font-semibold text-slate-950"
         >
-            {{ __('capell-block-library::blocks.buttons.read_more') }}
+            {{ $buttonLabel }}
         </a>
     @endif
 </section>

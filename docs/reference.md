@@ -6,7 +6,7 @@ Developer reference for `capell-app/block-library`. Start with the [README](../R
 
 ## Package Details
 
-Block Library is an **Available**, **No schema impact** Capell package in the **Capell Essentials** product group. It ships as `capell-app/block-library` and extends these surfaces: admin, frontend, shared.
+Block Library is an **Available** Capell package in the **Capell Essentials** product group. It ships as `capell-app/block-library` and extends these surfaces: admin, frontend, shared.
 
 - Status: Available
 - Tier: free
@@ -54,8 +54,10 @@ Block Library is an **Available**, **No schema impact** Capell package in the **
 ### Actions
 
 - `BuildBuilderBlockRenderDataAction`
+- `FormatPlainTextBlockAction`
 - `ListBlockDefinitionsAction`
 - `ListBuilderBlockPickerItemsAction`
+- `PruneUnreferencedBuilderBlockMediaAction`
 - `RegisterBlockDefinitionProviderAction`
 - `ResolveBlockDefinitionAction`
 - `ResolveBuilderBlockMediaAction`
@@ -126,7 +128,6 @@ Block Library is an **Available**, **No schema impact** Capell package in the **
 - `packages/block-library/resources/views/builder/team.blade.php`
 - `packages/block-library/resources/views/builder/testimonial.blade.php`
 - `packages/block-library/resources/views/builder/timeline.blade.php`
-- `packages/block-library/resources/views/registry.blade.php`
 
 ### Cache tags
 

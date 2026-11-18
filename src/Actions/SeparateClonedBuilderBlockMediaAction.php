@@ -8,10 +8,13 @@ use Capell\Admin\Filament\Components\Forms\Editor\ContentBuilder;
 use Capell\Core\Models\Media;
 use Capell\Core\Models\Translation;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use LogicException;
 use Lorisleiva\Actions\Concerns\AsFake;
 use Lorisleiva\Actions\Concerns\AsObject;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media as SpatieMedia;
 use Throwable;
 
 /** Runs after Core clones and regenerates widget identities, before another uploader can delete media. */
@@ -28,6 +31,7 @@ final class SeparateClonedBuilderBlockMediaAction
             return;
         }
 
+        $mediaOwner = $owner->mediaOwner();
         $seen = [];
         $stagedCollections = [];
         try {
@@ -48,11 +52,15 @@ final class SeparateClonedBuilderBlockMediaAction
                     continue;
                 }
 
-                $newKey = $this->unusedKey($owner);
+                $newKey = $this->unusedKey($mediaOwner);
                 $stagedCollections[] = 'builder-block-' . $newKey;
                 $references = [];
-                foreach ($owner->getMedia($collection) as $image) {
-                    $copy = $image->copy($owner, 'builder-block-' . $newKey, $image->disk);
+                foreach ($mediaOwner->getMedia($collection) as $image) {
+                    if (! $image instanceof SpatieMedia) {
+                        continue;
+                    }
+
+                    $copy = $image->copy($mediaOwner, 'builder-block-' . $newKey, $image->disk);
                     $references[$image->uuid] = $copy->uuid;
                     if ($image instanceof Media && $copy instanceof Media) {
                         $image->loadMissing('translations');
@@ -89,7 +97,7 @@ final class SeparateClonedBuilderBlockMediaAction
         } catch (Throwable $throwable) {
             // A database rollback cannot remove physical copies. Include a copy
             // persisted by Spatie even if a later step threw before it returned.
-            foreach ($owner->media()->whereIn('collection_name', $stagedCollections)->get() as $copy) {
+            foreach ($mediaOwner->media()->whereIn('collection_name', $stagedCollections)->get() as $copy) {
                 if ($copy instanceof Media) {
                     foreach ($copy->translations()->get() as $metadata) {
                         $metadata->forceDelete();
@@ -101,7 +109,7 @@ final class SeparateClonedBuilderBlockMediaAction
 
             throw $throwable;
         } finally {
-            $owner->unsetRelation('media');
+            $mediaOwner->unsetRelation('media');
         }
     }
 
@@ -109,7 +117,7 @@ final class SeparateClonedBuilderBlockMediaAction
      * Compensation removes everything in a staged collection, so a target
      * collection must be provably unused before this invocation owns it.
      */
-    private function unusedKey(Translation $owner): string
+    private function unusedKey(Model&HasMedia $owner): string
     {
         for ($attempt = 0; $attempt < 5; $attempt++) {
             $key = (string) Str::uuid();

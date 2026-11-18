@@ -32,33 +32,6 @@
             ]
         },
         {
-            "id": "content-block-registry-list",
-            "title": "List of content blocks available to editors.",
-            "package": "block-library",
-            "surface": "frontend",
-            "targetType": "frontend-url",
-            "target": "/screenshot-fixtures/catalogue/block-library/content-block-registry-list",
-            "required": true,
-            "notes": "Package-owned registry fixture renders the installed Block Library definitions from the live registry, with one card per registered block.",
-            "useCase": "An editor or package developer reviews the available reusable content blocks before creating block content.",
-            "screenshotPath": "packages/block-library/docs/screenshots/block-library-admin-index.png",
-            "url": "/screenshot-fixtures/catalogue/block-library/content-block-registry-list",
-            "colorSchemes": ["light", "dark"],
-            "waitFor": ".block-registry-item"
-        },
-        {
-            "id": "content-block-assets",
-            "title": "Content block asset settings.",
-            "package": "block-library",
-            "surface": "admin",
-            "targetType": "admin-surface",
-            "target": "content-block-assets",
-            "required": false,
-            "notes": "Optional Beta evidence target. The current file duplicates the registry capture; replace it with an independently captured asset workflow before using it as release or Marketplace evidence.",
-            "useCase": "An editor configures media-backed block content before publishing it through a consuming package.",
-            "screenshotPath": "packages/block-library/docs/screenshots/block-library-admin-assets.png"
-        },
-        {
             "id": "frontend-hero-block",
             "title": "Frontend hero block.",
             "package": "block-library",
@@ -69,7 +42,7 @@
             "waitFor": ".section-hero",
             "required": true,
             "notes": "Anonymous native page consumes a persisted Content Sections asset through the public layout graph and the actual Block Library catalogue view. Require populated section output; never accept the old illustrative route.",
-            "useCase": "A buyer verifies the package ships ready-to-render frontend block views.",
+            "useCase": "Ready-to-render frontend block views from the Block Library.",
             "screenshotPath": "packages/block-library/docs/screenshots/block-library-frontend-hero.png",
             "scenario": "frontend-page",
             "user": false,
@@ -98,7 +71,7 @@
             "waitFor": ".section-features",
             "required": true,
             "notes": "Anonymous native page consumes a persisted Content Sections asset through the public layout graph and the actual Block Library catalogue view. Require populated section output; never accept the old illustrative route.",
-            "useCase": "A buyer verifies reusable feature sections can be rendered by consuming packages.",
+            "useCase": "Reusable feature sections rendered on a public page.",
             "screenshotPath": "packages/block-library/docs/screenshots/block-library-frontend-features.png",
             "scenario": "frontend-page",
             "user": false,
@@ -127,7 +100,7 @@
             "waitFor": ".section-pricing",
             "required": true,
             "notes": "Anonymous native page consumes a persisted Content Sections asset through the public layout graph and the actual Block Library catalogue view. Require populated section output; never accept the old illustrative route.",
-            "useCase": "A buyer verifies reusable pricing sections can be rendered without custom theme work.",
+            "useCase": "Reusable pricing sections rendered without custom theme work.",
             "screenshotPath": "packages/block-library/docs/screenshots/block-library-frontend-pricing.png",
             "scenario": "frontend-page",
             "user": false,
@@ -144,31 +117,6 @@
                     "block": "center"
                 }
             ]
-        },
-        {
-            "id": "block-library-admin-sidebar-menu-open",
-            "title": "Reusable block templates with the admin sidebar open.",
-            "package": "block-library",
-            "surface": "admin",
-            "targetType": "admin-resource",
-            "target": "BlockTemplateResource",
-            "required": false,
-            "notes": "Capture the installed admin table after preparing the workshop programme records.",
-            "useCase": "An editor configures media-backed block content before publishing it through a consuming package.",
-            "screenshotPath": "packages/block-library/docs/screenshots/block-library-admin-sidebar-menu-open.png",
-            "interactions": [
-                {
-                    "type": "click",
-                    "selector": ".fi-topbar-open-collapse-sidebar-btn"
-                },
-                {
-                    "type": "waitFor",
-                    "selector": ".fi-sidebar.fi-sidebar-open"
-                }
-            ],
-            "url": "/admin/block-templates",
-            "scenario": "admin-index",
-            "waitFor": ".fi-ta tbody tr"
         }
     ],
     "fixtureCommands": [

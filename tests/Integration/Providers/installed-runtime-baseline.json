@@ -4,10 +4,10 @@
     "scenarios": {
         "default": {
             "source": {
-                "ref": "HEAD",
-                "commit": "adac26b4ce1e9e1de545f68a1ff272ff73111696",
+                "ref": "origin/main",
+                "commit": "c3aa59d52832fbec108dfe51dd8557b642344205",
                 "providers": {
-                    "Providers/BlockLibraryServiceProvider.php": "0190262b1d9528fd08acc30964ca36f45f8cad7b117842688b83287b88246440"
+                    "Providers/BlockLibraryServiceProvider.php": "3731bf79ad06dabd8a84ed6b4ff9e969307ab9e3bb4c4677df40950f5fdd8f03"
                 },
                 "configure": null
             },
@@ -410,7 +410,8 @@
                     "capell:layout-builder-widget-visual-regression": "Capell\\LayoutBuilder\\Console\\Commands\\WidgetVisualRegressionCommand",
                     "capell:layout-builder:prune-bulk-change-runs": "Capell\\LayoutBuilder\\Console\\Commands\\PruneLayoutBulkChangeRunsCommand",
                     "capell:layouts:bulk-change": "Capell\\LayoutBuilder\\Console\\Commands\\LayoutBulkChangeCommand",
-                    "capell:widget-snapshots:prune": "Capell\\LayoutBuilder\\Console\\Commands\\PrunePublicWidgetSnapshotsCommand"
+                    "capell:widget-snapshots:prune": "Capell\\LayoutBuilder\\Console\\Commands\\PrunePublicWidgetSnapshotsCommand",
+                    "layout-builder:resync-preset": "Capell\\LayoutBuilder\\Console\\Commands\\ResyncLayoutPresetCommand"
                 },
                 "config-values": {
                     "app.providers": [
@@ -485,6 +486,12 @@
                     "eloquent.restored: Capell\\LayoutBuilder\\Models\\Widget": [
                         "Capell\\Frontend\\Support\\Cache\\FrontendCacheInvalidationObserver@restored"
                     ],
+                    "eloquent.saved: Capell\\Core\\Models\\Layout": [
+                        [
+                            "Capell\\LayoutBuilder\\Listeners\\MaintainPublicWidgetSnapshotsListener",
+                            "handleLayoutSaved"
+                        ]
+                    ],
                     "eloquent.saved: Capell\\LayoutBuilder\\Models\\Widget": [
                         "Capell\\Frontend\\Support\\Cache\\FrontendCacheInvalidationObserver@saved"
                     ],
@@ -492,6 +499,13 @@
                         [
                             "<package:layout-builder>/src/Support/LayoutBuilderCoreRegistrar.php",
                             "Capell\\LayoutBuilder\\Support\\LayoutBuilderCoreRegistrar(Capell\\Core\\Models\\Blueprint $type):void bound=Capell\\LayoutBuilder\\Support\\LayoutBuilderCoreRegistrar",
+                            []
+                        ]
+                    ],
+                    "eloquent.updating: Capell\\Core\\Models\\Translation": [
+                        [
+                            "<package>/src/Providers/BlockLibraryServiceProvider.php",
+                            "static Capell\\BlockLibrary\\Providers\\BlockLibraryServiceProvider(Capell\\Core\\Models\\Translation $translation):void source=19ac1ba99fd78356349b3fa5c3f7b545",
                             []
                         ]
                     ]
@@ -569,6 +583,35 @@
                             ],
                             "before": null,
                             "entry": "Capell\\Frontend\\Support\\Cache\\FrontendCacheInvalidationObserver@restored"
+                        }
+                    ],
+                    "eloquent.saved: Capell\\Core\\Models\\Layout": [
+                        {
+                            "after": null,
+                            "before": [
+                                "<package:core>/src/Models/Concerns/HasDefault.php",
+                                "Capell\\Core\\Models\\Layout(Illuminate\\Database\\Eloquent\\Model $model):void",
+                                []
+                            ],
+                            "entry": [
+                                "Capell\\LayoutBuilder\\Listeners\\MaintainPublicWidgetSnapshotsListener",
+                                "handleLayoutSaved"
+                            ]
+                        }
+                    ],
+                    "eloquent.updating: Capell\\Core\\Models\\Translation": [
+                        {
+                            "after": null,
+                            "before": [
+                                "<package:core>/src/Models/Concerns/HasUserstamps.php",
+                                "Capell\\Core\\Models\\Translation(Illuminate\\Database\\Eloquent\\Model&Capell\\Core\\Models\\Contracts\\Userstampable $model):void",
+                                []
+                            ],
+                            "entry": [
+                                "<package>/src/Providers/BlockLibraryServiceProvider.php",
+                                "static Capell\\BlockLibrary\\Providers\\BlockLibraryServiceProvider(Capell\\Core\\Models\\Translation $translation):void source=19ac1ba99fd78356349b3fa5c3f7b545",
+                                []
+                            ]
                         }
                     ]
                 },
@@ -3227,6 +3270,11 @@
                             ]
                         }
                     },
+                    "Capell\\Core\\Support\\Capabilities\\CapabilityRegistry": {
+                        "items": {
+                            "Capell\\Core\\Contracts\\Capabilities\\LayoutWidgetHost": "Capell\\LayoutBuilder\\Capabilities\\LayoutBuilderWidgetHost"
+                        }
+                    },
                     "Capell\\Core\\Support\\CapellCoreManager": {
                         "cloneableRelations": {
                             "page": ["widgetAssets"]
@@ -4531,7 +4579,9 @@
                         "capell-layout-builder.fragments.show",
                         "_fragments/{reference}",
                         ["GET", "HEAD"],
-                        [],
+                        [
+                            "Capell\\LayoutBuilder\\Http\\Middleware\\ThrottlePublicLayoutRequests"
+                        ],
                         "Capell\\LayoutBuilder\\Http\\Controllers\\PublicFragmentController",
                         {
                             "as": "capell-layout-builder.fragments.show",
@@ -4546,7 +4596,10 @@
                         "capell-layout-builder.layout-widgets.localized.show",
                         "{siteDomainPath}/_capell/layout-widgets/{reference}",
                         ["GET", "HEAD"],
-                        ["web"],
+                        [
+                            "web",
+                            "Capell\\LayoutBuilder\\Http\\Middleware\\ThrottlePublicLayoutRequests"
+                        ],
                         "Capell\\LayoutBuilder\\Http\\Controllers\\LazyLayoutWidgetController",
                         {
                             "as": "capell-layout-builder.layout-widgets.localized.show",
@@ -4562,7 +4615,10 @@
                         "capell-layout-builder.layout-widgets.show",
                         "_capell/layout-widgets/{reference}",
                         ["GET", "HEAD"],
-                        ["web"],
+                        [
+                            "web",
+                            "Capell\\LayoutBuilder\\Http\\Middleware\\ThrottlePublicLayoutRequests"
+                        ],
                         "Capell\\LayoutBuilder\\Http\\Controllers\\LazyLayoutWidgetController",
                         {
                             "as": "capell-layout-builder.layout-widgets.show",
@@ -4634,7 +4690,7 @@
                 },
                 "views": {
                     "4f15f8015242395262c24b5ea24db9e6": [
-                        "<package>/src/Providers/../../resources/views"
+                        "<package>/resources/views"
                     ],
                     "capell-block-library": ["<package>/resources/views"]
                 }
@@ -4685,7 +4741,7 @@
                 },
                 "views": {
                     "4f15f8015242395262c24b5ea24db9e6": [
-                        "<package>/src/Providers/../../resources/views"
+                        "<package>/resources/views"
                     ],
                     "capell-block-library": ["<package>/resources/views"]
                 }

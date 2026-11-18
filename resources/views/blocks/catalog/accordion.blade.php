@@ -3,6 +3,7 @@
 @php
     $items = is_array($meta['items'] ?? null) ? $meta['items'] : [];
     $firstOpen = (bool) ($meta['first_open'] ?? false);
+    $group = 'accordion-' . substr(hash('xxh128', (string) json_encode([$items, $meta['capell_block_library_instance'] ?? 0], JSON_INVALID_UTF8_SUBSTITUTE)), 0, 8);
 @endphp
 
 <section
@@ -32,7 +33,9 @@
                     type="button"
                     class="flex w-full cursor-pointer items-center justify-between gap-4 text-left font-semibold"
                     :aria-expanded="openPanel === {{ $loop->index }} ? 'true' : 'false'"
-                    aria-controls="accordion-panel-{{ $loop->index }}"
+                    @if (filled($item['content'] ?? null))
+                        aria-controls="{{ $group }}-panel-{{ $loop->index }}"
+                    @endif
                     @click="openPanel = openPanel === {{ $loop->index }} ? null : {{ $loop->index }}"
                 >
                     <span>{{ $item['heading'] ?? '' }}</span>
@@ -47,7 +50,7 @@
 
                 @if (filled($item['content'] ?? null))
                     <div
-                        id="accordion-panel-{{ $loop->index }}"
+                        id="{{ $group }}-panel-{{ $loop->index }}"
                         class="prose mt-4 max-w-none text-slate-700"
                         x-show="openPanel === {{ $loop->index }}"
                         x-cloak

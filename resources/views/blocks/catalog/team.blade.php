@@ -33,6 +33,10 @@
                     <img
                         src="{{ $image['url'] }}"
                         alt="{{ $image['alt'] ?? '' }}"
+                        @if (is_int($image['width'] ?? null) && is_int($image['height'] ?? null))
+                            width="{{ $image['width'] }}"
+                            height="{{ $image['height'] }}"
+                        @endif
                         class="mb-4 h-16 w-16 rounded-full object-cover"
                         loading="lazy"
                     />
@@ -52,7 +56,7 @@
                 @endif
 
                 @if (filled($member['bio'] ?? null))
-                    <p class="mt-3 text-slate-600">{{ $member['bio'] }}</p>
+                    <p class="mt-3 whitespace-pre-line text-slate-600">{{ $member['bio'] }}</p>
                 @endif
 
                 @if (filled($member['url'] ?? null))

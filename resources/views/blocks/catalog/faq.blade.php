@@ -3,6 +3,7 @@
 @php
     $questions = is_array($meta['questions'] ?? null) ? $meta['questions'] : [];
     $firstOpen = (bool) ($meta['first_open'] ?? false);
+    $group = 'faq-' . substr(hash('xxh128', (string) json_encode([$questions, $meta['capell_block_library_instance'] ?? 0], JSON_INVALID_UTF8_SUBSTITUTE)), 0, 8);
 @endphp
 
 <section
@@ -30,7 +31,9 @@
                     type="button"
                     class="w-full cursor-pointer text-left font-semibold"
                     :aria-expanded="openQuestion === {{ $loop->index }} ? 'true' : 'false'"
-                    aria-controls="faq-panel-{{ $loop->index }}"
+                    @if (filled($question['answer'] ?? null))
+                        aria-controls="{{ $group }}-panel-{{ $loop->index }}"
+                    @endif
                     @click="openQuestion = openQuestion === {{ $loop->index }} ? null : {{ $loop->index }}"
                 >
                     {{ $question['question'] ?? '' }}
@@ -38,7 +41,7 @@
 
                 @if (filled($question['answer'] ?? null))
                     <div
-                        id="faq-panel-{{ $loop->index }}"
+                        id="{{ $group }}-panel-{{ $loop->index }}"
                         class="prose mt-3 max-w-none text-slate-700"
                         x-show="openQuestion === {{ $loop->index }}"
                         x-cloak

@@ -35,7 +35,7 @@
                 </p>
 
                 @if (filled($plan['description'] ?? null))
-                    <p class="mt-3 text-slate-600">{{ $plan['description'] }}</p>
+                    <p class="mt-3 whitespace-pre-line text-slate-600">{{ $plan['description'] }}</p>
                 @endif
 
                 @if (filled($plan['features'] ?? null))

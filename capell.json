@@ -6,7 +6,7 @@
     "kind": "package",
     "capellApiVersion": "^1.0",
     "version": "1.0.0",
-    "description": "Reuse typed content-block definitions and matching Filament Builder blocks across Capell content packages.",
+    "description": "Seventeen ready-made blocks for the page editor, such as FAQ, pricing, team and testimonial.",
     "product": {
         "group": "Capell Essentials",
         "tier": "free",
@@ -114,55 +114,149 @@
         "privateDocsRequested": false
     },
     "marketplace": {
-        "summary": "Reusable foundation content blocks with typed definitions, screenshots, and Filament Builder blocks for Capell packages.",
-        "problem": "Package authors have to rebuild content blocks when each editor needs its own definitions.",
-        "outcome": "A site has consistent block choices available to consuming content packages.",
+        "summary": "Editors add an FAQ, a pricing table or a team section to a page from a picker and fill in its fields, with no developer needed.",
+        "description": "Give editors common page blocks without custom development. The set covers accordion, call to action, comparison, content, counter, divider, FAQ, features, hero, logos, pricing, stats, table, tabs, team, testimonial and timeline. Blocks appear in the editor's picker with a description and search words, and they ship with their own styling. Each block lives on the page where it is added. For one shared across many pages, see Content Sections. It arrives with Layout Builder.",
+        "problem": "I don't want to wait for a developer every time a page needs an FAQ, a pricing table or a team section.",
+        "outcome": "A page gains an FAQ, pricing table or team section from the picker, with fields the editor fills in.",
         "faq": [
             {
-                "question": "Where do editors find blocks?",
-                "answer": "Block choices appear inside Builder surfaces supplied by consuming packages."
+                "question": "Does Block Library add a screen or settings to the admin?",
+                "answer": "No. It has no screen or settings of its own. Its blocks appear in the page editor for anyone who can already edit the page."
             },
             {
-                "question": "Does this add a separate admin resource?",
-                "answer": "No. Block Library has no standalone admin resource."
+                "question": "What is the difference between a block and a section?",
+                "answer": "A block belongs to the page you add it to. A section from Content Sections is built once and shared across many pages."
             },
             {
-                "question": "Which block types are available?",
-                "answer": "The library includes blocks for FAQs, pricing, testimonials and other content."
+                "question": "What happens if someone pastes an unusual link into a block?",
+                "answer": "Links are limited to ordinary web, email and phone addresses, so a link to anywhere else is dropped. Rich text in a block is cleaned in the same pass."
+            },
+            {
+                "question": "If I copy a block with images in it, do both copies share the pictures?",
+                "answer": "No. A copied block gets its own set of uploaded images, so changing one copy leaves the other as it was."
             }
         ],
         "screenshots": [
             {
                 "path": "docs/assets/marketplace/extension-card.jpg",
-                "alt": "Block Library extension preview image",
-                "caption": "Block Library extension preview"
-            },
-            {
-                "path": "docs/screenshots/block-library-admin-index.png",
-                "alt": "List of content blocks available to editors",
-                "caption": "Browse every block editors can add to a layout"
+                "alt": "Card with a cropped Content Blocks list and a block form above three steps labelled Define, Compose and Render.",
+                "caption": "The card sums the package up as blocks you define, compose into pages and render."
             },
             {
                 "path": "docs/screenshots/block-library-editor-picker.png",
-                "alt": "Block Library blocks in the installed Layout Builder picker",
-                "caption": "Choose registered Block Library blocks from the real installed layout editor"
+                "alt": "Page editor with the Add content block search box open, listing Accordion, Call-to-action, Comparison and Content blocks.",
+                "caption": "Editors search by name or description and pick a ready-made block to add to the page."
             },
             {
                 "path": "docs/screenshots/block-library-frontend-hero.png",
-                "alt": "Frontend hero block rendered from Block Library",
-                "caption": "Frontend hero block"
+                "alt": "Public page hero block with a dark band, the heading Make space for your next idea and one line of text beneath.",
+                "caption": "How the hero block looks on a public page, here for an example shared studio."
             },
             {
                 "path": "docs/screenshots/block-library-frontend-features.png",
-                "alt": "Frontend feature block rendered from Block Library",
-                "caption": "Frontend feature block"
+                "alt": "Public page feature block with a heading and three cards titled Room to create, Learn by doing and Meet your neighbours.",
+                "caption": "How the feature block shows a heading, a line of text and a row of short cards."
             },
             {
                 "path": "docs/screenshots/block-library-frontend-pricing.png",
-                "alt": "Frontend pricing block rendered from Block Library",
-                "caption": "Frontend pricing block"
+                "alt": "Public page pricing block with three plans, Day desk, Regular maker and Resident, each with a price and a ticked list.",
+                "caption": "How the pricing block sets plans side by side, with the middle plan outlined."
             }
         ],
         "categories": ["foundation", "shared"]
+    },
+    "contributionTraceability": {
+        "contributions": [
+            {
+                "type": "dashboard-widget",
+                "key": "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\AccordionBlock",
+                "providerBucket": "runtime"
+            },
+            {
+                "type": "dashboard-widget",
+                "key": "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\CallToActionBlock",
+                "providerBucket": "runtime"
+            },
+            {
+                "type": "dashboard-widget",
+                "key": "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\ComparisonBlock",
+                "providerBucket": "runtime"
+            },
+            {
+                "type": "dashboard-widget",
+                "key": "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\ContentBlock",
+                "providerBucket": "runtime"
+            },
+            {
+                "type": "dashboard-widget",
+                "key": "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\CounterBlock",
+                "providerBucket": "runtime"
+            },
+            {
+                "type": "dashboard-widget",
+                "key": "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\DividerBlock",
+                "providerBucket": "runtime"
+            },
+            {
+                "type": "dashboard-widget",
+                "key": "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\FaqBlock",
+                "providerBucket": "runtime"
+            },
+            {
+                "type": "dashboard-widget",
+                "key": "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\FeaturesBlock",
+                "providerBucket": "runtime"
+            },
+            {
+                "type": "dashboard-widget",
+                "key": "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\HeroBlock",
+                "providerBucket": "runtime"
+            },
+            {
+                "type": "dashboard-widget",
+                "key": "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\LogosBlock",
+                "providerBucket": "runtime"
+            },
+            {
+                "type": "dashboard-widget",
+                "key": "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\PricingBlock",
+                "providerBucket": "runtime"
+            },
+            {
+                "type": "dashboard-widget",
+                "key": "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\StatsBlock",
+                "providerBucket": "runtime"
+            },
+            {
+                "type": "dashboard-widget",
+                "key": "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TableBlock",
+                "providerBucket": "runtime"
+            },
+            {
+                "type": "dashboard-widget",
+                "key": "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TabsBlock",
+                "providerBucket": "runtime"
+            },
+            {
+                "type": "dashboard-widget",
+                "key": "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TeamBlock",
+                "providerBucket": "runtime"
+            },
+            {
+                "type": "dashboard-widget",
+                "key": "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TestimonialBlock",
+                "providerBucket": "runtime"
+            },
+            {
+                "type": "dashboard-widget",
+                "key": "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TimelineBlock",
+                "providerBucket": "runtime"
+            },
+            {
+                "type": "dashboard-widget",
+                "key": "widget:Capell\\Socials\\Filament\\BuilderBlocks\\SocialsBuilderBlock",
+                "providerBucket": "runtime"
+            }
+        ]
     }
 }

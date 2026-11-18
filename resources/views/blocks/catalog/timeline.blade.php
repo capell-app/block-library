@@ -33,7 +33,7 @@
                 </h3>
 
                 @if (filled($milestone['description'] ?? null))
-                    <p class="mt-2 text-slate-600">{{ $milestone['description'] }}</p>
+                    <p class="mt-2 whitespace-pre-line text-slate-600">{{ $milestone['description'] }}</p>
                 @endif
             </li>
         @endforeach

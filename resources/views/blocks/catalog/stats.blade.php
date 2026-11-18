@@ -29,7 +29,7 @@
                 <h3 class="mt-2 font-semibold">{{ $stat['label'] ?? '' }}</h3>
 
                 @if (filled($stat['description'] ?? null))
-                    <p class="mt-2 text-sm text-slate-600">{{ $stat['description'] }}</p>
+                    <p class="mt-2 text-sm whitespace-pre-line text-slate-600">{{ $stat['description'] }}</p>
                 @endif
             </article>
         @endforeach

@@ -1,6 +1,6 @@
 {
     "name": "capell-app/block-library",
-    "description": "Shared typed content block primitives for Capell packages.",
+    "description": "A starter catalogue of seventeen editor blocks and their public views for Capell pages.",
     "keywords": [
         "capell",
         "block-library",

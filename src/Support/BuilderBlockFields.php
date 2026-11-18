@@ -36,7 +36,7 @@ final class BuilderBlockFields
             'call_to_action' => ['alignment'],
             'divider' => ['style'],
             'features', 'stats' => ['columns'],
-            'hero' => ['alignment', 'url'],
+            'hero' => ['alignment', 'heading_level', 'button_label', 'url'],
             'logos', 'team' => ['columns', 'media_key', 'block_images'],
             'table' => ['caption'],
             'testimonial' => ['quote', 'author', 'role'],

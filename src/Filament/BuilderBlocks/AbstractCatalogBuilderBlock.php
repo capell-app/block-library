@@ -9,6 +9,7 @@ use Capell\BlockLibrary\Contracts\FilamentBuilderBlock;
 use Capell\BlockLibrary\Enums\BlockAlignment;
 use Capell\BlockLibrary\Enums\BlockColumnCount;
 use Capell\BlockLibrary\Enums\BlockDividerStyle;
+use Capell\BlockLibrary\Enums\BlockHeadingLevel;
 use Capell\BlockLibrary\Support\DefaultBlockCatalog;
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
@@ -129,6 +130,16 @@ abstract class AbstractCatalogBuilderBlock implements FilamentBuilderBlock, Fila
                     ->helperText(__('capell-block-library::helpers.AbstractCatalogBuilderBlock.alignment'))
                     ->options(BlockAlignment::class)
                     ->default(BlockAlignment::Center->value),
+                Select::make('heading_level')
+                    ->label(__('capell-block-library::blocks.fields.heading_level'))
+                    ->helperText(__('capell-block-library::helpers.AbstractCatalogBuilderBlock.heading_level'))
+                    ->options(BlockHeadingLevel::class)
+                    ->default(BlockHeadingLevel::One->value)
+                    ->required(),
+                TextInput::make('button_label')
+                    ->label(__('capell-block-library::blocks.fields.button_label'))
+                    ->helperText(__('capell-block-library::helpers.AbstractCatalogBuilderBlock.button_label'))
+                    ->maxLength(60),
                 TextInput::make('url')->label(__('capell-block-library::blocks.fields.url')),
             ],
             'logos' => [

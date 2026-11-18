@@ -67,7 +67,7 @@ Recommended view contract:
 
 Every public block definition should declare a `BlockAccessibilityContractData` with semantic, keyboard, contrast, and media rules. Treat the contract as the package-owned checklist that keeps public block output usable across themes.
 
-The default catalog health check fails when a shipped block has an empty rule bucket. Custom packages should add the same focused test around their provider output before relying on the block in Layout Builder or Content Sections.
+The default catalogue health check fails when a shipped block has an empty rule bucket. Custom packages should add the same focused test around their provider output before relying on the block in Layout Builder or Content Sections.
 
 ## Fixtures And Demo Content
 
@@ -75,11 +75,11 @@ Use `BlockFixtureProvider` when a block needs reusable example payloads for test
 
 Fixtures should be small, deterministic, and safe to render publicly. Do not store theme wrappers, utility classes, or complex layout HTML in fixture payloads.
 
-The default Block Library catalog uses one provider for both contracts so every shipped block has a renderable fixture and demo payload. Custom packages should add provider completeness tests that instantiate each declared provider, assert at least one non-empty fixture payload, and render the payload through the public view safety test.
+The default Block Library catalogue uses one provider for both contracts so every shipped block has a renderable fixture and demo payload. Custom packages should add provider completeness tests that instantiate each declared provider, assert at least one non-empty fixture payload, and render the payload through the public view safety test.
 
 ## Builder Blocks
 
-If the block should appear in Filament Builder, add a class implementing `FilamentBuilderBlock`. For catalog-style blocks, mirror the local `AbstractCatalogBuilderBlock` pattern: keep the schema thin, delegate content structure to typed settings, and keep runtime rendering in public views.
+If the block should appear in Filament Builder, add a class implementing `FilamentBuilderBlock`. For catalogue-style blocks, mirror the local `AbstractCatalogBuilderBlock` pattern: keep the schema thin, delegate content structure to typed settings, and keep runtime rendering in public views.
 
 When package files change or an extension is installed/removed, clear `BuilderBlockDiscovery` cache so stale builder maps are not reused.
 
@@ -93,5 +93,5 @@ For every custom block definition, keep these aligned:
 - Translation keys used by labels, descriptions, defaults, and settings.
 - Public view tests for output safety.
 - Fixture/demo provider coverage for every block that declares providers.
-- Screenshot contract entries for admin/builder and public render states.
+- Screenshot entries for admin/builder and public render states.
 - Builder block registration or discovery cache invalidation tests when Filament Builder support is included.

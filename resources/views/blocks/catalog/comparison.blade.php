@@ -22,10 +22,9 @@
                             {{ $column['heading'] ?? '' }}
                             @if (filled($column['description'] ?? null))
                                 <span
-                                    class="section mt-1 text-xs font-normal opacity-75"
+                                    class="section mt-1 text-xs font-normal whitespace-pre-line opacity-75"
+                                    >{{ $column['description'] }}</span
                                 >
-                                    {{ $column['description'] }}
-                                </span>
                             @endif
                         </th>
                     @endforeach

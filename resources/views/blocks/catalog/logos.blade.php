@@ -26,11 +26,16 @@
         @foreach ($logos as $logo)
             @php
                 $image = is_array($logo['image'] ?? null) && filled($logo['image']['url'] ?? null) ? $logo['image'] : null;
+                $logoUrl = filled($logo['url'] ?? null) ? $logo['url'] : null;
+                $imageWidth = is_array($image) && is_int($image['width'] ?? null) ? $image['width'] : null;
+                $imageHeight = is_array($image) && is_int($image['height'] ?? null) ? $image['height'] : null;
             @endphp
 
-            <a
-                href="{{ $logo['url'] ?? '#' }}"
-                @if ($image && ($image['alt'] ?? null) === '' && filled($logo['name'] ?? null))
+            <{{ $logoUrl ? 'a' : 'div' }}
+                @if ($logoUrl)
+                    href="{{ $logoUrl }}"
+                @endif
+                @if ($image && ($image['alt'] ?? null) === '' && filled($logo['name'] ?? null) && $logoUrl)
                     aria-label="{{ $logo['name'] }}"
                 @endif
                 class="flex min-h-24 items-center justify-center rounded-lg border border-slate-200 bg-white px-6 text-center text-lg font-semibold text-slate-600"
@@ -38,14 +43,18 @@
                 @if ($image)
                     <img
                         src="{{ $image['url'] }}"
-                        alt="{{ $image['alt'] ?? ($logo['name'] ?? '') }}"
+                        alt="{{ $logoUrl === null && ($image['alt'] ?? null) === '' ? ($logo['name'] ?? '') : ($image['alt'] ?? ($logo['name'] ?? '')) }}"
+                        @if ($imageWidth && $imageHeight)
+                            width="{{ $imageWidth }}"
+                            height="{{ $imageHeight }}"
+                        @endif
                         class="max-h-14 w-auto max-w-full object-contain"
                         loading="lazy"
                     />
                 @else
                     {{ $logo['name'] ?? '' }}
                 @endif
-            </a>
+            </{{ $logoUrl ? 'a' : 'div' }}>
         @endforeach
     </div>
 </section>

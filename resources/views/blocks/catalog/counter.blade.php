@@ -36,7 +36,7 @@
                 </h3>
 
                 @if (filled($counter['description'] ?? null))
-                    <p class="mt-2 text-sm text-slate-600">{{ $counter['description'] }}</p>
+                    <p class="mt-2 text-sm whitespace-pre-line text-slate-600">{{ $counter['description'] }}</p>
                 @endif
             </article>
         @endforeach

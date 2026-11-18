@@ -2,27 +2,25 @@
 
 <!-- prettier-ignore-start -->
 
-## What It Does
+In the block picker on a page you are building, typing pricing finds a block with a field for each plan. Seventeen ready-made blocks are in the picker, from FAQ and pricing to team and timeline. A block belongs to the page you add it to, while a section from Content Sections is built once and shared across many pages.
 
-Block Library supplies typed, reusable content-block definitions and matching Filament Builder blocks for Capell content packages.
+Block Library arrives with Layout Builder, the page builder, which puts the blocks on public pages using Block Library's own templates. It has no screen or settings of its own, and its blocks appear in the page editor for anyone who can already edit the page.
+
+Each block has a title and a short summary, and most have fields of their own, such as a list of questions or plans you can reorder and fold away. Rich text is cleaned, and links are limited to ordinary web, email and phone addresses, so a pasted link to anywhere else is dropped. Logo and team blocks take uploaded images, and a copied block gets its own set.
 
 - **Price and availability:** Check current availability and price on the [Capell Marketplace listing](https://capell.app/extensions/block-library).
 - **Licence:** Check the licence terms on the [Capell Marketplace listing](https://capell.app/extensions/block-library).
 - **Requires:** `PHP ^8.4`, `capell-app/admin ^1.0.72`, `capell-app/core ^1.0.72`, `filament/forms ^5.7.6`, `lorisleiva/laravel-actions *`, `spatie/laravel-package-tools *`.
 - **Install:** `composer require capell-app/block-library`.
 
-The package has no standalone admin resource. Editors see its registered block choices inside Builder surfaces provided by consuming packages and can render their matching frontend views.
-
-## Who It Is For
-
-**For developers:** BlockDefinitionProvider and FilamentBuilderBlock define the extension boundary, while the block and builder registries resolve definitions without hard-coding them into a consuming package.
-
-**For teams:** Editors can use the same supported block types across package-owned content forms instead of rebuilding common sections for each workflow.
-
 ## Quick Start
 
 1. Install the package: `composer require capell-app/block-library`.
 2. Verify the package provider and manifest contributions are registered in the host app.
+
+## For Developers
+
+BlockDefinitionProvider and FilamentBuilderBlock define the extension boundary, while the block and builder registries resolve definitions without hard-coding them into a consuming package.
 
 ## Configure
 
@@ -38,15 +36,12 @@ This extension works without configuration. There is nothing to set after instal
 
 ![Block Library blocks in the installed page editor picker](docs/screenshots/block-library-editor-picker.png)
 
-![List of content blocks available to editors](docs/screenshots/block-library-admin-index.png)
+![Frontend hero block](docs/screenshots/block-library-frontend-hero.png)
 
 - Block Library blocks in the installed page editor picker (admin).
-- List of content blocks available to editors (frontend).
-- Content block asset settings (admin).
 - Frontend hero block (frontend).
 - Frontend features block (frontend).
 - Frontend pricing block (frontend).
-- Reusable block templates with the admin sidebar open (admin).
 
 ## Install Impact
 

@@ -64,7 +64,8 @@ describe('block-library capell.json manifest', function (): void {
         $guide = File::get($packagePath . '/docs/custom-blocks.md');
 
         expect($docsIndex)->toContain('custom-blocks.md')
-            ->and($readme)->toContain('Block Library supplies typed, reusable content-block definitions and matching Filament Builder blocks for Capell content packages.')
+            ->and(trim($readme))->not->toBeEmpty()
+            ->and($readme)->toContain('Block Library')
             ->and($guide)->toContain(
                 'BlockDefinitionProvider',
                 'BlockDefinitionData',

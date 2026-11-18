@@ -36,7 +36,7 @@
                 </h3>
 
                 @if (filled($feature['description'] ?? null))
-                    <p class="mt-2 text-slate-600">{{ $feature['description'] }}</p>
+                    <p class="mt-2 whitespace-pre-line text-slate-600">{{ $feature['description'] }}</p>
                 @endif
 
                 @if (filled($feature['url'] ?? null))

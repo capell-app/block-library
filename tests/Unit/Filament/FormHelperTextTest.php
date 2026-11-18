@@ -111,6 +111,8 @@ it('exposes translated helpers for the listed form fields', function (Closure $b
         static fn (Schema $schema): Schema => $schema->components([HeroBlock::make()]),
         [
             'alignment' => 'AbstractCatalogBuilderBlock.alignment',
+            'heading_level' => 'AbstractCatalogBuilderBlock.heading_level',
+            'button_label' => 'AbstractCatalogBuilderBlock.button_label',
         ],
     ],
     'LogosBlock' => [

@@ -8,6 +8,7 @@ use Capell\Admin\Actions\GetMaxUploadSizeInBytes;
 use Capell\Admin\Contracts\Media\AdminMediaFieldFactory;
 use Capell\Admin\Filament\Components\Forms\MediaLibraryFileUpload;
 use Capell\BlockLibrary\Actions\ResolveBuilderBlockMediaAction;
+use Capell\Core\Models\Translation;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
@@ -16,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
 
-/** The content Translation owns media, just as it does for Admin content widgets. */
+/** Block media belongs to the content Translation's media owner, so every language of the record shares it. */
 final class BuilderBlockMediaFields
 {
     /** @return array{Hidden, SpatieMediaLibraryFileUpload} */
@@ -37,6 +38,11 @@ final class BuilderBlockMediaFields
                     }
                 }),
             $upload
+                ->model(static function (SpatieMediaLibraryFileUpload $component): ?Model {
+                    $record = $component->getContainer()->getRecord();
+
+                    return $record instanceof Translation && $record->exists ? $record->mediaOwner() : null;
+                })
                 ->label(__('capell-block-library::blocks.fields.block_images'))
                 ->helperText(__('capell-block-library::blocks.fields.block_images_helper'))
                 ->collection(static fn (Get $get): string => ResolveBuilderBlockMediaAction::collection($get('media_key')) ?? 'builder-block-unassigned')

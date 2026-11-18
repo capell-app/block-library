@@ -1,0 +1,65 @@
+[
+    {
+        "claim": "In the block picker on a page you are building, typing pricing finds a block with a field for each plan.",
+        "evidence": [
+            "docs/admin-guide.md",
+            "src/Actions/ListBuilderBlockPickerItemsAction.php",
+            "src/Filament/BuilderBlocks/AbstractCatalogBuilderBlock.php",
+            "resources/views/blocks/catalog/pricing.blade.php"
+        ]
+    },
+    {
+        "claim": "Seventeen ready-made blocks are in the picker, from FAQ and pricing to team and timeline.",
+        "evidence": [
+            "src/Support/DefaultBlockCatalog.php",
+            "src/Filament/BuilderBlocks/FaqBlock.php",
+            "src/Filament/BuilderBlocks/TimelineBlock.php"
+        ]
+    },
+    {
+        "claim": "A block belongs to the page you add it to, while a section from Content Sections is built once and shared across many pages.",
+        "evidence": [
+            "docs/admin-guide.md",
+            "src/Actions/PruneUnreferencedBuilderBlockMediaAction.php"
+        ]
+    },
+    {
+        "claim": "Block Library arrives with Layout Builder, the page builder, which puts the blocks on public pages using Block Library's own templates.",
+        "evidence": [
+            "capell.json",
+            "src/View/Components/BuilderBlock.php",
+            "resources/views/blocks/catalog/faq.blade.php"
+        ]
+    },
+    {
+        "claim": "It has no screen or settings of its own, and its blocks appear in the page editor for anyone who can already edit the page.",
+        "evidence": [
+            "capell.json",
+            "src/Providers/BlockLibraryServiceProvider.php",
+            "docs/admin-guide.md"
+        ]
+    },
+    {
+        "claim": "Each block has a title and a short summary, and most have fields of their own, such as a list of questions or plans you can reorder and fold away.",
+        "evidence": [
+            "src/Filament/BuilderBlocks/AbstractCatalogBuilderBlock.php",
+            "src/Filament/BuilderBlocks/ContentBlock.php"
+        ]
+    },
+    {
+        "claim": "Rich text is cleaned, and links are limited to ordinary web, email and phone addresses, so a pasted link to anywhere else is dropped.",
+        "evidence": [
+            "src/Actions/BuildBuilderBlockRenderDataAction.php",
+            "src/Actions/SanitizeBuilderBlockHtmlAction.php",
+            "src/Actions/SanitizeBlockHtmlAction.php"
+        ]
+    },
+    {
+        "claim": "Logo and team blocks take uploaded images, and a copied block gets its own set.",
+        "evidence": [
+            "src/Filament/BuilderBlocks/BuilderBlockMediaFields.php",
+            "src/Actions/SeparateClonedBuilderBlockMediaAction.php",
+            "src/Providers/BlockLibraryServiceProvider.php"
+        ]
+    }
+]
