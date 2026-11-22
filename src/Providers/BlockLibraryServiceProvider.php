@@ -91,7 +91,8 @@ final class BlockLibraryServiceProvider extends AbstractPackageServiceProvider
             }
         });
         $receipts = $this->app->make(ExtensionContributionReceiptRegistry::class);
-        $contexts = $receipts->activeContexts();
+        // Builder blocks are admin contributions, so the receipts need the admin context as well as the runtime one.
+        $contexts = [...$receipts->activeContexts(), ...$receipts->providerContexts(self::class)];
 
         // Catalog definitions need booted translation namespaces in both installation paths.
         $this->app->booted(function () use ($receipts, $contexts): void {
@@ -123,9 +124,19 @@ final class BlockLibraryServiceProvider extends AbstractPackageServiceProvider
                 resolve(WidgetDiscovery::class)->registerAuthoritative(ContentFilamentWidget::class);
 
                 foreach (resolve(BuilderBlockRegistry::class)->allForTarget(BuilderBlockTarget::AdminFilament) as $blockClass) {
-                    if (is_a($blockClass, FilamentWidget::class, true)) {
-                        CapellAdmin::registerWidget($blockClass);
+                    if (! is_a($blockClass, FilamentWidget::class, true)) {
+                        continue;
                     }
+
+                    // A block from another package reaches the editor here but is that package's contribution:
+                    // it records its own builder-block receipt, so this package never claims it.
+                    if (str_starts_with($blockClass, 'Capell\\BlockLibrary\\')) {
+                        CapellAdmin::registerBuilderBlock($blockClass);
+
+                        continue;
+                    }
+
+                    resolve(WidgetDiscovery::class)->register($blockClass);
                 }
 
             });

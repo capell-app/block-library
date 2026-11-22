@@ -1,7 +1,8 @@
 {
     "package": "block-library",
     "composerName": "capell-app/block-library",
-    "generatedFor": "deployment-screenshot-runner",
+    "generatedFor": "shared-capell-screenshot-runner",
+    "provenancePolicy": "runner-only-v1",
     "requiresInstalledPackage": true,
     "auditStatus": "authentic-installed-app-captured",
     "auditReason": "Required Marketplace evidence is captured from the installed Page content editor with Block Library's registered blocks visible in the real block picker.",

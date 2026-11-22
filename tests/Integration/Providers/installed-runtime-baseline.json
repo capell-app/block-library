@@ -4,10 +4,10 @@
     "scenarios": {
         "default": {
             "source": {
-                "ref": "origin/main",
-                "commit": "c3aa59d52832fbec108dfe51dd8557b642344205",
+                "ref": "HEAD",
+                "commit": "521cc77de78770e73fff25fdf239bb2483c3a670",
                 "providers": {
-                    "Providers/BlockLibraryServiceProvider.php": "3731bf79ad06dabd8a84ed6b4ff9e969307ab9e3bb4c4677df40950f5fdd8f03"
+                    "Providers/BlockLibraryServiceProvider.php": "21b0d6871bb93af4fd8effb160465409637100ec2ab1740ed3b1f54988d9daf1"
                 },
                 "configure": null
             },
@@ -664,136 +664,136 @@
                 },
                 "receipt-emissions": [
                     [
-                        "dashboard-widget",
-                        "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\AccordionBlock",
+                        "builder-block",
+                        "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\AccordionBlock",
                         "Capell\\BlockLibrary\\Filament\\BuilderBlocks\\AccordionBlock",
                         "Capell\\Admin\\Support\\CapellAdminManager",
                         "admin",
                         "context"
                     ],
                     [
-                        "dashboard-widget",
-                        "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\CallToActionBlock",
+                        "builder-block",
+                        "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\CallToActionBlock",
                         "Capell\\BlockLibrary\\Filament\\BuilderBlocks\\CallToActionBlock",
                         "Capell\\Admin\\Support\\CapellAdminManager",
                         "admin",
                         "context"
                     ],
                     [
-                        "dashboard-widget",
-                        "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\ComparisonBlock",
+                        "builder-block",
+                        "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\ComparisonBlock",
                         "Capell\\BlockLibrary\\Filament\\BuilderBlocks\\ComparisonBlock",
                         "Capell\\Admin\\Support\\CapellAdminManager",
                         "admin",
                         "context"
                     ],
                     [
-                        "dashboard-widget",
-                        "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\ContentBlock",
+                        "builder-block",
+                        "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\ContentBlock",
                         "Capell\\BlockLibrary\\Filament\\BuilderBlocks\\ContentBlock",
                         "Capell\\Admin\\Support\\CapellAdminManager",
                         "admin",
                         "context"
                     ],
                     [
-                        "dashboard-widget",
-                        "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\CounterBlock",
+                        "builder-block",
+                        "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\CounterBlock",
                         "Capell\\BlockLibrary\\Filament\\BuilderBlocks\\CounterBlock",
                         "Capell\\Admin\\Support\\CapellAdminManager",
                         "admin",
                         "context"
                     ],
                     [
-                        "dashboard-widget",
-                        "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\DividerBlock",
+                        "builder-block",
+                        "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\DividerBlock",
                         "Capell\\BlockLibrary\\Filament\\BuilderBlocks\\DividerBlock",
                         "Capell\\Admin\\Support\\CapellAdminManager",
                         "admin",
                         "context"
                     ],
                     [
-                        "dashboard-widget",
-                        "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\FaqBlock",
+                        "builder-block",
+                        "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\FaqBlock",
                         "Capell\\BlockLibrary\\Filament\\BuilderBlocks\\FaqBlock",
                         "Capell\\Admin\\Support\\CapellAdminManager",
                         "admin",
                         "context"
                     ],
                     [
-                        "dashboard-widget",
-                        "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\FeaturesBlock",
+                        "builder-block",
+                        "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\FeaturesBlock",
                         "Capell\\BlockLibrary\\Filament\\BuilderBlocks\\FeaturesBlock",
                         "Capell\\Admin\\Support\\CapellAdminManager",
                         "admin",
                         "context"
                     ],
                     [
-                        "dashboard-widget",
-                        "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\HeroBlock",
+                        "builder-block",
+                        "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\HeroBlock",
                         "Capell\\BlockLibrary\\Filament\\BuilderBlocks\\HeroBlock",
                         "Capell\\Admin\\Support\\CapellAdminManager",
                         "admin",
                         "context"
                     ],
                     [
-                        "dashboard-widget",
-                        "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\LogosBlock",
+                        "builder-block",
+                        "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\LogosBlock",
                         "Capell\\BlockLibrary\\Filament\\BuilderBlocks\\LogosBlock",
                         "Capell\\Admin\\Support\\CapellAdminManager",
                         "admin",
                         "context"
                     ],
                     [
-                        "dashboard-widget",
-                        "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\PricingBlock",
+                        "builder-block",
+                        "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\PricingBlock",
                         "Capell\\BlockLibrary\\Filament\\BuilderBlocks\\PricingBlock",
                         "Capell\\Admin\\Support\\CapellAdminManager",
                         "admin",
                         "context"
                     ],
                     [
-                        "dashboard-widget",
-                        "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\StatsBlock",
+                        "builder-block",
+                        "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\StatsBlock",
                         "Capell\\BlockLibrary\\Filament\\BuilderBlocks\\StatsBlock",
                         "Capell\\Admin\\Support\\CapellAdminManager",
                         "admin",
                         "context"
                     ],
                     [
-                        "dashboard-widget",
-                        "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TableBlock",
+                        "builder-block",
+                        "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TableBlock",
                         "Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TableBlock",
                         "Capell\\Admin\\Support\\CapellAdminManager",
                         "admin",
                         "context"
                     ],
                     [
-                        "dashboard-widget",
-                        "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TabsBlock",
+                        "builder-block",
+                        "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TabsBlock",
                         "Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TabsBlock",
                         "Capell\\Admin\\Support\\CapellAdminManager",
                         "admin",
                         "context"
                     ],
                     [
-                        "dashboard-widget",
-                        "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TeamBlock",
+                        "builder-block",
+                        "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TeamBlock",
                         "Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TeamBlock",
                         "Capell\\Admin\\Support\\CapellAdminManager",
                         "admin",
                         "context"
                     ],
                     [
-                        "dashboard-widget",
-                        "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TestimonialBlock",
+                        "builder-block",
+                        "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TestimonialBlock",
                         "Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TestimonialBlock",
                         "Capell\\Admin\\Support\\CapellAdminManager",
                         "admin",
                         "context"
                     ],
                     [
-                        "dashboard-widget",
-                        "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TimelineBlock",
+                        "builder-block",
+                        "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TimelineBlock",
                         "Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TimelineBlock",
                         "Capell\\Admin\\Support\\CapellAdminManager",
                         "admin",
@@ -801,90 +801,90 @@
                     ]
                 ],
                 "receipts": {
-                    "dashboard-widget": [
+                    "builder-block": [
                         [
-                            "dashboard-widget",
-                            "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\AccordionBlock",
+                            "builder-block",
+                            "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\AccordionBlock",
                             "Capell\\BlockLibrary\\Filament\\BuilderBlocks\\AccordionBlock"
                         ],
                         [
-                            "dashboard-widget",
-                            "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\CallToActionBlock",
+                            "builder-block",
+                            "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\CallToActionBlock",
                             "Capell\\BlockLibrary\\Filament\\BuilderBlocks\\CallToActionBlock"
                         ],
                         [
-                            "dashboard-widget",
-                            "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\ComparisonBlock",
+                            "builder-block",
+                            "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\ComparisonBlock",
                             "Capell\\BlockLibrary\\Filament\\BuilderBlocks\\ComparisonBlock"
                         ],
                         [
-                            "dashboard-widget",
-                            "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\ContentBlock",
+                            "builder-block",
+                            "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\ContentBlock",
                             "Capell\\BlockLibrary\\Filament\\BuilderBlocks\\ContentBlock"
                         ],
                         [
-                            "dashboard-widget",
-                            "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\CounterBlock",
+                            "builder-block",
+                            "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\CounterBlock",
                             "Capell\\BlockLibrary\\Filament\\BuilderBlocks\\CounterBlock"
                         ],
                         [
-                            "dashboard-widget",
-                            "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\DividerBlock",
+                            "builder-block",
+                            "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\DividerBlock",
                             "Capell\\BlockLibrary\\Filament\\BuilderBlocks\\DividerBlock"
                         ],
                         [
-                            "dashboard-widget",
-                            "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\FaqBlock",
+                            "builder-block",
+                            "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\FaqBlock",
                             "Capell\\BlockLibrary\\Filament\\BuilderBlocks\\FaqBlock"
                         ],
                         [
-                            "dashboard-widget",
-                            "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\FeaturesBlock",
+                            "builder-block",
+                            "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\FeaturesBlock",
                             "Capell\\BlockLibrary\\Filament\\BuilderBlocks\\FeaturesBlock"
                         ],
                         [
-                            "dashboard-widget",
-                            "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\HeroBlock",
+                            "builder-block",
+                            "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\HeroBlock",
                             "Capell\\BlockLibrary\\Filament\\BuilderBlocks\\HeroBlock"
                         ],
                         [
-                            "dashboard-widget",
-                            "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\LogosBlock",
+                            "builder-block",
+                            "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\LogosBlock",
                             "Capell\\BlockLibrary\\Filament\\BuilderBlocks\\LogosBlock"
                         ],
                         [
-                            "dashboard-widget",
-                            "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\PricingBlock",
+                            "builder-block",
+                            "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\PricingBlock",
                             "Capell\\BlockLibrary\\Filament\\BuilderBlocks\\PricingBlock"
                         ],
                         [
-                            "dashboard-widget",
-                            "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\StatsBlock",
+                            "builder-block",
+                            "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\StatsBlock",
                             "Capell\\BlockLibrary\\Filament\\BuilderBlocks\\StatsBlock"
                         ],
                         [
-                            "dashboard-widget",
-                            "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TableBlock",
+                            "builder-block",
+                            "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TableBlock",
                             "Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TableBlock"
                         ],
                         [
-                            "dashboard-widget",
-                            "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TabsBlock",
+                            "builder-block",
+                            "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TabsBlock",
                             "Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TabsBlock"
                         ],
                         [
-                            "dashboard-widget",
-                            "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TeamBlock",
+                            "builder-block",
+                            "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TeamBlock",
                             "Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TeamBlock"
                         ],
                         [
-                            "dashboard-widget",
-                            "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TestimonialBlock",
+                            "builder-block",
+                            "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TestimonialBlock",
                             "Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TestimonialBlock"
                         ],
                         [
-                            "dashboard-widget",
-                            "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TimelineBlock",
+                            "builder-block",
+                            "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TimelineBlock",
                             "Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TimelineBlock"
                         ]
                     ]
@@ -4647,9 +4647,6 @@
                     ]
                 ],
                 "tagged-consumers": {
-                    "capell-frontend-authoring:editable-regions": [
-                        "Capell\\LayoutBuilder\\Support\\FrontendAuthoring\\LayoutBuilderEditableRegionContributor"
-                    ],
                     "capell.admin.block_picker_metadata_provider": [
                         "Capell\\BlockLibrary\\Support\\BlockPickerMetadataAdapter"
                     ],
@@ -4668,9 +4665,6 @@
                     ]
                 },
                 "tags": {
-                    "capell-frontend-authoring:editable-regions": [
-                        "Capell\\LayoutBuilder\\Support\\FrontendAuthoring\\LayoutBuilderEditableRegionContributor"
-                    ],
                     "capell.admin.block_picker_metadata_provider": [
                         "Capell\\BlockLibrary\\Support\\BlockPickerMetadataAdapter"
                     ],

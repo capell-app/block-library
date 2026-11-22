@@ -31,14 +31,14 @@ The **Logo block** and **Team block** use images you upload to the block itself.
 3. In each logo or team member, choose the uploaded file in **Image**.
 4. If no image is chosen or a file is missing, the block shows the name or an initial instead.
 
-Images belong to the language you are editing, so each translation keeps its own images. If you copy a logo or team block, the copy gets its own set of images; removing an image from the copy leaves the original unchanged.
+Uploaded images are shared by every language of the page, so a block's files stay in place until no language still uses them. If you copy a logo or team block, the copy gets its own set of images; removing an image from the copy leaves the original unchanged.
 
 ### How to remove a block
 
 1. Open the page and find the block in the editor.
 2. Remove it with the block's remove control and save the page.
 
-Removing a block does not delete its uploaded files straight away, because earlier versions of the page may still use them.
+When you save, Capell permanently deletes the uploaded files of a removed block, unless a logo or team block in any language of the page still uses them. The deletion is permanent, so keep a copy of any file you may want again.
 
 ### Where blocks appear
 

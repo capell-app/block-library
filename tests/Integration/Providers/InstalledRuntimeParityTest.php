@@ -70,8 +70,8 @@ it('preserves fresh installed surfaces after real installation and repeated refr
             assertDeclared: static function (Application $app): void {
                 $contentReceipts = array_values(array_filter(
                     $app->make(ExtensionContributionReceiptRegistry::class)->forPackage(BlockLibraryServiceProvider::$packageName),
-                    static fn (ExtensionContributionReceiptData $receipt): bool => $receipt->type === ExtensionContributionType::DashboardFilamentWidget
-                        && $receipt->key === 'widget:' . ContentBlock::class,
+                    static fn (ExtensionContributionReceiptData $receipt): bool => $receipt->type === ExtensionContributionType::BuilderBlock
+                        && $receipt->key === 'builder-block:' . ContentBlock::class,
                 ));
 
                 expect($contentReceipts)->toHaveCount(1)

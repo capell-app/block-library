@@ -168,94 +168,89 @@
     "contributionTraceability": {
         "contributions": [
             {
-                "type": "dashboard-widget",
-                "key": "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\AccordionBlock",
-                "providerBucket": "runtime"
+                "type": "builder-block",
+                "key": "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\AccordionBlock",
+                "providerBucket": "admin"
             },
             {
-                "type": "dashboard-widget",
-                "key": "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\CallToActionBlock",
-                "providerBucket": "runtime"
+                "type": "builder-block",
+                "key": "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\CallToActionBlock",
+                "providerBucket": "admin"
             },
             {
-                "type": "dashboard-widget",
-                "key": "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\ComparisonBlock",
-                "providerBucket": "runtime"
+                "type": "builder-block",
+                "key": "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\ComparisonBlock",
+                "providerBucket": "admin"
             },
             {
-                "type": "dashboard-widget",
-                "key": "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\ContentBlock",
-                "providerBucket": "runtime"
+                "type": "builder-block",
+                "key": "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\ContentBlock",
+                "providerBucket": "admin"
             },
             {
-                "type": "dashboard-widget",
-                "key": "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\CounterBlock",
-                "providerBucket": "runtime"
+                "type": "builder-block",
+                "key": "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\CounterBlock",
+                "providerBucket": "admin"
             },
             {
-                "type": "dashboard-widget",
-                "key": "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\DividerBlock",
-                "providerBucket": "runtime"
+                "type": "builder-block",
+                "key": "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\DividerBlock",
+                "providerBucket": "admin"
             },
             {
-                "type": "dashboard-widget",
-                "key": "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\FaqBlock",
-                "providerBucket": "runtime"
+                "type": "builder-block",
+                "key": "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\FaqBlock",
+                "providerBucket": "admin"
             },
             {
-                "type": "dashboard-widget",
-                "key": "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\FeaturesBlock",
-                "providerBucket": "runtime"
+                "type": "builder-block",
+                "key": "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\FeaturesBlock",
+                "providerBucket": "admin"
             },
             {
-                "type": "dashboard-widget",
-                "key": "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\HeroBlock",
-                "providerBucket": "runtime"
+                "type": "builder-block",
+                "key": "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\HeroBlock",
+                "providerBucket": "admin"
             },
             {
-                "type": "dashboard-widget",
-                "key": "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\LogosBlock",
-                "providerBucket": "runtime"
+                "type": "builder-block",
+                "key": "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\LogosBlock",
+                "providerBucket": "admin"
             },
             {
-                "type": "dashboard-widget",
-                "key": "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\PricingBlock",
-                "providerBucket": "runtime"
+                "type": "builder-block",
+                "key": "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\PricingBlock",
+                "providerBucket": "admin"
             },
             {
-                "type": "dashboard-widget",
-                "key": "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\StatsBlock",
-                "providerBucket": "runtime"
+                "type": "builder-block",
+                "key": "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\StatsBlock",
+                "providerBucket": "admin"
             },
             {
-                "type": "dashboard-widget",
-                "key": "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TableBlock",
-                "providerBucket": "runtime"
+                "type": "builder-block",
+                "key": "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TableBlock",
+                "providerBucket": "admin"
             },
             {
-                "type": "dashboard-widget",
-                "key": "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TabsBlock",
-                "providerBucket": "runtime"
+                "type": "builder-block",
+                "key": "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TabsBlock",
+                "providerBucket": "admin"
             },
             {
-                "type": "dashboard-widget",
-                "key": "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TeamBlock",
-                "providerBucket": "runtime"
+                "type": "builder-block",
+                "key": "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TeamBlock",
+                "providerBucket": "admin"
             },
             {
-                "type": "dashboard-widget",
-                "key": "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TestimonialBlock",
-                "providerBucket": "runtime"
+                "type": "builder-block",
+                "key": "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TestimonialBlock",
+                "providerBucket": "admin"
             },
             {
-                "type": "dashboard-widget",
-                "key": "widget:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TimelineBlock",
-                "providerBucket": "runtime"
-            },
-            {
-                "type": "dashboard-widget",
-                "key": "widget:Capell\\Socials\\Filament\\BuilderBlocks\\SocialsBuilderBlock",
-                "providerBucket": "runtime"
+                "type": "builder-block",
+                "key": "builder-block:Capell\\BlockLibrary\\Filament\\BuilderBlocks\\TimelineBlock",
+                "providerBucket": "admin"
             }
         ]
     }

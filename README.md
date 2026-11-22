@@ -8,9 +8,9 @@ Block Library arrives with Layout Builder, the page builder, which puts the bloc
 
 Each block has a title and a short summary, and most have fields of their own, such as a list of questions or plans you can reorder and fold away. Rich text is cleaned, and links are limited to ordinary web, email and phone addresses, so a pasted link to anywhere else is dropped. Logo and team blocks take uploaded images, and a copied block gets its own set.
 
-- **Price and availability:** Check current availability and price on the [Capell Marketplace listing](https://capell.app/extensions/block-library).
-- **Licence:** Check the licence terms on the [Capell Marketplace listing](https://capell.app/extensions/block-library).
-- **Requires:** `PHP ^8.4`, `capell-app/admin ^1.0.72`, `capell-app/core ^1.0.72`, `filament/forms ^5.7.6`, `lorisleiva/laravel-actions *`, `spatie/laravel-package-tools *`.
+- **Price and availability:** Check current availability and price on the [Capell Marketplace listing](https://capell.app/marketplace/extensions/block-library).
+- **Licence:** Check the licence terms on the [Capell Marketplace listing](https://capell.app/marketplace/extensions/block-library).
+- **Requires:** `PHP ^8.4`, `capell-app/admin ^1.0.79`, `capell-app/core ^1.0.79`, `filament/forms ^5.7.6`, `lorisleiva/laravel-actions *`, `spatie/laravel-package-tools *`.
 - **Install:** `composer require capell-app/block-library`.
 
 ## Quick Start
@@ -28,7 +28,7 @@ This extension works without configuration. There is nothing to set after instal
 
 ## Limits And Pitfalls
 
-- Install the required Capell packages at the versions in `composer.json`: `capell-app/admin ^1.0.72`, `capell-app/core ^1.0.72`.
+- Install the required Capell packages at the versions in `composer.json`: `capell-app/admin ^1.0.79`, `capell-app/core ^1.0.79`.
 - Keep public Blade and cached HTML free of authoring markers, model IDs, permissions, signed editor URLs, and lazy database queries.
 - Custom write integrations must preserve invalidation for `block-library` cache tags.
 
